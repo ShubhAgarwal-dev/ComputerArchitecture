@@ -26,19 +26,7 @@ public class Infiltrator {
         }
         return moveList;
     }
-
-    private LinkedList<int[]> makeMoveAllDirections(Border border){
-        int[] cols = {1,1,1,0,0,0,-1,-1,-1};
-        int[] rows = {-1,0,1,-1,0,1,-1,0,1};
-        LinkedList<int[]> moveList = new LinkedList<int[]>();
-        for(int i=0;i< cols.length;i++){
-            if(validMove(this.x+cols[i],this.y+rows[i],border) && !border.getSensorState(this.x+cols[i],this.y+rows[i])){
-                moveList.add(new int[]{this.x+cols[i],this.y+rows[i]});
-            }
-        }
-        return moveList;
-    }
-
+    
     public void randomMovePolicy(Border border){
         PriorityQueue<Integer[]> moveList = this.makeMoveOnlyFwd(border);
         int len = moveList.size();
