@@ -12,4 +12,5 @@ public class Clock {
     public void increment() {
         this.time += 1;
     }
+
 }

@@ -25,11 +25,11 @@ public class Border {
         }
     }
 
-    public Boolean get_sensor_state(int x, int y){
+    public Boolean getSensorState(int x, int y){
         return this.sensors[x][y].isState();
     }
 
-    public void set_sensor_state(int x, int y, boolean state){
+    public void setSensorState(int x, int y, boolean state){
         this.sensors[x][y].setState(state);
     }
 }
