@@ -1,16 +1,35 @@
 public class Border {
-    private int L;
-    private int W;
+    public int getLength() {
+        return length;
+    }
+
+    private int length;
+
+    public int getWidth() {
+        return width;
+    }
+
+    private int width;
+    private double probability;
     private Sensor sensors[][];
 
-    public Border(int l, int w) {
-        this.L = l;
-        this.W = w;
-        this.sensors = new Sensor[w][l];
-        for (int x=0; x<w; x++){
-            for (int y=0; y<l; y++){
+    public Border(int length, int width, double p) {
+        this.length = length;
+        this.width = width;
+        this.probability = p;
+        this.sensors = new Sensor[length][width];
+        for (int x = 0; x< length; x++){
+            for (int y = 0; y< width; y++){
                 this.sensors[x][y] = new Sensor();
             }
         }
+    }
+
+    public Boolean get_sensor_state(int x, int y){
+        return this.sensors[x][y].isState();
+    }
+
+    public void set_sensor_state(int x, int y, boolean state){
+        this.sensors[x][y].setState(state);
     }
 }
