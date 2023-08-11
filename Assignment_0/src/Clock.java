@@ -13,4 +13,8 @@ public class Clock {
         this.time += 1;
     }
 
+    public void increment(int sec) {
+        this.time += sec;
+    }
+
 }

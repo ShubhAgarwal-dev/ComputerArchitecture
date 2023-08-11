@@ -17,7 +17,7 @@ public class Sensor {
         this.state = false;
     }
 
-    public void changeState(double probability){
+    public Sensor(double probability) {
         double randProb = Math.random();
         this.state = randProb > probability;
     }
