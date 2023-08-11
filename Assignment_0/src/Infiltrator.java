@@ -26,14 +26,13 @@ public class Infiltrator {
         }
         return moveList;
     }
-    
+
     public void randomMovePolicy(Border border){
         PriorityQueue<Integer[]> moveList = this.makeMoveOnlyFwd(border);
-        int len = moveList.size();
-        Random rand = new Random();
         Integer[] randomEle = moveList.peek();
-        assert randomEle != null;
-        this.x = randomEle[1];
-        this.y = randomEle[2];
+        if(randomEle != null) {
+            this.x = randomEle[1];
+            this.y = randomEle[2];
+        }
     }
 }
