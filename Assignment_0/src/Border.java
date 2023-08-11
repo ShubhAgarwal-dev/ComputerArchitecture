@@ -27,7 +27,10 @@ public class Border {
     }
 
     public boolean getSensorState(int x, int y) {
-        return this.sensors[x][y].isState();
+        if (y >= this.width) {
+            return true;
+        }
+        return !this.sensors[x][y].isState();
     }
 
     public void setSensorState(int x, int y, boolean state) {

@@ -31,7 +31,7 @@ public class Infiltrator {
         PriorityQueue<Integer[]> moveList = new PriorityQueue<Integer[]>(new PqCompares());
         for (int i = 0; i < cols.length; i++) {
             if (validMove(this.x + cols[i], this.y + rows[i], border) &&
-                    !border.getSensorState(this.x + cols[i], this.y + rows[i])) {
+                    border.getSensorState(this.x + cols[i], this.y + rows[i])) {
                 moveList.add(new Integer[]{priorArr[i], this.x + cols[i], this.y + rows[i]});
             }
         }
