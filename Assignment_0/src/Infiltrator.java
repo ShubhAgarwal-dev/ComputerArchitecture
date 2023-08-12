@@ -40,12 +40,16 @@ public class Infiltrator {
 
     public Integer[] priorityMovePolicy(Border border) {
         PriorityQueue<Integer[]> moveList = this.makeMoveOnlyFwd(border);
-        Integer[] randomEle = moveList.peek();
+        Integer[] randomEle = moveList.peek(); // We have Priority, X-coordinate and Y-coordinate
         assert randomEle != null;
         int oldX = this.x;
         int oldY = this.y;
-        this.x = randomEle[1];
-        this.y = randomEle[2];
+        try {
+            this.x = randomEle[1];
+            this.y = randomEle[2];
+        } catch (NullPointerException e){
+            return new Integer[]{oldX, oldY};
+        }
         return new Integer[]{oldX, oldY};
     }
 }

@@ -32,7 +32,7 @@ class Main {
                     }
 
                     globalClock.increment(10);
-                    if (myBorder.getSensorState(primeInfiltrator.getX(), primeInfiltrator.getY())) {
+                    if (!myBorder.getSensorState(primeInfiltrator.getX(), primeInfiltrator.getY())) {
                         Integer[] oldPosition = primeInfiltrator.priorityMovePolicy(myBorder);
                         System.out.println(oldPosition[0] + "\t" + oldPosition[1]);
                     }
