@@ -19,7 +19,7 @@ class Main {
         try {
             FileWriter outputFile = new FileWriter(filename);
 
-            for (int run = 0; run < 150; run++) {
+            for (int run = 0; run < 500; run++) {
                 Clock globalClock = new Clock();
                 Border myBorder = new Border(borderLength, borderWidth, probability);
                 Infiltrator primeInfiltrator = new Infiltrator(borderLength);
@@ -34,7 +34,7 @@ class Main {
                     globalClock.increment(10);
                     if (!myBorder.getSensorState(primeInfiltrator.getX(), primeInfiltrator.getY())) {
                         Integer[] oldPosition = primeInfiltrator.priorityMovePolicy(myBorder);
-                        System.out.println(oldPosition[0] + "\t" + oldPosition[1]);
+//                        System.out.println(oldPosition[0] + "\t" + oldPosition[1]);
                     }
 
                     if (primeInfiltrator.getY() >= borderWidth) {
