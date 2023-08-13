@@ -18,6 +18,7 @@ class Main {
         String filename = borderLength + "_" + borderWidth + "_" + probability + ".txt";
         try {
             FileWriter outputFile = new FileWriter(filename);
+            outputFile.write(borderLength + "\n" + borderWidth + "\n" + probability + "\n");
 
             for (int run = 0; run < 500; run++) {
                 Clock globalClock = new Clock();
