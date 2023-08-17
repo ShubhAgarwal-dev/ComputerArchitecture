@@ -31,7 +31,7 @@ def plotViolin(path):
 
     plt.xlabel("Variance")
     plt.ylabel("Time Taken")
-
+    plt.title("Widht:"+str(width)+" & Probability:"+str(prob))
     plt.violinplot(timeArr, showmeans=True, showmedians=True)
     plt.savefig("images/"+path+"Violin.png", bbox_inches="tight",dpi=800)
     plt.clf()
@@ -115,4 +115,4 @@ arrPath3 = [
 # plotBar(arrPath2)
 
 
-plotBar(arrPath3)
+# plotBar(arrPath3)
