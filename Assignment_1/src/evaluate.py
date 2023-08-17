@@ -9,7 +9,7 @@ from threading import Timer
 def evaluate(submitted_program):
 
 	jarfile = "./emulator.jar"
-	testcases_directory = "../test_cases_for_evaluation/"
+	testcases_directory = "./test_cases/"
 
 	l = len(submitted_program.split("/"))
 	program_name = submitted_program.split("/")[l-1].split("_")[0].split(".")[0]
@@ -84,24 +84,27 @@ def evaluate(submitted_program):
 			if first_line_found == False:
 				evaluation = False
 
+			expected_file.close()
+			result_file.close()
+
 			if evaluation == True:
 				scored_marks = scored_marks + 1
-				print cur_file + "\t: PASS!"
+				print(cur_file + "\t: PASS!")
 			else:
-				print cur_file + "\t: Fail"
+				print(cur_file + "\t: Fail")
 #debug print
 			debug = False
 			if debug == True:
-				print "testcase = " + cur_file
-				print "\n output expected to contain = "
+				print("testcase = " + cur_file)
+				print("\n output expected to contain = ")
 				expected_file = open(testcases_directory + cur_file.split(".")[0] + ".expected")
 				for line in expected_file:
-					print line
+					print(line)
 				expected_file.close()
-				print "\n obtained output = "
+				print("\n obtained output = ")
 				output_file = open("./tmp.output")
 				for line in output_file:
-					print line
+					print(line)
 				output_file.close()
 
 			os.remove("./tmp.asm")
