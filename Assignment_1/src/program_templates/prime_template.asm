@@ -2,7 +2,20 @@
 a:
 	10
 	.text
-// your code here to check if the number 'a' is prime. If yes, write 1 to x10. Else write -1.
-// you may change the value of 'a'
-// remove these comments!
-
+main:
+	load %x0, $a, %x1
+	addi %x0, 1, %x2
+	beq %x1, %x2, is_prime
+	addi %x2, 1, %x2
+loop:
+	beq %x1, %x2, prime
+	div %x1, %x2, %x3
+	beq %x0, %x31, notprime
+	addi %x2, 1, %x2
+	jmp loop
+prime:
+	addi %x0, 1, %x10
+	end
+notprime:
+	subi %x0, 1, %x10
+	end
