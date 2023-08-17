@@ -33,7 +33,7 @@ def plotViolin(path):
     plt.ylabel("Time Taken")
 
     plt.violinplot(timeArr, showmeans=True, showmedians=True)
-    plt.savefig("images/"+path+"Violin.png", bbox_inches="tight")
+    plt.savefig("images/"+path+"Violin.png", bbox_inches="tight",dpi=800)
     plt.clf()
     fileRead.close()
 
@@ -51,7 +51,7 @@ def plotHist(pathArr):
     plt.hist(avg, linewidth=0.5, edgecolor="white")
     plt.xlabel("Average Time")
     plt.ylabel("Counts")
-    plt.savefig("images/Hist.png", bbox_inches="tight")
+    plt.savefig("images/Hist.png", bbox_inches="tight", dpi=800)
     plt.clf()
 
 
@@ -65,10 +65,10 @@ def plotBar(pathArr):
         readFile.readline()
         widhts.append(int(readFile.readline().rstrip('\n')))
         probs.append(float(readFile.readline().rstrip('\n')))
-    plt.bar(x=probs,height=avg,width=0.1, edgecolor="white", linewidth=0.7)
+    plt.bar(x=probs, height=avg,width=0.015, edgecolor="white")
     plt.ylabel("Average Time")
-    plt.xlabel("Probablilty")
-    plt.savefig("images/Bar.png", bbox_inches="tight")
+    plt.xlabel("Probablity = 1/Width")
+    plt.savefig("images/Bar2.png", bbox_inches="tight",dpi=800)
     plt.clf()
 
 
@@ -100,7 +100,19 @@ arrPath2 = ["1000_10_0.1.txt",
             "1000_10_0.8.txt",
             "1000_10_0.9.txt"]
 
+arrPath3 = [
+    "1000_4_0.25.txt",
+    "1000_5_0.2.txt",
+    "1000_6_0.166666.txt",
+    "1000_7_0.142857.txt",
+    "1000_8_0.125.txt",
+    "1000_9_0.11111111.txt"
+]
+
 # for i in arrPath:
 #     plotViolin(path=i)
-plotHist(arrPath)
-plotBar(arrPath2)
+# plotHist(arrPath)
+# plotBar(arrPath2)
+
+
+plotBar(arrPath3)
