@@ -30,6 +30,6 @@ for asm_file in os.listdir(submissions_temp_dir):
 		total_marks = total_marks + t
 		scored_marks = scored_marks + s
 
-shutil.rmtree(submissions_temp_dir)
+# shutil.rmtree(submissions_temp_dir)
 
 print("total score = " + str(scored_marks) + " out of " + str(total_marks))
