@@ -1,6 +1,6 @@
 	.data
 a:
-	10
+	45
 	.text
 main:
 	load %x0, $a, %x3
