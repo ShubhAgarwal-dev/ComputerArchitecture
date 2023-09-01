@@ -1,19 +1,21 @@
 	.data
 a:
-	45
+	11
 	.text
 main:
-	load %x0, $a, %x3
 	load %x0, $a, %x4
+	add %x0, %x0, %x10
+	addi %x0, 2, %x5
+	beq %x5, %x4, isprime
 loop:
-	beq %x4, 1, pass
-	subi %x4, 1, %x4
-	div %x3, %x4, %x5
-	beq %x31, 0, fail
+	div %x4, %x5, %x6
+	beq %x31, %x0, notprime
+	addi %x5, 1, %x5
+	beq %x5, %x4, isprime
 	jmp loop
-pass:
-	addi %x0, 1, %x10
+isprime:
+	addi %x10, 1, %x10
 	end
-fail:
-	subi %x0, 1, %x10
+notprime:
+	subi %x10, 1, %x10
 	end
