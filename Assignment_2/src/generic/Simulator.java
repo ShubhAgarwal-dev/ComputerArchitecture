@@ -3,6 +3,7 @@ package generic;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -70,7 +71,7 @@ public class Simulator {
             int source1_val = inst.getSourceOperand1().getValue();
             int source2_val = inst.getSourceOperand2().getValue();
 
-            opCode = (opCode << 27) | (source1_val << 22) | (opCode << 17) | (dest_val << 12);
+            opCode = (opCode << 27) | (source1_val << 22) | (source2_val << 17) | (dest_val << 12);
         }
 
         if (typeMap.get(inst.getOperationType()) == 1){
@@ -104,6 +105,12 @@ public class Simulator {
     }
 
     public static void assemble(String objectProgramFile) {
+
+        try {
+            FileOutputStream asm = new FileOutputStream(objectProgramFile);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
 
         for (Instruction i : ParsedProgram.code) {
             System.out.println(adjustMachineCode(instToMachineCode(i)));
