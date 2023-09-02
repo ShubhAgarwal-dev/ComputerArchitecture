@@ -66,7 +66,6 @@ public class Simulator {
         int opCode = inst.getOperationType().ordinal();
 
         if (typeMap.get(inst.getOperationType()) == 2){
-//            System.out.println(inst.getOperationType());
             int dest_val = inst.getDestinationOperand().getValue();
             int source1_val = inst.getSourceOperand1().getValue();
             int source2_val = inst.getSourceOperand2().getValue();
@@ -75,11 +74,10 @@ public class Simulator {
         }
 
         if (typeMap.get(inst.getOperationType()) == 1){
-            System.out.println(inst.getOperationType());
             int dest_val = inst.getDestinationOperand().getValue();
             int source_val = inst.getSourceOperand1().getValue();
 
-            if (inst.getSourceOperand2() != null) {
+            if (inst.getSourceOperand2().operandType == Operand.OperandType.Immediate) {
                 int imm = inst.getSourceOperand2().getValue();
                 opCode = (opCode << 27) | (source_val << 22) | (dest_val << 17) | imm;
             } else {
