@@ -1,6 +1,10 @@
 package generic;
 
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
 import generic.Operand.OperandType;
 
 
@@ -23,6 +27,16 @@ public class Simulator {
 		//3. write the data to the file
 		//4. assemble one instruction at a time, and write to the file
 		//5. close the file
+		try {
+			File readFile = new File(objectProgramFile);
+			Scanner reader = new Scanner(readFile);
+			while (reader.hasNextLine()) {
+				String data = reader.nextLine();
+				System.out.println(data);
+			}
+		}catch (FileNotFoundException e){
+			System.out.println("File not found");
+		}
 	}
 	
 }
