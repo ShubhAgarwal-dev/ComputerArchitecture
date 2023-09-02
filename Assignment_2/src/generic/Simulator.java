@@ -65,15 +65,23 @@ public class Simulator {
         }
 
         if (typeMap.get(inst.getOperationType()) == 1) {
-            int dest_val = inst.getDestinationOperand().getValue();
             int source_val = inst.getSourceOperand1().getValue();
 
             if (inst.getSourceOperand2().operandType == Operand.OperandType.Immediate) {
+                int dest_val = inst.getDestinationOperand().getValue();
                 int imm = inst.getSourceOperand2().getValue();
                 opCode = (opCode << 27) | (source_val << 22) | (dest_val << 17) | imm;
             } else {
-                int val = ParsedProgram.symtab.get(inst.getSourceOperand2().labelValue);
-                opCode = (opCode << 27) | (source_val << 22) | (dest_val << 17) | val;
+                if (inst.getDestinationOperand().operandType == Operand.OperandType.Label){
+                    int dest_val = ParsedProgram.symtab.get(inst.getDestinationOperand().getLabelValue());
+                    int source2_val = inst.getSourceOperand2().getValue();
+                    opCode = (opCode << 27) | (source_val << 22) | (source2_val << 17) | dest_val;
+                }
+                else {
+                    int dest_val = inst.getDestinationOperand().getValue();
+                    int val = ParsedProgram.symtab.get(inst.getSourceOperand2().labelValue);
+                    opCode = (opCode << 27) | (source_val << 22) | (dest_val << 17) | val;
+                }
             }
         }
 
