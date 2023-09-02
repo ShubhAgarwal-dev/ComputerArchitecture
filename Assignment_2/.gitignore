@@ -22,6 +22,7 @@ bin/
 /nbdist/
 /.nb-gradle/
 
+test_cases/test_out/*
 ### VS Code ###
 .vscode/
 

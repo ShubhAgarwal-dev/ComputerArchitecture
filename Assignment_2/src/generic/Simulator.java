@@ -1,60 +1,53 @@
 package generic;
 
 import java.io.*;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.nio.ByteBuffer;
-
-
 import generic.Instruction.OperationType;
 
 
 public class Simulator {
 
     static FileInputStream inputcodeStream = null;
-    static HashMap<Instruction.OperationType, Integer> typeMap = new HashMap<>();
+    /*
+     * Value 0 -> RI Type
+     * Value 1 -> R2I Type
+     * Value 2 -> R3 Type
+     */
+    static HashMap<Instruction.OperationType, Integer> typeMap = new HashMap<>() {{
+        put(Instruction.OperationType.add, 2);
+        put(Instruction.OperationType.addi, 1);
+        put(Instruction.OperationType.sub, 2);
+        put(Instruction.OperationType.subi, 1);
+        put(Instruction.OperationType.mul, 2);
+        put(Instruction.OperationType.muli, 1);
+        put(Instruction.OperationType.div, 2);
+        put(Instruction.OperationType.divi, 1);
+        put(Instruction.OperationType.and, 2);
+        put(Instruction.OperationType.andi, 1);
+        put(Instruction.OperationType.or, 2);
+        put(Instruction.OperationType.ori, 1);
+        put(Instruction.OperationType.xor, 2);
+        put(Instruction.OperationType.xori, 1);
+        put(Instruction.OperationType.slt, 2);
+        put(Instruction.OperationType.slti, 1);
+        put(Instruction.OperationType.sll, 2);
+        put(Instruction.OperationType.slli, 1);
+        put(Instruction.OperationType.srl, 2);
+        put(Instruction.OperationType.srli, 1);
+        put(Instruction.OperationType.sra, 2);
+        put(Instruction.OperationType.srai, 1);
+        put(Instruction.OperationType.load, 1);
+        put(Instruction.OperationType.store, 1);
+        put(Instruction.OperationType.jmp, 0);
+        put(Instruction.OperationType.beq, 1);
+        put(Instruction.OperationType.bne, 1);
+        put(Instruction.OperationType.blt, 1);
+        put(Instruction.OperationType.bgt, 1);
+        put(Instruction.OperationType.end, 0);
+    }};
 
     public static void setupSimulation(String assemblyProgramFile) {
-        /*
-         * Value 0 -> RI Type
-         * Value 1 -> R2I Type
-         * Value 2 -> R3 Type
-         */
-//		Arithmetic Inst
-        typeMap.put(Instruction.OperationType.add, 2);
-        typeMap.put(Instruction.OperationType.addi, 1);
-        typeMap.put(Instruction.OperationType.sub, 2);
-        typeMap.put(Instruction.OperationType.subi, 1);
-        typeMap.put(Instruction.OperationType.mul, 2);
-        typeMap.put(Instruction.OperationType.muli, 1);
-        typeMap.put(Instruction.OperationType.div, 2);
-        typeMap.put(Instruction.OperationType.divi, 1);
-        typeMap.put(Instruction.OperationType.and, 2);
-        typeMap.put(Instruction.OperationType.andi, 1);
-        typeMap.put(Instruction.OperationType.or, 2);
-        typeMap.put(Instruction.OperationType.ori, 1);
-        typeMap.put(Instruction.OperationType.xor, 2);
-        typeMap.put(Instruction.OperationType.xori, 1);
-        typeMap.put(Instruction.OperationType.slt, 2);
-        typeMap.put(Instruction.OperationType.slti, 1);
-        typeMap.put(Instruction.OperationType.sll, 2);
-        typeMap.put(Instruction.OperationType.slli, 1);
-        typeMap.put(Instruction.OperationType.srl, 2);
-        typeMap.put(Instruction.OperationType.srli, 1);
-        typeMap.put(Instruction.OperationType.sra, 2);
-        typeMap.put(Instruction.OperationType.srai, 1);
-// 		Memory Inst
-        typeMap.put(Instruction.OperationType.load, 1);
-        typeMap.put(Instruction.OperationType.store, 1);
-//		Control Flow Inst
-        typeMap.put(Instruction.OperationType.jmp, 0);
-        typeMap.put(Instruction.OperationType.beq, 1);
-        typeMap.put(Instruction.OperationType.bne, 1);
-        typeMap.put(Instruction.OperationType.blt, 1);
-        typeMap.put(Instruction.OperationType.bgt, 1);
-//		End Inst
-        typeMap.put(Instruction.OperationType.end, 0);
-
         int firstCodeAddress = ParsedProgram.parseDataSection(assemblyProgramFile);
         ParsedProgram.parseCodeSection(assemblyProgramFile, firstCodeAddress);
     }
@@ -103,48 +96,28 @@ public class Simulator {
 
     public static void assemble(String objectProgramFile) {
 
-        try(FileOutputStream asm = new FileOutputStream(objectProgramFile)) {
+        try (FileOutputStream asm = new FileOutputStream(objectProgramFile)) {
             BufferedOutputStream bfile = new BufferedOutputStream(asm);
 
             byte[] addressCode = ByteBuffer.allocate(4).putInt(ParsedProgram.firstCodeAddress).array();
             bfile.write(addressCode);
 
-            for (var value: ParsedProgram.data) {
+            for (var value : ParsedProgram.data) {
                 byte[] dataValue = ByteBuffer.allocate(4).putInt(value).array();
                 bfile.write(dataValue);
             }
 
-//            StringBuilder opString = new StringBuilder();
             for (Instruction i : ParsedProgram.code) {
-//                opString.append(adjustMachineCode(instToMachineCode(i)));
                 int instInteger = (int) Long.parseLong(adjustMachineCode(instToMachineCode(i)), 2);
                 byte[] instBinary = ByteBuffer.allocate(4).putInt(instInteger).array();
                 bfile.write(instBinary);
             }
-//            int len = opString.length();
-//            System.out.println(opString.length());
-//            ArrayList<Byte> arrayList = new ArrayList<>(len);
-//            for (int i = 0; i < opString.length(); i++) {
-//                arrayList.add(i, (opString.charAt(i) == '0') ? Byte.valueOf((byte) 0) : Byte.valueOf((byte) 1));
-//            }
-////            System.out.println(arrayList.size());
-//            for (int i = 0; i < arrayList.size(); i++) {
-//                asm.write(arrayList.get(i));
-//            }
             bfile.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
-
-        //TODO your assembler code
-        //1. open the objectProgramFile in binary mode
-        //2. write the firstCodeAddress to the file
-        //3. write the data to the file
-        //4. assemble one instruction at a time, and write to the file
-        //5. close the file
     }
 
 }
