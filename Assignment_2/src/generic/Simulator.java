@@ -27,17 +27,27 @@ public class Simulator {
 //        ParsedProgram.printState();
     }
 
+
+    private static String instToMachineCode(Instruction inst, int type) {
+        int opCode = inst.getOperationType().ordinal();
+        if (inst.getOperationType() == Instruction.OperationType.end) {
+            opCode = opCode << 27;
+        }
+        return Integer.toBinaryString(opCode);
+    }
+
+
     public static void assemble(String objectProgramFile) {
         HashMap<Instruction.OperationType, Integer> opCodeMap = new HashMap<>();
-        HashMap<Instruction.OperationType, Integer> typeMap = new HashMap<>();
+        HashMap<Instruction.OperationType, Integer>typeMap = new HashMap<>();
         /*
          * Value 0 -> RI Type
          * Value 1 -> R2I Type
          * Value 2 -> R3 Type
          */
 //		Arithmetic Inst
-        opCodeMap.put(Instruction.OperationType.and, 0);
-        typeMap.put(Instruction.OperationType.and, 2);
+        opCodeMap.put(Instruction.OperationType.add, 0);
+        typeMap.put(Instruction.OperationType.add, 2);
         opCodeMap.put(Instruction.OperationType.addi, 1);
         typeMap.put(Instruction.OperationType.addi, 1);
         opCodeMap.put(Instruction.OperationType.sub, 2);
@@ -100,15 +110,23 @@ public class Simulator {
         opCodeMap.put(Instruction.OperationType.end, 29);
         typeMap.put(Instruction.OperationType.end, 0);
 
-        Instruction inst = ParsedProgram.getInstructionAt(2);
+        for (Instruction i : ParsedProgram.code) {
+//            System.out.println(i.getOperationType());
+//            int opCode = i.getOperationType().ordinal();
+//            int type = typeMap.get(i.getOperationType());
+//            System.out.println(opCode);
+//            System.out.println(type);
+//            System.out.println(instToMachineCode(i,typeMap.get(i.getOperationType())));
+            System.out.println(i.getSourceOperand1());
+            System.out.println(i.getSourceOperand1().getValue());
+        }
 //        System.out.println( inst.getOperationType());
 //        System.out.println(inst.getSourceOperand1());
 //        System.out.println(inst.getDestinationOperand());
 //        System.out.println(inst.getSourceOperand2());
-        System.out.println(typeMap.get(inst.getOperationType()));
-        System.out.println(opCodeMap.get(inst.getOperationType()));
+//        System.out.println(typeMap.get(inst.getOperationType()));
+//        System.out.println(opCodeMap.get(inst.getOperationType()));
 
-        
 
         //TODO your assembler code
         //1. open the objectProgramFile in binary mode
