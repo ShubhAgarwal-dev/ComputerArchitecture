@@ -1,12 +1,10 @@
 package generic;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
+import java.io.*;
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.nio.ByteBuffer;
+
 
 import generic.Instruction.OperationType;
 
@@ -66,15 +64,14 @@ public class Simulator {
 
         int opCode = inst.getOperationType().ordinal();
 
-        if (typeMap.get(inst.getOperationType()) == 2){
+        if (typeMap.get(inst.getOperationType()) == 2) {
             int dest_val = inst.getDestinationOperand().getValue();
             int source1_val = inst.getSourceOperand1().getValue();
             int source2_val = inst.getSourceOperand2().getValue();
-
             opCode = (opCode << 27) | (source1_val << 22) | (source2_val << 17) | (dest_val << 12);
         }
 
-        if (typeMap.get(inst.getOperationType()) == 1){
+        if (typeMap.get(inst.getOperationType()) == 1) {
             int dest_val = inst.getDestinationOperand().getValue();
             int source_val = inst.getSourceOperand1().getValue();
 
@@ -82,13 +79,13 @@ public class Simulator {
                 int imm = inst.getSourceOperand2().getValue();
                 opCode = (opCode << 27) | (source_val << 22) | (dest_val << 17) | imm;
             } else {
-                int val = ParsedProgram.symtab.get(inst.destinationOperand.labelValue);
+                int val = ParsedProgram.symtab.get(inst.getSourceOperand2().labelValue);
                 opCode = (opCode << 27) | (source_val << 22) | (dest_val << 17) | val;
             }
         }
 
         if (inst.getOperationType() == OperationType.jmp) {
-            int val =  ParsedProgram.symtab.get(inst.destinationOperand.labelValue);
+            int val = ParsedProgram.symtab.get(inst.destinationOperand.labelValue);
             opCode = (opCode << 27) | (val << 22);
         }
 
@@ -106,15 +103,41 @@ public class Simulator {
 
     public static void assemble(String objectProgramFile) {
 
-        try {
-            FileOutputStream asm = new FileOutputStream(objectProgramFile);
+        try(FileOutputStream asm = new FileOutputStream(objectProgramFile)) {
+            BufferedOutputStream bfile = new BufferedOutputStream(asm);
+
+            byte[] addressCode = ByteBuffer.allocate(4).putInt(ParsedProgram.firstCodeAddress).array();
+            bfile.write(addressCode);
+
+            for (var value: ParsedProgram.data) {
+                byte[] dataValue = ByteBuffer.allocate(4).putInt(value).array();
+                bfile.write(dataValue);
+            }
+
+//            StringBuilder opString = new StringBuilder();
+            for (Instruction i : ParsedProgram.code) {
+//                opString.append(adjustMachineCode(instToMachineCode(i)));
+                int instInteger = (int) Long.parseLong(adjustMachineCode(instToMachineCode(i)), 2);
+                byte[] instBinary = ByteBuffer.allocate(4).putInt(instInteger).array();
+                bfile.write(instBinary);
+            }
+//            int len = opString.length();
+//            System.out.println(opString.length());
+//            ArrayList<Byte> arrayList = new ArrayList<>(len);
+//            for (int i = 0; i < opString.length(); i++) {
+//                arrayList.add(i, (opString.charAt(i) == '0') ? Byte.valueOf((byte) 0) : Byte.valueOf((byte) 1));
+//            }
+////            System.out.println(arrayList.size());
+//            for (int i = 0; i < arrayList.size(); i++) {
+//                asm.write(arrayList.get(i));
+//            }
+            bfile.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
 
-        for (Instruction i : ParsedProgram.code) {
-            System.out.println(adjustMachineCode(instToMachineCode(i)));
-        }
 
         //TODO your assembler code
         //1. open the objectProgramFile in binary mode

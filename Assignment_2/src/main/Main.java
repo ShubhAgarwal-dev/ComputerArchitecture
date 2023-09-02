@@ -14,7 +14,7 @@ public class Main {
         }
 
         Simulator.setupSimulation(args[0]);
-        Simulator.assemble(args[0]);
+        Simulator.assemble(args[1]);
 //        System.out.println(args[0]);
 //        System.out.println(args[1]);
     }
