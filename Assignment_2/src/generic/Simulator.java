@@ -72,10 +72,16 @@ public class Simulator {
                 int imm = inst.getSourceOperand2().getValue();
                 opCode = (opCode << 27) | (source_val << 22) | (dest_val << 17) | imm;
             } else {
-                if (inst.getDestinationOperand().operandType == Operand.OperandType.Label) {
-                    int dest_val = ParsedProgram.symtab.get(inst.getDestinationOperand().getLabelValue());
+                if (inst.getSourceOperand2().operandType == Operand.OperandType.Register) {
                     int source2_val = inst.getSourceOperand2().getValue();
-                    opCode = (opCode << 27) | (source_val << 22) | (source2_val << 17) | dest_val;
+                    if (inst.getDestinationOperand().operandType == Operand.OperandType.Label) {
+                        int dest_val = ParsedProgram.symtab.get(inst.getDestinationOperand().getLabelValue());
+                        dest_val -= inst.getProgramCounter();
+                        opCode = (opCode << 27) | (source_val << 22) | (source2_val << 17) | dest_val;
+                    } else {
+                        int dest_val = inst.getDestinationOperand().getValue();
+                        opCode = (opCode << 27) | (source_val << 22) | (source2_val << 17) | dest_val;
+                    }
                 } else {
                     int dest_val = inst.getDestinationOperand().getValue();
                     int val = ParsedProgram.symtab.get(inst.getSourceOperand2().labelValue);
@@ -121,8 +127,6 @@ public class Simulator {
 
             for (Instruction i : ParsedProgram.code) {
                 int instInteger = (int) Long.parseLong(adjustMachineCode(instToMachineCode(i)), 2);
-                System.out.println(i.getOperationType());
-                System.out.println(instInteger);
                 byte[] instBinary = ByteBuffer.allocate(4).putInt(instInteger).array();
                 bfile.write(instBinary);
             }
