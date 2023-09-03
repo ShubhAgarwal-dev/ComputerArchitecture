@@ -11,6 +11,8 @@ public class Main {
         }
         Simulator.setupSimulation(args[0]);
         Simulator.assemble(args[1]);
+//        SimulatorDada.setupSimulation(args[0]);
+//        SimulatorDada.assemble(args[1]);
     }
 }
 

@@ -53,7 +53,6 @@ public class Simulator {
         ParsedProgram.parseCodeSection(assemblyProgramFile, firstCodeAddress);
     }
 
-
     private static String instToMachineCode(Instruction inst) {
 
         int opCode = inst.getOperationType().ordinal();
@@ -75,8 +74,12 @@ public class Simulator {
                 if (inst.getSourceOperand2().operandType == Operand.OperandType.Register) {
                     int source2_val = inst.getSourceOperand2().getValue();
                     if (inst.getDestinationOperand().operandType == Operand.OperandType.Label) {
-                        int dest_val = ParsedProgram.symtab.get(inst.getDestinationOperand().getLabelValue());
-                        dest_val -= inst.getProgramCounter();
+                        int dest_val = ParsedProgram.symtab.get(inst.getDestinationOperand().labelValue) - inst.programCounter;
+                        String val = Integer.toBinaryString(dest_val);
+                        if (val.length() > 17) {
+                            val = val.substring(val.length() - 17);
+                        }
+                        dest_val = Integer.parseInt(val, 2);
                         opCode = (opCode << 27) | (source_val << 22) | (source2_val << 17) | dest_val;
                     } else {
                         int dest_val = inst.getDestinationOperand().getValue();
@@ -94,10 +97,17 @@ public class Simulator {
             int val = 0;
             if (inst.getDestinationOperand().operandType == Operand.OperandType.Label) {
                 val = ParsedProgram.symtab.get(inst.destinationOperand.labelValue);
+                System.out.println(val);
                 val -= inst.getProgramCounter();
+                System.out.println(val);
             } else {
                 val = inst.getDestinationOperand().getValue();
             }
+            String val_adj = Integer.toBinaryString(val);
+            if (val_adj.length() > 17) {
+                val_adj = val_adj.substring(val_adj.length() - 22);
+            }
+            val = Integer.parseInt(val_adj, 2);
             opCode = (opCode << 27) | val;
         }
 
