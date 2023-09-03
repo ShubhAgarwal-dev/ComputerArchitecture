@@ -1,9 +1,10 @@
 package generic;
 
-import java.io.*;
-import java.util.HashMap;
-import java.nio.ByteBuffer;
 import generic.Instruction.OperationType;
+
+import java.io.*;
+import java.nio.ByteBuffer;
+import java.util.HashMap;
 
 
 public class Simulator {
@@ -66,18 +67,20 @@ public class Simulator {
 
         if (typeMap.get(inst.getOperationType()) == 1) {
             int source_val = inst.getSourceOperand1().getValue();
-
+//            System.out.println(inst.getOperationType());
+//            System.out.println(inst.getSourceOperand1());
+//            System.out.println(inst.getSourceOperand2());
+//            System.out.println(inst.getDestinationOperand());
             if (inst.getSourceOperand2().operandType == Operand.OperandType.Immediate) {
                 int dest_val = inst.getDestinationOperand().getValue();
                 int imm = inst.getSourceOperand2().getValue();
                 opCode = (opCode << 27) | (source_val << 22) | (dest_val << 17) | imm;
             } else {
-                if (inst.getDestinationOperand().operandType == Operand.OperandType.Label){
+                if (inst.getDestinationOperand().operandType == Operand.OperandType.Label) {
                     int dest_val = ParsedProgram.symtab.get(inst.getDestinationOperand().getLabelValue());
                     int source2_val = inst.getSourceOperand2().getValue();
                     opCode = (opCode << 27) | (source_val << 22) | (source2_val << 17) | dest_val;
-                }
-                else {
+                }  else {
                     int dest_val = inst.getDestinationOperand().getValue();
                     int val = ParsedProgram.symtab.get(inst.getSourceOperand2().labelValue);
                     opCode = (opCode << 27) | (source_val << 22) | (dest_val << 17) | val;
@@ -86,8 +89,15 @@ public class Simulator {
         }
 
         if (inst.getOperationType() == OperationType.jmp) {
-            int val = ParsedProgram.symtab.get(inst.destinationOperand.labelValue);
-            opCode = (opCode << 27) | (val << 22);
+            int val = 0;
+            if (inst.getDestinationOperand().operandType == Operand.OperandType.Label) {
+                val = ParsedProgram.symtab.get(inst.destinationOperand.labelValue);
+                val -= inst.getProgramCounter();
+            } else {
+                val = inst.getDestinationOperand().getValue();
+            }
+
+            opCode = (opCode << 27) | val;
         }
 
         if (inst.getOperationType() == OperationType.end) {
@@ -103,7 +113,6 @@ public class Simulator {
     }
 
     public static void assemble(String objectProgramFile) {
-
         try (FileOutputStream asm = new FileOutputStream(objectProgramFile)) {
             BufferedOutputStream bfile = new BufferedOutputStream(asm);
 
@@ -117,6 +126,7 @@ public class Simulator {
 
             for (Instruction i : ParsedProgram.code) {
                 int instInteger = (int) Long.parseLong(adjustMachineCode(instToMachineCode(i)), 2);
+                System.out.println(instInteger);
                 byte[] instBinary = ByteBuffer.allocate(4).putInt(instInteger).array();
                 bfile.write(instBinary);
             }
