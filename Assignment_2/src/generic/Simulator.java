@@ -67,10 +67,6 @@ public class Simulator {
 
         if (typeMap.get(inst.getOperationType()) == 1) {
             int source_val = inst.getSourceOperand1().getValue();
-//            System.out.println(inst.getOperationType());
-//            System.out.println(inst.getSourceOperand1());
-//            System.out.println(inst.getSourceOperand2());
-//            System.out.println(inst.getDestinationOperand());
             if (inst.getSourceOperand2().operandType == Operand.OperandType.Immediate) {
                 int dest_val = inst.getDestinationOperand().getValue();
                 int imm = inst.getSourceOperand2().getValue();
