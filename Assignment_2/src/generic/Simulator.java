@@ -76,7 +76,7 @@ public class Simulator {
                     int dest_val = ParsedProgram.symtab.get(inst.getDestinationOperand().getLabelValue());
                     int source2_val = inst.getSourceOperand2().getValue();
                     opCode = (opCode << 27) | (source_val << 22) | (source2_val << 17) | dest_val;
-                }  else {
+                } else {
                     int dest_val = inst.getDestinationOperand().getValue();
                     int val = ParsedProgram.symtab.get(inst.getSourceOperand2().labelValue);
                     opCode = (opCode << 27) | (source_val << 22) | (dest_val << 17) | val;
@@ -121,6 +121,8 @@ public class Simulator {
 
             for (Instruction i : ParsedProgram.code) {
                 int instInteger = (int) Long.parseLong(adjustMachineCode(instToMachineCode(i)), 2);
+                System.out.println(i.getOperationType());
+                System.out.println(instInteger);
                 byte[] instBinary = ByteBuffer.allocate(4).putInt(instInteger).array();
                 bfile.write(instBinary);
             }
