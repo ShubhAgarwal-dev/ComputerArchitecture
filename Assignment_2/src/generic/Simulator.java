@@ -96,7 +96,6 @@ public class Simulator {
             } else {
                 val = inst.getDestinationOperand().getValue();
             }
-
             opCode = (opCode << 27) | val;
         }
 
@@ -126,7 +125,6 @@ public class Simulator {
 
             for (Instruction i : ParsedProgram.code) {
                 int instInteger = (int) Long.parseLong(adjustMachineCode(instToMachineCode(i)), 2);
-                System.out.println(instInteger);
                 byte[] instBinary = ByteBuffer.allocate(4).putInt(instInteger).array();
                 bfile.write(instBinary);
             }
