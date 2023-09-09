@@ -15,7 +15,7 @@ public class Simulator {
      * Value 1 -> R2I Type
      * Value 2 -> R3 Type
      */
-    static HashMap<Instruction.OperationType, Integer> typeMap = new HashMap<>() {{
+    static HashMap<Instruction.OperationType, Integer> typeMap = new HashMap<Instruction.OperationType, Integer>() {{
         put(Instruction.OperationType.add, 2);
         put(Instruction.OperationType.addi, 1);
         put(Instruction.OperationType.sub, 2);
@@ -130,7 +130,7 @@ public class Simulator {
             byte[] addressCode = ByteBuffer.allocate(4).putInt(ParsedProgram.firstCodeAddress).array();
             bfile.write(addressCode);
 
-            for (var value : ParsedProgram.data) {
+            for (Integer value : ParsedProgram.data) {
                 byte[] dataValue = ByteBuffer.allocate(4).putInt(value).array();
                 bfile.write(dataValue);
             }
