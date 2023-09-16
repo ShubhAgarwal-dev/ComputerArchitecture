@@ -13,14 +13,11 @@ public class Statistics {
 	{
 		try
 		{
-			PrintWriter writer = new PrintWriter(statFile);
-			
-			writer.println("Number of instructions executed = " + numberOfInstructions);
-			writer.println("Number of cycles taken = " + numberOfCycles);
-			
-			// TODO add code here to print statistics in the output file
-			
-			writer.close();
+                    try (PrintWriter writer = new PrintWriter(statFile)) {
+                        writer.println("Number of instructions executed = " + numberOfInstructions);
+                        writer.println("Number of cycles taken = " + numberOfCycles);
+                        // TODO add code here to print statistics in the output file
+                    }
 		}
 		catch(Exception e)
 		{
