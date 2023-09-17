@@ -22,13 +22,13 @@ public class MemoryAccess {
 				int memoLocation = EX_MA_Latch.getOpRes();
 				int loadData = containingProcessor.getMainMemory().getWord(memoLocation);
 				MA_RW_Latch.setLoadResult(loadData);
-				System.out.println("[Debug] (MA) Load from address " + memoLocation + " data " + loadData);
+//				System.out.println("[Debug] (MA) Load from address " + memoLocation + " data " + loadData);
 
 			}else if(opCode==23){
 				int data = EX_MA_Latch.getOp1();
 				int memoLocation = EX_MA_Latch.getOpRes();
 				containingProcessor.getMainMemory().setWord(memoLocation,data);
-				System.out.println("[Debug] (MA) Store to address " + memoLocation + " data " + data);
+//				System.out.println("[Debug] (MA) Store to address " + memoLocation + " data " + data);
 
 			}
 		}

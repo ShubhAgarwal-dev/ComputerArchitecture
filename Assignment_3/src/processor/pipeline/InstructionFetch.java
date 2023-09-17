@@ -25,11 +25,11 @@ public class InstructionFetch {
 			if(containingProcessor.isBranchTaken()){
 				containingProcessor.getRegisterFile().setProgramCounter(containingProcessor.getBranchPC());
 				containingProcessor.setBranchTaken(false);
-				System.out.println("[Debug] (IF) Branch taken, PC updated to " + containingProcessor.getBranchPC());
+//				System.out.println("[Debug] (IF) Branch taken, PC updated to " + containingProcessor.getBranchPC());
 
 			}else{
 				containingProcessor.getRegisterFile().setProgramCounter(containingProcessor.getRegisterFile().getProgramCounter()+1);
-				System.out.println("[Debug] (IF) PC incremented to " + containingProcessor.getRegisterFile().getProgramCounter());
+//				System.out.println("[Debug] (IF) PC incremented to " + containingProcessor.getRegisterFile().getProgramCounter());
 
 			}
 			// Getting the PC

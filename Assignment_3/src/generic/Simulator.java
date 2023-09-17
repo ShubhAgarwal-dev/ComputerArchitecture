@@ -59,9 +59,7 @@ public class Simulator {
         int cycles =0;
         int numberOfInstructionsExecuted=0;
         while (!simulationComplete) {
-//            System.out.println(processor.getMainMemory().getContentsAsString(0,8));
-//            System.out.println(processor.getRegisterFile().getContentsAsString());
-            System.out.println("Iter:"+cycles);
+//            System.out.println("Iter:"+cycles);
             processor.getIFUnit().performIF();
             Clock.incrementClock();
             processor.getOFUnit().performOF();
