@@ -6,6 +6,7 @@ import processor.Processor;
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.math.BigInteger;
 import java.nio.ByteBuffer;
 
 public class Simulator {
@@ -36,9 +37,10 @@ public class Simulator {
             int currLoc = 0; // counter to insert into memory
             byte[] bytes = new byte[4]; // reading 4 words at a time
             fis.read(bytes);
-            processor.getRegisterFile().setProgramCounter(ByteBuffer.wrap(bytes).getInt());
+            processor.getRegisterFile().setProgramCounter(new BigInteger(bytes).intValue()-1);
             while (fis.read(bytes) != -1) {
-                processor.getMainMemory().setWord(currLoc,ByteBuffer.wrap(bytes).getInt()); // converting the bytes array to int and inserting it to memory
+                int val = new BigInteger(bytes).intValue();
+                processor.getMainMemory().setWord(currLoc,val); // converting the bytes array to int and inserting it to memory
                 currLoc+=1;
             }
             Statistics.setStaticInstCount(currLoc-processor.getRegisterFile().getProgramCounter());
@@ -52,10 +54,14 @@ public class Simulator {
     }
 
     public static void simulate() {
+
 //        Statistics.
         int cycles =0;
         int numberOfInstructionsExecuted=0;
         while (!simulationComplete) {
+            System.out.println(processor.getMainMemory().getContentsAsString(0,8));
+            System.out.println(processor.getRegisterFile().getContentsAsString());
+            System.out.println("Iter:"+cycles);
             processor.getIFUnit().performIF();
             Clock.incrementClock();
             processor.getOFUnit().performOF();

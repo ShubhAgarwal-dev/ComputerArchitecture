@@ -27,6 +27,9 @@ public class OperandFetch {
 			}
 			immediateString = complement.toString();
 		}
+		if(isNegative){
+			return Integer.parseInt(immediateString,2)*-1 -1;
+		}
 		return  Integer.parseInt(immediateString,2);
 	}
 
@@ -87,7 +90,6 @@ public class OperandFetch {
 			// Getting the instruction and adjusting its size
 			String binaryCodeForInstruction = Integer.toBinaryString(IF_OF_Latch.getInstruction());
 			binaryCodeForInstruction = "0".repeat(32-binaryCodeForInstruction.length())+binaryCodeForInstruction;
-
 			// Getting the OP Code
 			int opCode = getOpCodeFromBinaryInstruction(binaryCodeForInstruction);
 
@@ -142,6 +144,18 @@ public class OperandFetch {
 			// disabling and enabling latches
 			IF_OF_Latch.setOF_enable(false);
 			OF_EX_Latch.setEX_enable(true);
+
+			System.out.println("[Debug] (OF) binCode: " + binaryCodeForInstruction);
+			System.out.println("[Debug] (OF) PC: " + Misc.getPC(containingProcessor));
+			System.out.println("[Debug] (OF) Opcode: " + opCode);
+//			System.out.println("[Debug] (OF) Rs1: " + rs1);
+//			System.out.println("[Debug] (OF) Rs2: " + rs2);
+			System.out.println("[Debug] (OF) Rd: " + rd);
+			System.out.println("[Debug] (OF) Op1: " + op1);
+			System.out.println("[Debug] (OF) Op2: " + op2);
+			System.out.println("[Debug] (OF) Imm: " + immediate);
+			System.out.println("[Debug] (OF) BranchPC: " + branchPC);
+
 		}
 	}
 

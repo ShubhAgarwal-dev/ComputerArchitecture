@@ -41,6 +41,7 @@ public class RegisterWrite {
 			}
 
 			if(opCode==29){
+                System.out.println("End Instruction Detected");
 				containingProcessor.getRegisterFile().setProgramCounter(Misc.getPC(containingProcessor)+1);
 				setSimulationComplete(true);
 			}
