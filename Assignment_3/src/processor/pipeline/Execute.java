@@ -124,15 +124,14 @@ public class Execute {
         int immediate = OF_EX_Latch.getImmediate();
         int op1 = OF_EX_Latch.getR1();
         int op2 = OF_EX_Latch.getR2();
-        int pc = Misc.getPC(containingProcessor);
         int rd = OF_EX_Latch.getRd();
-
+        EX_MA_Latch.setR31(-1);
         long calcOpRes = 0;
         long remainder = -1;
         long underflow = -1;
 
         // getThe results
-        if (opCode >= 1 && opCode <= 7) {
+        if (opCode >= 0 && opCode <= 7) {
             calcOpRes = performArithmetic(opCode, op1, op2, immediate);
             if (opCode == 6 || opCode == 7) {
                 remainder = (opCode == 6) ? op1 % op2 : op1 % immediate;
@@ -161,8 +160,14 @@ public class Execute {
         int opRes = (int) calcOpRes;
         int overflow = (int) (calcOpRes >> 32);
 
+
+
         // passing data to latch
         setR31Register(overflow, (int) underflow, (int) remainder, op1);
+
+        System.out.println("[Debug] (EX) ALU Result: " + opRes);
+        System.out.println("[Debug] (EX) r31: " + EX_MA_Latch.getR31());
+        System.out.println("[Debug] (EX) isBranchTaken: " + containingProcessor.isBranchTaken());
         EX_MA_Latch.setOp1(op1);
         EX_MA_Latch.setOp2(op2);
         EX_MA_Latch.setOpRes(opRes);
