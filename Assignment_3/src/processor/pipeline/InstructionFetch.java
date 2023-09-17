@@ -1,5 +1,6 @@
 package processor.pipeline;
 
+import generic.Misc;
 import processor.Processor;
 
 public class InstructionFetch {
@@ -21,11 +22,20 @@ public class InstructionFetch {
 	{
 		if(IF_EnableLatch.isIF_enable())
 		{
-			int currentPC = containingProcessor.getRegisterFile().getProgramCounter();
+			if(containingProcessor.isBranchTaken()){
+				containingProcessor.getRegisterFile().setProgramCounter(containingProcessor.getBranchPC());
+				containingProcessor.setBranchTaken(false);
+			}else{
+				containingProcessor.getRegisterFile().setProgramCounter(containingProcessor.getRegisterFile().getProgramCounter()+1);
+			}
+			// Getting the PC
+			int currentPC = Misc.getPC(containingProcessor);
 			int newInstruction = containingProcessor.getMainMemory().getWord(currentPC);
+
+			//Updating the processor and the latch
 			IF_OF_Latch.setInstruction(newInstruction);
-			containingProcessor.getRegisterFile().setProgramCounter(currentPC + 1);
-			
+
+			// disabling and enabling latches
 			IF_EnableLatch.setIF_enable(false);
 			IF_OF_Latch.setOF_enable(true);
 		}

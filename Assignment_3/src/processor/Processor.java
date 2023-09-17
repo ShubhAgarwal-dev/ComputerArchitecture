@@ -11,7 +11,7 @@ import processor.pipeline.MA_RW_LatchType;
 import processor.pipeline.MemoryAccess;
 import processor.pipeline.OF_EX_LatchType;
 import processor.pipeline.OperandFetch;
-import processor.pipeline.RegisterFile;
+import processor.memorysystem.RegisterFile;
 import processor.pipeline.RegisterWrite;
 
 public class Processor {
@@ -31,7 +31,27 @@ public class Processor {
 	Execute EXUnit;
 	MemoryAccess MAUnit;
 	RegisterWrite RWUnit;
-	
+
+	int branchPC;
+
+	public int getBranchPC() {
+		return branchPC;
+	}
+
+	public void setBranchPC(int branchPC) {
+		this.branchPC = branchPC;
+	}
+
+	public boolean isBranchTaken() {
+		return isBranchTaken;
+	}
+
+	public void setBranchTaken(boolean branchTaken) {
+		isBranchTaken = branchTaken;
+	}
+
+	boolean isBranchTaken;
+
 	public Processor()
 	{
 		registerFile = new RegisterFile();

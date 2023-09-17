@@ -16,7 +16,26 @@ public class MemoryAccess {
 	
 	public void performMA()
 	{
-		//TODO
+		if(EX_MA_Latch.isMA_enable()){
+			int opCode = EX_MA_Latch.getOpCode();
+			if(opCode==22){
+				int memoLocation = EX_MA_Latch.getOpRes();
+				int loadData = containingProcessor.getMainMemory().getWord(memoLocation);
+				MA_RW_Latch.setLoadResult(loadData);
+			}else if(opCode==23){
+				int data = EX_MA_Latch.getOp1();
+				int memoLocation = EX_MA_Latch.getOpRes();
+				containingProcessor.getMainMemory().setWord(memoLocation,data);
+			}
+		}
+		MA_RW_Latch.setOpResult(EX_MA_Latch.getOpRes());
+		MA_RW_Latch.setR31(EX_MA_Latch.getR31());
+		MA_RW_Latch.setOpCode(EX_MA_Latch.getOpCode());
+		MA_RW_Latch.setRd(EX_MA_Latch.getRd());
+
+		//disable and enable
+		EX_MA_Latch.setMA_enable(false);
+		MA_RW_Latch.setRW_enable(true);
 	}
 
 }

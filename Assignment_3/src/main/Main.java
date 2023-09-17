@@ -6,7 +6,7 @@ import generic.Misc;
 import generic.Statistics;
 import processor.Processor;
 import processor.memorysystem.MainMemory;
-import processor.pipeline.RegisterFile;
+import processor.memorysystem.RegisterFile;
 import generic.Simulator;
 
 public class Main {
