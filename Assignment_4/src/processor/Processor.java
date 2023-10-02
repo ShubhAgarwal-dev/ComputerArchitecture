@@ -18,7 +18,16 @@ public class Processor {
 	
 	RegisterFile registerFile;
 	MainMemory mainMemory;
-	
+
+	public DataLock getDataLockUnit() {
+		return dataLockUnit;
+	}
+
+	public void setDataLockUnit(DataLock dataLockUnit) {
+		this.dataLockUnit = dataLockUnit;
+	}
+
+	DataLock dataLockUnit;
 	IF_EnableLatchType IF_EnableLatch;
 	IF_OF_LatchType IF_OF_Latch;
 	OF_EX_LatchType OF_EX_Latch;
@@ -33,6 +42,8 @@ public class Processor {
 	RegisterWrite RWUnit;
 
 	int branchPC;
+
+
 
 	public int getBranchPC() {
 		return branchPC;

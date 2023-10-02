@@ -1,11 +1,21 @@
 package processor.pipeline;
 
 public class EX_MA_LatchType {
-	
+
 	boolean MA_enable;
 
-	private int  opRes, op1, op2, opCode, rd, r31;
+	private int opRes, op1, op2, opCode, rd, r31;
 
+	private String instruction;
+
+
+	public String getInstruction() {
+		return instruction;
+	}
+
+	public void setInstruction(String instruction) {
+		this.instruction = this.instruction;
+	}
 
 	public int getOpRes() {
 		return opRes;
@@ -55,8 +65,7 @@ public class EX_MA_LatchType {
 		this.r31 = r31;
 	}
 
-	public EX_MA_LatchType()
-	{
+	public EX_MA_LatchType() {
 		MA_enable = false;
 	}
 

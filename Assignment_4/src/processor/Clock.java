@@ -12,4 +12,5 @@ public class Clock {
 	{
 		return currentTime;
 	}
+
 }

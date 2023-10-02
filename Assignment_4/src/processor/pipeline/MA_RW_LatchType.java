@@ -1,14 +1,21 @@
 package processor.pipeline;
 
 public class MA_RW_LatchType {
-	
+
 	boolean RW_enable;
 
 	private int loadResult, opResult, opCode, rd, r31;
+	private String instruction;
 
+	public String getInstruction() {
+		return instruction;
+	}
 
-	public MA_RW_LatchType()
-	{
+	public void setInstruction(String instruction) {
+		this.instruction = instruction;
+	}
+
+	public MA_RW_LatchType() {
 		RW_enable = false;
 	}
 
