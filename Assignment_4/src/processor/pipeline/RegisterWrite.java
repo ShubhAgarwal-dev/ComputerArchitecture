@@ -1,7 +1,6 @@
 package processor.pipeline;
 
 import generic.Misc;
-import generic.Simulator;
 import processor.Processor;
 
 import static generic.Simulator.setSimulationComplete;
@@ -12,7 +11,7 @@ public class RegisterWrite {
     IF_EnableLatchType IF_EnableLatch;
 
     public RegisterWrite(Processor containingProcessor, MA_RW_LatchType mA_RW_Latch,
-            IF_EnableLatchType iF_EnableLatch) {
+                         IF_EnableLatchType iF_EnableLatch) {
         this.containingProcessor = containingProcessor;
         this.MA_RW_Latch = mA_RW_Latch;
         this.IF_EnableLatch = iF_EnableLatch;
@@ -29,7 +28,10 @@ public class RegisterWrite {
             int rd = MA_RW_Latch.getRd();
             int loadResult = MA_RW_Latch.getLoadResult();
             int opResult = MA_RW_Latch.getOpResult();
-            if(opCode!=30) {
+            if (opCode == 30) {
+                containingProcessor.getDataLockUnit().setInstEXString(Integer.toBinaryString(opCode) + "0".repeat(32 - Integer.toBinaryString(opCode).length()));
+            }
+            if (opCode != 30) {
                 containingProcessor.getDataLockUnit().setInstRWString(MA_RW_Latch.getInstruction());
                 if (opCode >= 0 && opCode <= 21) {
                     containingProcessor.getRegisterFile().setValue(rd, opResult);

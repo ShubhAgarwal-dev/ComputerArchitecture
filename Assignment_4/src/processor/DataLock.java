@@ -12,21 +12,17 @@ public class DataLock {
     private String instMAString;
     private String instRWString;
 
-    private long stallDuration = 0;
+    private boolean conflict;
 
-    // Setter
-
-    public long getStallDuration() {
-        return stallDuration;
-    }
-
-    public void setStallDuration(long stallDuration) {
-        this.stallDuration = stallDuration;
+    public boolean getConflict() {
+        return conflict;
     }
 
     public void setInstOFString(String instOFString) {
         this.instOFString = instOFString;
     }
+
+    // Setter
 
     public void setInstEXString(String instEXString) {
         this.instEXString = instEXString;
@@ -40,11 +36,11 @@ public class DataLock {
         this.instRWString = instRWString;
     }
 
-    // Operand Getter
-
     private int getOperation(String instructionString) {
         return Integer.parseInt(instructionString.substring(0, 5), 2);
     }
+
+    // Operand Getter
 
     private int getOP1(String instructioString) {
         return Integer.parseInt(instructioString.substring(5, 10), 2);
@@ -57,8 +53,6 @@ public class DataLock {
     private int getOP3(String instructioString) {
         return Integer.parseInt(instructioString.substring(15, 20), 2);
     }
-
-    // Compare Logic
 
     private boolean compare_R3_R3(String instructionString1, String instructionString2) {
         int I1_rs1, I1_rs2, I1_rd;
@@ -74,6 +68,8 @@ public class DataLock {
         System.out.println("[DL] Debug: Comparing R3_R3: True");
         return true;
     }
+
+    // Compare Logic
 
     // ! Store instruction special case where the op1 is needed
     private boolean compare_R2I_R2I(String instructionString1, String instructionString2) {
@@ -158,8 +154,6 @@ public class DataLock {
         return true;
     }
 
-    // Checks
-
     private boolean check_OF_X(int operationOF, String instructionString) {
         int operationEX = getOperation(instructionString);
         if (operationEX >= 24 && operationEX <= 30) {
@@ -223,31 +217,32 @@ public class DataLock {
         return false;
     }
 
+    // Checks
+
     private boolean isConflict() {
         int operationOF = getOperation(instOFString);
         if (check_OF_X(operationOF, instEXString)) {
-            stallDuration = 3;
             System.out.println("[DL] Debug: Conflict in OF and EX");
             return true;
         } else if (check_OF_X(operationOF, instMAString)) {
-            stallDuration = 2;
             System.out.println("[DL] Debug: Conflict in OF and MA");
             return true;
         } else if (check_OF_X(operationOF, instRWString)) {
-            stallDuration = 1;
             System.out.println("[DL] Debug: Conflict in OF and RW");
             return true;
         }
         return false;
     }
 
+    public void setConflict(boolean conflict) {
+        this.conflict = conflict;
+    }
+
     public void applyDataLock(OF_EX_LatchType OF_EX_Latch) {
         if (isConflict()) {
             OF_EX_Latch.setOpCode(30);
-            stallDuration=Clock.getCurrentTime()+stallDuration;
-            System.out.println("[DL] Debug: Pipeline Stalled Till "+stallDuration);
+            System.out.println("[DL] Debug: Pipeline Stalled");
         }
         System.out.println("[DL] Debug: All Checks Passed No Stall");
     }
-
 }

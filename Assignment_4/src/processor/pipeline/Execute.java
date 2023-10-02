@@ -8,8 +8,7 @@ public class Execute {
     EX_MA_LatchType EX_MA_Latch;
     EX_IF_LatchType EX_IF_Latch;
 
-    public Execute(Processor containingProcessor, OF_EX_LatchType oF_EX_Latch, EX_MA_LatchType eX_MA_Latch,
-                   EX_IF_LatchType eX_IF_Latch) {
+    public Execute(Processor containingProcessor, OF_EX_LatchType oF_EX_Latch, EX_MA_LatchType eX_MA_Latch, EX_IF_LatchType eX_IF_Latch) {
         this.containingProcessor = containingProcessor;
         this.OF_EX_Latch = oF_EX_Latch;
         this.EX_MA_Latch = eX_MA_Latch;
@@ -97,10 +96,10 @@ public class Execute {
             EX_MA_Latch.setR31(overFlow);
         }
         if (underFlow != -1) {
-            EX_MA_Latch.setR31((int) op1 << (32 - underFlow));
+            EX_MA_Latch.setR31(op1 << (32 - underFlow));
         }
         if (remainder != -1) {
-            EX_MA_Latch.setR31((int) remainder);
+            EX_MA_Latch.setR31(remainder);
         }
     }
 
@@ -124,6 +123,9 @@ public class Execute {
         int op1 = OF_EX_Latch.getR1();
         int op2 = OF_EX_Latch.getR2();
         int rd = OF_EX_Latch.getRd();
+        if (opCode == 30) {
+            containingProcessor.getDataLockUnit().setInstEXString(Integer.toBinaryString(opCode) + "0".repeat(32 - Integer.toBinaryString(opCode).length()));
+        }
         if (opCode != 30) {
             containingProcessor.getDataLockUnit().setInstEXString(OF_EX_Latch.getInstruction());
             EX_MA_Latch.setInstruction(OF_EX_Latch.getInstruction());
@@ -142,9 +144,9 @@ public class Execute {
                 calcOpRes = performLogical(opCode, op1, op2, immediate);
             } else if (opCode == 14 || opCode == 15) {
                 if (opCode == 14) {
-                    calcOpRes = (long) ((op1 < op2) ? 1 : 0);
+                    calcOpRes = (op1 < op2) ? 1 : 0;
                 } else {
-                    calcOpRes = (long) ((op1 < immediate) ? 1 : 0);
+                    calcOpRes = (op1 < immediate) ? 1 : 0;
                 }
             } else if (opCode >= 16 && opCode <= 21) {
                 calcOpRes = performShift(opCode, op1, op2, immediate);
@@ -174,7 +176,7 @@ public class Execute {
             EX_MA_Latch.setOpRes(opRes);
 
             // enable disable latches
-        }else{
+        } else {
             EX_MA_Latch.setOp1(op1);
             EX_MA_Latch.setOp2(op2);
             EX_MA_Latch.setOpRes(0);
