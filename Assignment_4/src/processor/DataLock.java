@@ -1,11 +1,13 @@
 package processor;
 
-import processor.pipeline.OF_EX_LatchType;
+//import processor.pipeline.OF_EX_LatchType;
 
 /**
  * DataLock
  */
 public class DataLock {
+
+    public DataLock() {}
 
     private String instOFString;
     private String instEXString;

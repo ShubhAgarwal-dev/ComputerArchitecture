@@ -39,6 +39,7 @@ public class Processor {
         EXUnit = new Execute(this, OF_EX_Latch, EX_MA_Latch, EX_IF_Latch);
         MAUnit = new MemoryAccess(this, EX_MA_Latch, MA_RW_Latch);
         RWUnit = new RegisterWrite(this, MA_RW_Latch, IF_EnableLatch);
+        dataLockUnit = new DataLock();
     }
 
     public DataLock getDataLockUnit() {
@@ -105,6 +106,14 @@ public class Processor {
 
     public RegisterWrite getRWUnit() {
         return RWUnit;
+    }
+
+    public IF_OF_LatchType IF_OF_Latch() {
+        return IF_OF_Latch;
+    }
+
+    public OF_EX_LatchType OF_EX_Latch() {
+        return OF_EX_Latch;
     }
 
 }

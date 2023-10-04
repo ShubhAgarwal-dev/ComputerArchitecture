@@ -11,4 +11,8 @@ public class EX_IF_LatchType {
 	public void setBranchTaken(boolean value) {
 		this.isBranchTaken = value;
 	}
+
+	public boolean isBranchTaken(){
+		return isBranchTaken;
+	}
 }

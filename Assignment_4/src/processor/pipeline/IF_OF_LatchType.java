@@ -6,6 +6,16 @@ public class IF_OF_LatchType {
 	int instruction;
 	int pc;
 
+	public boolean isBubble() {
+		return isBubble;
+	}
+
+	public void setBubble(boolean bubble) {
+		isBubble = bubble;
+	}
+
+	boolean isBubble=false;
+
 	public IF_OF_LatchType() {
 		OF_enable = false;
 	}

@@ -8,6 +8,16 @@ public class EX_MA_LatchType {
 
 	private String instruction;
 
+	public boolean isBubble() {
+		return isBubble;
+	}
+
+	public void setBubble(boolean bubble) {
+		isBubble = bubble;
+	}
+
+	boolean isBubble=false;
+
 
 	public String getInstruction() {
 		return instruction;
