@@ -78,7 +78,8 @@ public class OperandFetch {
     }
 
     public void performOF() {
-        if (IF_OF_Latch.isOF_enable() && !IF_OF_Latch.isBubble()) {
+//        if (IF_OF_Latch.isOF_enable() && !IF_OF_Latch.isBubble()) {
+        if (IF_OF_Latch.isOF_enable()) {
 
             // Getting the instruction and adjusting its size
             String binaryCodeForInstruction = Integer.toBinaryString(IF_OF_Latch.getInstruction());
@@ -142,7 +143,7 @@ public class OperandFetch {
             // disabling and enabling latches
             IF_OF_Latch.setOF_enable(false);
             OF_EX_Latch.setEX_enable(true);
-            OF_EX_Latch.setBubble(IF_OF_Latch.isBubble());
+//            OF_EX_Latch.setBubble(IF_OF_Latch.isBubble());
 
             // System.out.println("[Debug] (OF) binCode: " + binaryCodeForInstruction);
             // System.out.println("[Debug] (OF) PC: " + Misc.getPC(containingProcessor));

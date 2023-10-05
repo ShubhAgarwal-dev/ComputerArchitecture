@@ -118,9 +118,9 @@ public class Execute {
     }
 
     public void performEX() {
-        if (OF_EX_Latch.isBubble()){
-            return;
-        }
+//        if (OF_EX_Latch.isBubble()){
+//            return;
+//        }
 
         int opCode = OF_EX_Latch.getOpCode();
         int immediate = OF_EX_Latch.getImmediate();
