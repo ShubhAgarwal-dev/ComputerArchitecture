@@ -59,18 +59,18 @@ public class Simulator {
         int numberOfInstructionsExecuted = 0;
         while (!simulationComplete) {
 //            System.out.println("Iter:"+cycles);
+            processor.getRWUnit().performRW();
+            Clock.incrementClock();
+            processor.getMAUnit().performMA();
+            Clock.incrementClock();
+            processor.getEXUnit().performEX();
+            Clock.incrementClock();
             processor.getIFUnit().performIF();
             Clock.incrementClock();
             processor.getOFUnit().performOF();
             Clock.incrementClock();
-            processor.getEXUnit().performEX();
-            Clock.incrementClock();
-            processor.getMAUnit().performMA();
-            Clock.incrementClock();
-            processor.getRWUnit().performRW();
-            Clock.incrementClock();
-            cycles += 1;
-            numberOfInstructionsExecuted += 1;
+            cycles += 5;
+            numberOfInstructionsExecuted += 5;
         }
 
         // TODO

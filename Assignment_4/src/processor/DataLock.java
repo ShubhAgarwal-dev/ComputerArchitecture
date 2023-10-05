@@ -1,6 +1,6 @@
 package processor;
 
-//import processor.pipeline.OF_EX_LatchType;
+import processor.pipeline.OF_EX_LatchType;
 
 /**
  * DataLock
@@ -9,10 +9,10 @@ public class DataLock {
 
     public DataLock() {}
 
-    private String instOFString;
-    private String instEXString;
-    private String instMAString;
-    private String instRWString;
+    private String instOFString = Integer.toBinaryString(30) + "0".repeat(28);
+    private String instEXString = Integer.toBinaryString(30) + "0".repeat(28);
+    private String instMAString = Integer.toBinaryString(30) + "0".repeat(28);
+    private String instRWString = Integer.toBinaryString(30) + "0".repeat(28);
 
     private boolean conflict;
 
@@ -39,6 +39,7 @@ public class DataLock {
     }
 
     private int getOperation(String instructionString) {
+        System.out.println(instructionString);
         return Integer.parseInt(instructionString.substring(0, 5), 2);
     }
 
