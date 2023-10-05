@@ -6,6 +6,10 @@ public class BranchLock {
     Processor containingProcessor;
 //	boolean insert_bubble;
 
+    public BranchLock(Processor containingProcessor) {
+        this.containingProcessor = containingProcessor;
+    }
+
     public void checkBrachHazard() {
         if (this.containingProcessor.isBranchTaken()) {
 //			containingProcessor.IF_OF_Latch().setBubble(true);

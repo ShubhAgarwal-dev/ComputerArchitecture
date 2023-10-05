@@ -190,6 +190,7 @@ public class Execute {
             EX_MA_Latch.setRd(rd);
             EX_MA_Latch.setMA_enable(true);
 //            OF_EX_Latch.setEX_enable(false);
+            this.containingProcessor.BranchLockUnit().checkBrachHazard();
         }
     }
 
