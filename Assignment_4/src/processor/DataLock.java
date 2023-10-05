@@ -7,14 +7,14 @@ import processor.pipeline.OF_EX_LatchType;
  */
 public class DataLock {
 
-    public DataLock() {}
-
     private String instOFString = Integer.toBinaryString(30) + "0".repeat(28);
     private String instEXString = Integer.toBinaryString(30) + "0".repeat(28);
     private String instMAString = Integer.toBinaryString(30) + "0".repeat(28);
     private String instRWString = Integer.toBinaryString(30) + "0".repeat(28);
-
     private boolean conflict;
+
+    public DataLock() {
+    }
 
     public boolean getConflict() {
         return conflict;
@@ -39,7 +39,6 @@ public class DataLock {
     }
 
     private int getOperation(String instructionString) {
-        System.out.println(instructionString);
         return Integer.parseInt(instructionString.substring(0, 5), 2);
     }
 
@@ -65,10 +64,10 @@ public class DataLock {
         I1_rd = getOP3(instructionString1);
         I2_rd = getOP3(instructionString2);
         if (I1_rs1 == I2_rd || I1_rs2 == I2_rd || I1_rd == I2_rd) {
-            System.out.println("[DL] Debug: Comparing R3_R3: False");
+            System.out.println("[DL] Debug: Comparing R3_R3 Pass: False");
             return false;
         }
-        System.out.println("[DL] Debug: Comparing R3_R3: True");
+        System.out.println("[DL] Debug: Comparing R3_R3 Pass: True");
         return true;
     }
 
@@ -83,19 +82,19 @@ public class DataLock {
             int I2_rd;
             I2_rd = getOP2(instructionString2);
             if (I1_rs1 == I2_rd || I1_rd == I2_rd) {
-                System.out.println("[DL] Debug: Comparing R2I_R2I(Non Store): False");
+                System.out.println("[DL] Debug: Comparing R2I_R2I(Non Store) Pass: False");
                 return false;
             }
-            System.out.println("[DL] Debug: Comparing R2I_R2I(Non Store): True");
+            System.out.println("[DL] Debug: Comparing R2I_R2I(Non Store) Pass: True");
             return true;
         } else {
             int I2_rs1;
             I2_rs1 = getOP1(instructionString2);
             if (I1_rs1 == I2_rs1 || I1_rd == I2_rs1) {
-                System.out.println("[DL] Debug: Comparing R2I_R2I(Store): False");
+                System.out.println("[DL] Debug: Comparing R2I_R2I(Store) Pass: False");
                 return false;
             }
-            System.out.println("[DL] Debug: Comparing R2I_R2I(Store): True");
+            System.out.println("[DL] Debug: Comparing R2I_R2I(Store) Pass: True");
             return true;
         }
     }
@@ -110,19 +109,19 @@ public class DataLock {
             int I2_rd;
             I2_rd = getOP2(instructionString2);
             if (I1_rs1 == I2_rd || I1_rs2 == I2_rd || I1_rd == I2_rd) {
-                System.out.println("[DL] Debug: Comparing R3_R2I(Non Store): False");
+                System.out.println("[DL] Debug: Comparing R3_R2I(Non Store) Pass: False");
                 return false;
             }
-            System.out.println("[DL] Debug: Comparing R3_R2I(Non Store): True");
+            System.out.println("[DL] Debug: Comparing R3_R2I(Non Store) Pass: True");
             return true;
         } else {
             int I2_rs1;
             I2_rs1 = getOP1(instructionString2);
             if (I1_rs1 == I2_rs1 || I1_rs2 == I2_rs1 || I1_rd == I2_rs1) {
-                System.out.println("[DL] Debug: Comparing R3_R2I(Store): False");
+                System.out.println("[DL] Debug: Comparing R3_R2I(Store) Pass: False");
                 return false;
             }
-            System.out.println("[DL] Debug: Comparing R3_R2I(Store): True");
+            System.out.println("[DL] Debug: Comparing R3_R2I(Store) Pass: True");
             return true;
         }
 
@@ -135,10 +134,10 @@ public class DataLock {
         int I2_rd;
         I2_rd = getOP2(instructionString2);
         if (I1_rs1 == I2_rd || I1_rd == I2_rd) {
-            System.out.println("[DL] Debug: Comparing R2I_R3: False");
+            System.out.println("[DL] Debug: Comparing R2I_R3 Pass: False");
             return false;
         }
-        System.out.println("[DL] Debug: Comparing R2I_R3: True");
+        System.out.println("[DL] Debug: Comparing R2I_R3 Pass: True");
         return true;
     }
 
@@ -150,16 +149,17 @@ public class DataLock {
         int I1_rd = getOP1(instructionString1);
         int I2_rd = getOP2(instructionString2);
         if (I1_rd == I2_rd) {
-            System.out.println("[DL] Debug: Comparing RI_RX: False");
+            System.out.println("[DL] Debug: Comparing RI_RX Pass: False");
             return false;
         }
-        System.out.println("[DL] Debug: Comparing RI_RX: True");
+        System.out.println("[DL] Debug: Comparing RI_RX Pass: True");
         return true;
     }
 
     private boolean check_OF_X(int operationOF, String instructionString) {
         int operationEX = getOperation(instructionString);
         if (operationEX >= 24 && operationEX <= 30) {
+            System.out.println("NOP");
             return true;
         }
         if (operationOF >= 0 && operationOF <= 21 && operationOF % 2 == 0) {
@@ -224,13 +224,18 @@ public class DataLock {
 
     private boolean isConflict() {
         int operationOF = getOperation(instOFString);
-        if (check_OF_X(operationOF, instEXString)) {
+        System.out.println("[DL] Comparing OF_EX");
+        if (!check_OF_X(operationOF, instEXString)) {
             System.out.println("[DL] Debug: Conflict in OF and EX");
             return true;
-        } else if (check_OF_X(operationOF, instMAString)) {
+        }
+        System.out.println("[DL] Comparing OF_MA");
+        if (!check_OF_X(operationOF, instMAString)) {
             System.out.println("[DL] Debug: Conflict in OF and MA");
             return true;
-        } else if (check_OF_X(operationOF, instRWString)) {
+        }
+        System.out.println("[DL] Comparing OF_RW");
+        if (!check_OF_X(operationOF, instRWString)) {
             System.out.println("[DL] Debug: Conflict in OF and RW");
             return true;
         }
@@ -242,10 +247,16 @@ public class DataLock {
     }
 
     public void applyDataLock(OF_EX_LatchType OF_EX_Latch) {
+        System.out.println("");
+        System.out.println("[DL] OF: "+instOFString);
+        System.out.println("[DL] EX: "+instEXString);
+        System.out.println("[DL] MA: "+instMAString);
+        System.out.println("[DL] RW: "+instRWString);
         if (isConflict()) {
             OF_EX_Latch.setOpCode(30);
             System.out.println("[DL] Debug: Pipeline Stalled");
+        } else {
+            System.out.println("[DL] Debug: All Checks Passed No Stall");
         }
-        System.out.println("[DL] Debug: All Checks Passed No Stall");
     }
 }

@@ -141,7 +141,7 @@ public class OperandFetch {
             containingProcessor.getDataLockUnit().applyDataLock(OF_EX_Latch);
 
             // disabling and enabling latches
-            IF_OF_Latch.setOF_enable(false);
+//            IF_OF_Latch.setOF_enable(false);
             OF_EX_Latch.setEX_enable(true);
 //            OF_EX_Latch.setBubble(IF_OF_Latch.isBubble());
 

@@ -24,7 +24,7 @@ public class EX_MA_LatchType {
 	}
 
 	public void setInstruction(String instruction) {
-		this.instruction = this.instruction;
+		this.instruction = instruction;
 	}
 
 	public int getOpRes() {

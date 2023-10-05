@@ -29,7 +29,7 @@ public class RegisterWrite {
             int loadResult = MA_RW_Latch.getLoadResult();
             int opResult = MA_RW_Latch.getOpResult();
             if (opCode == 30) {
-                containingProcessor.getDataLockUnit().setInstEXString(Integer.toBinaryString(opCode) + "0".repeat(32 - Integer.toBinaryString(opCode).length()));
+                containingProcessor.getDataLockUnit().setInstRWString(Integer.toBinaryString(opCode) + "0".repeat(32 - Integer.toBinaryString(opCode).length()));
             }
             if (opCode != 30) {
                 containingProcessor.getDataLockUnit().setInstRWString(MA_RW_Latch.getInstruction());
@@ -61,7 +61,7 @@ public class RegisterWrite {
 
                 }
             }
-            MA_RW_Latch.setRW_enable(false);
+//            MA_RW_Latch.setRW_enable(false);
             IF_EnableLatch.setIF_enable(true);
         }
     }

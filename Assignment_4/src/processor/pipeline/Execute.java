@@ -121,75 +121,76 @@ public class Execute {
 //        if (OF_EX_Latch.isBubble()){
 //            return;
 //        }
-
-        int opCode = OF_EX_Latch.getOpCode();
-        int immediate = OF_EX_Latch.getImmediate();
-        int op1 = OF_EX_Latch.getR1();
-        int op2 = OF_EX_Latch.getR2();
-        int rd = OF_EX_Latch.getRd();
-        if (opCode == 30) {
-            containingProcessor.getDataLockUnit().setInstEXString(Integer.toBinaryString(opCode) + "0".repeat(32 - Integer.toBinaryString(opCode).length()));
-        }
-        if (opCode != 30) {
-            containingProcessor.getDataLockUnit().setInstEXString(OF_EX_Latch.getInstruction());
-            EX_MA_Latch.setInstruction(OF_EX_Latch.getInstruction());
-            EX_MA_Latch.setR31(-1);
-            long calcOpRes = 0;
-            long remainder = -1;
-            long underflow = -1;
-
-            // getThe results
-            if (opCode >= 0 && opCode <= 7) {
-                calcOpRes = performArithmetic(opCode, op1, op2, immediate);
-                if (opCode == 6 || opCode == 7) {
-                    remainder = (opCode == 6) ? op1 % op2 : op1 % immediate;
-                }
-            } else if (opCode >= 8 && opCode <= 13) {
-                calcOpRes = performLogical(opCode, op1, op2, immediate);
-            } else if (opCode == 14 || opCode == 15) {
-                if (opCode == 14) {
-                    calcOpRes = (op1 < op2) ? 1 : 0;
-                } else {
-                    calcOpRes = (op1 < immediate) ? 1 : 0;
-                }
-            } else if (opCode >= 16 && opCode <= 21) {
-                calcOpRes = performShift(opCode, op1, op2, immediate);
-                if (opCode >= 18) {
-                    underflow = (opCode == 18 || opCode == 20) ? op2 : immediate;
-                }
-            } else if (opCode == 22) {
-                calcOpRes = op1 + immediate;
-            } else if (opCode == 23) {
-                calcOpRes = op2 + immediate;
-            } else {
-                handelBranchTaken(opCode, op1, op2);
+        if (OF_EX_Latch.isEX_enable()) {
+            int opCode = OF_EX_Latch.getOpCode();
+            int immediate = OF_EX_Latch.getImmediate();
+            int op1 = OF_EX_Latch.getR1();
+            int op2 = OF_EX_Latch.getR2();
+            int rd = OF_EX_Latch.getRd();
+            if (opCode == 30) {
+                containingProcessor.getDataLockUnit().setInstEXString(Integer.toBinaryString(opCode) + "0".repeat(32 - Integer.toBinaryString(opCode).length()));
             }
+            if (opCode != 30) {
+                containingProcessor.getDataLockUnit().setInstEXString(OF_EX_Latch.getInstruction());
+                EX_MA_Latch.setR31(-1);
+                long calcOpRes = 0;
+                long remainder = -1;
+                long underflow = -1;
 
-            int opRes = (int) calcOpRes;
-            int overflow = (int) (calcOpRes >> 32);
+                // getThe results
+                if (opCode >= 0 && opCode <= 7) {
+                    calcOpRes = performArithmetic(opCode, op1, op2, immediate);
+                    if (opCode == 6 || opCode == 7) {
+                        remainder = (opCode == 6) ? op1 % op2 : op1 % immediate;
+                    }
+                } else if (opCode >= 8 && opCode <= 13) {
+                    calcOpRes = performLogical(opCode, op1, op2, immediate);
+                } else if (opCode == 14 || opCode == 15) {
+                    if (opCode == 14) {
+                        calcOpRes = (op1 < op2) ? 1 : 0;
+                    } else {
+                        calcOpRes = (op1 < immediate) ? 1 : 0;
+                    }
+                } else if (opCode >= 16 && opCode <= 21) {
+                    calcOpRes = performShift(opCode, op1, op2, immediate);
+                    if (opCode >= 18) {
+                        underflow = (opCode == 18 || opCode == 20) ? op2 : immediate;
+                    }
+                } else if (opCode == 22) {
+                    calcOpRes = op1 + immediate;
+                } else if (opCode == 23) {
+                    calcOpRes = op2 + immediate;
+                } else {
+                    handelBranchTaken(opCode, op1, op2);
+                }
 
-            // passing data to latch
-            setR31Register(overflow, (int) underflow, (int) remainder, op1);
+                int opRes = (int) calcOpRes;
+                int overflow = (int) (calcOpRes >> 32);
 
-            // System.out.println("[Debug] (EX) ALU Result: " + opRes);
-            // System.out.println("[Debug] (EX) r31: " + EX_MA_Latch.getR31());
-            // System.out.println("[Debug] (EX) isBranchTaken: " +
-            // containingProcessor.isBranchTaken());
-            EX_MA_Latch.setOp1(op1);
-            EX_MA_Latch.setOp2(op2);
-            EX_MA_Latch.setOpRes(opRes);
+                // passing data to latch
+                setR31Register(overflow, (int) underflow, (int) remainder, op1);
 
-            // enable disable latches
-        } else {
-            EX_MA_Latch.setOp1(op1);
-            EX_MA_Latch.setOp2(op2);
-            EX_MA_Latch.setOpRes(0);
-            // enable disable latches
+                // System.out.println("[Debug] (EX) ALU Result: " + opRes);
+                // System.out.println("[Debug] (EX) r31: " + EX_MA_Latch.getR31());
+                // System.out.println("[Debug] (EX) isBranchTaken: " +
+                // containingProcessor.isBranchTaken());
+                EX_MA_Latch.setOp1(op1);
+                EX_MA_Latch.setOp2(op2);
+                EX_MA_Latch.setOpRes(opRes);
+
+                // enable disable latches
+            } else {
+                EX_MA_Latch.setOp1(op1);
+                EX_MA_Latch.setOp2(op2);
+                EX_MA_Latch.setOpRes(0);
+                // enable disable latches
+            }
+            EX_MA_Latch.setInstruction(OF_EX_Latch.getInstruction());
+            EX_MA_Latch.setOpCode(opCode);
+            EX_MA_Latch.setRd(rd);
+            EX_MA_Latch.setMA_enable(true);
+//            OF_EX_Latch.setEX_enable(false);
         }
-        EX_MA_Latch.setOpCode(opCode);
-        EX_MA_Latch.setRd(rd);
-        EX_MA_Latch.setMA_enable(true);
-        OF_EX_Latch.setEX_enable(false);
     }
 
 }

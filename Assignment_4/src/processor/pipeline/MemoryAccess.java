@@ -43,7 +43,7 @@ public class MemoryAccess {
             }
             // disable and enable
             MA_RW_Latch.setOpCode(EX_MA_Latch.getOpCode());
-            EX_MA_Latch.setMA_enable(false);
+//            EX_MA_Latch.setMA_enable(false);
             MA_RW_Latch.setRW_enable(true);
         }
     }
