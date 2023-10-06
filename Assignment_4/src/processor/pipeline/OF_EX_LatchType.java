@@ -1,32 +1,13 @@
 package processor.pipeline;
 
 public class OF_EX_LatchType {
-
+	
 	boolean EX_enable;
 
 	private int opCode, rd, r1, r2, immediate, r31;
-
-	private String instruction;
-
-//	public boolean isBubble() {
-//		return isBubble;
-//	}
-//
-//	public void setBubble(boolean bubble) {
-//		isBubble = bubble;
-//	}
-//
-//	boolean isBubble=false;
-
-	public String getInstruction() {
-		return instruction;
-	}
-
-	public void setInstruction(String instruction) {
-		this.instruction = instruction;
-	}
-
-	public OF_EX_LatchType() {
+	
+	public OF_EX_LatchType()
+	{
 		EX_enable = false;
 	}
 
@@ -85,5 +66,6 @@ public class OF_EX_LatchType {
 	public void setEX_enable(boolean eX_enable) {
 		EX_enable = eX_enable;
 	}
+
 
 }
