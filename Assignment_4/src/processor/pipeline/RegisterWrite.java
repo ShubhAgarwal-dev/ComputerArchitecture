@@ -52,6 +52,11 @@ public class RegisterWrite {
 
 			}
 
+            if (this.containingProcessor.DataLockUnit().dataLockDone > 0) {
+                this.containingProcessor.DataLockUnit().setSrcDest();
+                this.containingProcessor.DataLockUnit().performAppend();
+            }
+
 //            MA_RW_Latch.setRW_enable(false);
 //            IF_EnableLatch.setIF_enable(true);
         }

@@ -19,7 +19,7 @@ public class DataLock {
         this.dataLockDone = 0;
     }
 
-    private void setSrcDest() {
+    public void setSrcDest() {
         int opCode = this.containingProcessor.OF_EX_Latch().getOpCode();
         this.isSrc1 = true;
         this.src11 = this.containingProcessor.OF_EX_Latch().getR1();
@@ -57,7 +57,7 @@ public class DataLock {
         return res;
     }
 
-    private void performAppend()  {
+    public void performAppend()  {
         this.des3 = this.des2;
         this.des2 = this.des1;
     }
