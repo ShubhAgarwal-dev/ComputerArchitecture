@@ -122,8 +122,8 @@ public class Execute {
         if (OF_EX_Latch.isEX_enable()) {
             int opCode = OF_EX_Latch.getOpCode();
             int immediate = OF_EX_Latch.getImmediate();
-            int op1 = OF_EX_Latch.getR1();
-            int op2 = OF_EX_Latch.getR2();
+            int op1 = OF_EX_Latch.getOp1();
+            int op2 = OF_EX_Latch.getOp2();
             int rd = OF_EX_Latch.getRd();
             EX_MA_Latch.setR31(-1);
             long calcOpRes = 0;

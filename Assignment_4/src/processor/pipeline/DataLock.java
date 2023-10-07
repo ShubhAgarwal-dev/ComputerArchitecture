@@ -28,12 +28,12 @@ public class DataLock {
     private void setSrcDest() {
         int opCode = this.containingProcessor.OF_EX_Latch().getOpCode();
         this.isSrc1 = true;
-        this.src11 = this.containingProcessor.OF_EX_Latch().getR1();
+        this.src11 = this.containingProcessor.OF_EX_Latch().getOp1();
         this.isSrc2  = false;
         this.src21 = 0;
         this.des1 = this.containingProcessor.OF_EX_Latch().getRd();
         if ((opCode <= 21 && (opCode % 2 == 0))) {
-            this.src21 = this.containingProcessor.OF_EX_Latch().getR2();
+            this.src21 = this.containingProcessor.OF_EX_Latch().getOp2();
             this.isSrc2 = true;
         } else if (opCode == 24 || opCode == 29) { // jmp and end
             this.src11 = 0;
@@ -63,8 +63,8 @@ public class DataLock {
         this.containingProcessor.IF_EnableLatch().setIF_enable(false);
         this.containingProcessor.IF_OF_Latch().setOF_enable(false);
         this.containingProcessor.OF_EX_Latch().setOpCode(0);
-        this.containingProcessor.OF_EX_Latch().setR1(0);
-        this.containingProcessor.OF_EX_Latch().setR2(0);
+        this.containingProcessor.OF_EX_Latch().setOp1(0);
+        this.containingProcessor.OF_EX_Latch().setOp2(0);
         this.containingProcessor.OF_EX_Latch().setR31(0);
         this.containingProcessor.OF_EX_Latch().setRd(0);
     }

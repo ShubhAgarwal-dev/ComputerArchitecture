@@ -4,8 +4,24 @@ public class OF_EX_LatchType {
 	
 	boolean EX_enable;
 
-	private int opCode, rd, r1, r2, immediate, r31;
-	
+	private int opCode, rd, op1, op2, immediate, r31, rs1, rs2;
+
+	public int getRs1() {
+		return rs1;
+	}
+
+	public void setRs1(int rs1) {
+		this.rs1 = rs1;
+	}
+
+	public int getRs2() {
+		return rs2;
+	}
+
+	public void setRs2(int rs2) {
+		this.rs2 = rs2;
+	}
+
 	public OF_EX_LatchType()
 	{
 		EX_enable = false;
@@ -27,20 +43,20 @@ public class OF_EX_LatchType {
 		this.rd = rd;
 	}
 
-	public int getR1() {
-		return r1;
+	public int getOp1() {
+		return op1;
 	}
 
-	public void setR1(int r1) {
-		this.r1 = r1;
+	public void setOp1(int op1) {
+		this.op1 = op1;
 	}
 
-	public int getR2() {
-		return r2;
+	public int getOp2() {
+		return op2;
 	}
 
-	public void setR2(int r2) {
-		this.r2 = r2;
+	public void setOp2(int op2) {
+		this.op2 = op2;
 	}
 
 	public int getImmediate() {

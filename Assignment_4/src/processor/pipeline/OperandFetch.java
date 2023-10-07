@@ -3,8 +3,6 @@ package processor.pipeline;
 import generic.Misc;
 import processor.Processor;
 
-import java.net.Inet4Address;
-
 public class OperandFetch {
 	Processor containingProcessor;
 	IF_OF_LatchType IF_OF_Latch;
@@ -101,10 +99,10 @@ public class OperandFetch {
 
 			// op1
 			int op1 = containingProcessor.getRegisterFile().getValue(getOp1FromBinaryInstruction(binaryCodeForInstruction));
-
+			int rs1 = getOp1FromBinaryInstruction(binaryCodeForInstruction);
 			// op2
 			int op2 = containingProcessor.getRegisterFile().getValue(getOp2FromBinaryInstruction(binaryCodeForInstruction));
-
+			int rs2 = getOp2FromBinaryInstruction(binaryCodeForInstruction);
 			// rd
 			int rd;
 			if(opCode<=21 && opCode%2!=0){
@@ -134,11 +132,13 @@ public class OperandFetch {
 			// passing necessary values to the next latch
 			OF_EX_Latch.setEX_enable(true);
 			OF_EX_Latch.setOpCode(opCode);
-			OF_EX_Latch.setR1(op1);
-			OF_EX_Latch.setR2(op2);
+			OF_EX_Latch.setOp1(op1);
+			OF_EX_Latch.setOp2(op2);
 			OF_EX_Latch.setRd(rd);
 			OF_EX_Latch.setImmediate(immediate);
 			OF_EX_Latch.setR31(r31);
+			OF_EX_Latch.setRs1(rs1);
+			OF_EX_Latch.setRs2(rs2);
 
 
 			// disabling and enabling latches
