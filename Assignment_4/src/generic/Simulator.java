@@ -53,51 +53,22 @@ public class Simulator {
         processor.getRegisterFile().setValue(2,65535);
     }
 
-//    public static void simulate() {
-//
-////        Statistics.
-//        int cycles =0;
-//        int numberOfInstructionsExecuted=0;
-//        while (!simulationComplete) {
-////            System.out.println("Iter:"+cycles);
-//            processor.getIFUnit().performIF();
-//            Clock.incrementClock();
-//            processor.getOFUnit().performOF();
-//            Clock.incrementClock();
-//            processor.getEXUnit().performEX();
-//            Clock.incrementClock();
-//            processor.getMAUnit().performMA();
-//            Clock.incrementClock();
-//            processor.getRWUnit().performRW();
-//            Clock.incrementClock();
-//            cycles+=1;
-//            numberOfInstructionsExecuted+=1;
-//        }
-//
-//        Statistics.setNumCycles(cycles);
-//        Statistics.setDynamicInstCount(numberOfInstructionsExecuted);
-//        Statistics.setFrequency((float) Statistics.getNumCycles()/Clock.getCurrentTime());
-//        Statistics.setIPC((float) Statistics.getDynamicInstCount()/Statistics.getNumCycles());
-//    }
-
     public static void simulate() {
 
 //        Statistics.
         int cycles =0;
         int numberOfInstructionsExecuted=0;
-
         while (!simulationComplete) {
 //            System.out.println("Iter:"+cycles);
-            processor.getRWUnit().performRW();
-            Clock.incrementClock();
-            if(simulationComplete) { break; }
-            processor.getMAUnit().performMA();
-            Clock.incrementClock();
-            processor.getEXUnit().performEX();
+            processor.getIFUnit().performIF();
             Clock.incrementClock();
             processor.getOFUnit().performOF();
             Clock.incrementClock();
-            processor.getIFUnit().performIF();
+            processor.getEXUnit().performEX();
+            Clock.incrementClock();
+            processor.getMAUnit().performMA();
+            Clock.incrementClock();
+            processor.getRWUnit().performRW();
             Clock.incrementClock();
             cycles+=1;
             numberOfInstructionsExecuted+=1;
@@ -108,6 +79,35 @@ public class Simulator {
         Statistics.setFrequency((float) Statistics.getNumCycles()/Clock.getCurrentTime());
         Statistics.setIPC((float) Statistics.getDynamicInstCount()/Statistics.getNumCycles());
     }
+
+//    public static void simulate() {
+//
+////        Statistics.
+//        int cycles =0;
+//        int numberOfInstructionsExecuted=0;
+//
+//        while (!simulationComplete) {
+////            System.out.println("Iter:"+cycles);
+//            processor.getRWUnit().performRW();
+//            Clock.incrementClock();
+//            if(simulationComplete) { break; }
+//            processor.getMAUnit().performMA();
+//            Clock.incrementClock();
+//            processor.getEXUnit().performEX();
+//            Clock.incrementClock();
+//            processor.getOFUnit().performOF();
+//            Clock.incrementClock();
+//            processor.getIFUnit().performIF();
+//            Clock.incrementClock();
+//            cycles+=1;
+//            numberOfInstructionsExecuted+=1;
+//        }
+//
+//        Statistics.setNumCycles(cycles);
+//        Statistics.setDynamicInstCount(numberOfInstructionsExecuted);
+//        Statistics.setFrequency((float) Statistics.getNumCycles()/Clock.getCurrentTime());
+//        Statistics.setIPC((float) Statistics.getDynamicInstCount()/Statistics.getNumCycles());
+//    }
 
 //    public static void simulate()
 //    {

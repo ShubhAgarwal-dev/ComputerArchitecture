@@ -82,6 +82,9 @@ public class OperandFetch {
 
 	public void performOF()
 	{
+		if (this.containingProcessor.DataLockUnit().dataLockDone) {
+			this.containingProcessor.IF_EnableLatch.setIF_enable(true);
+		}
 		if(IF_OF_Latch.isOF_enable())
 		{
 

@@ -9,7 +9,7 @@ public class Processor {
 	RegisterFile registerFile;
 	MainMemory mainMemory;
 	
-	IF_EnableLatchType IF_EnableLatch;
+	public IF_EnableLatchType IF_EnableLatch;
 	IF_OF_LatchType IF_OF_Latch;
 	OF_EX_LatchType OF_EX_Latch;
 	EX_MA_LatchType EX_MA_Latch;

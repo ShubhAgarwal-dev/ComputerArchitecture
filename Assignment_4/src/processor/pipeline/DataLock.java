@@ -9,12 +9,14 @@ public class DataLock {
     int src21 = 0;
     int des1,des2,des3;
     Processor containingProcessor;
+    public boolean dataLockDone;
 
     public DataLock(Processor containingProcessor) {
         this.containingProcessor = containingProcessor;
         this.des1 =  0;
         this.des2 =  0;
         this.des3 = 0;
+        this.dataLockDone = false;
     }
 
     private void setSrcDest() {
@@ -65,7 +67,8 @@ public class DataLock {
 
     public void DLU(){
         this.setSrcDest();
-        if (this.checkDataHazard()) { this.performLock(); }
+        this.dataLockDone = false;
+        if (this.checkDataHazard()) { this.performLock(); this.dataLockDone = true; }
         this.performAppend();
     }
 }
