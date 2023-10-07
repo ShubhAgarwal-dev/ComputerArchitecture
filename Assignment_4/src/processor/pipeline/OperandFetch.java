@@ -145,14 +145,16 @@ public class OperandFetch {
 //			IF_OF_Latch.setOF_enable(false);
 			OF_EX_Latch.setEX_enable(true);
 
-//			this.containingProcessor.DataLockUnit().DLU();
+			this.containingProcessor.DataLockUnit().DLU();
 
 			System.out.println("[Debug] (OF) binCode: " + binaryCodeForInstruction);
 			System.out.println("[Debug] (OF) PC: " + Misc.getPC(containingProcessor));
 			System.out.println("[Debug] (OF) Opcode: " + opCode);
 			System.out.println("[Debug] (OF) Rd: " + rd);
 			System.out.println("[Debug] (OF) Op1: " + op1);
+			System.out.println("[Debug] (OF) Rs1: " + rs1);
 			System.out.println("[Debug] (OF) Op2: " + op2);
+			System.out.println("[Debug] (OF) Rs2: " + rs2);
 			System.out.println("[Debug] (OF) Imm: " + immediate);
 			System.out.println("[Debug] (OF) BranchPC: " + branchPC);
 
