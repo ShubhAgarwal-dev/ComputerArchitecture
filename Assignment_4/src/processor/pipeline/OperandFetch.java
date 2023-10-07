@@ -142,7 +142,7 @@ public class OperandFetch {
 
 
 			// disabling and enabling latches
-			IF_OF_Latch.setOF_enable(false);
+//			IF_OF_Latch.setOF_enable(false);
 			OF_EX_Latch.setEX_enable(true);
 
 //			this.containingProcessor.DataLockUnit().DLU();

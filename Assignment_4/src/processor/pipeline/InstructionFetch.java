@@ -40,7 +40,7 @@ public class InstructionFetch {
 			IF_OF_Latch.setInstruction(newInstruction);
 
 			// disabling and enabling latches
-			IF_EnableLatch.setIF_enable(false);
+//			IF_EnableLatch.setIF_enable(false);
 			IF_OF_Latch.setOF_enable(true);
 		}
 	}

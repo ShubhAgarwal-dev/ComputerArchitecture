@@ -175,7 +175,7 @@ public class Execute {
 
             // enable disable latches
             EX_MA_Latch.setMA_enable(true);
-            OF_EX_Latch.setEX_enable(false);
+//            OF_EX_Latch.setEX_enable(false);
         }
 
     }
