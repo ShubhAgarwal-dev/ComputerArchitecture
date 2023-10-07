@@ -22,7 +22,7 @@ public class Processor {
 	MemoryAccess MAUnit;
 	RegisterWrite RWUnit;
 	BranchLock BranchLockUnit;
-	DataLock DataLockUnit;
+//	DataLock DataLockUnit;
 
 	int branchPC;
 
@@ -62,7 +62,7 @@ public class Processor {
 		MAUnit = new MemoryAccess(this, EX_MA_Latch, MA_RW_Latch);
 		RWUnit = new RegisterWrite(this, MA_RW_Latch, IF_EnableLatch);
 		BranchLockUnit = new BranchLock(this);
-		DataLockUnit = new DataLock(this);
+//		DataLockUnit = new DataLock(this);
 	}
 	
 	public void printState(int memoryStartingAddress, int memoryEndingAddress)
@@ -116,5 +116,5 @@ public class Processor {
 
 	public IF_EnableLatchType IF_EnableLatch() { return IF_EnableLatch; }
 
-	public DataLock DataLockUnit() { return DataLockUnit; }
+//	public DataLock DataLockUnit() { return DataLockUnit; }
 }

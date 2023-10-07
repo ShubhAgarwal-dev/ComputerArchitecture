@@ -80,38 +80,66 @@ public class Simulator {
 //        Statistics.setIPC((float) Statistics.getDynamicInstCount()/Statistics.getNumCycles());
 //    }
 
-    public static void simulate()
-    {
-//        Statistics.setNumberOfDynamicInstructions(0);
-//        Statistics.setNumberOfCycles(0);
+    public static void simulate() {
 
-//        int i = 0;
-        while(!simulationComplete)
-        {
-//            i++;
-//            processor.getIF_EnableLatch().setIsBubbled(false);
+//        Statistics.
+        int cycles =0;
+        int numberOfInstructionsExecuted=0;
+        while (!simulationComplete) {
+//            System.out.println("Iter:"+cycles);
             processor.getRWUnit().performRW();
-            if(simulationComplete)
-            {
-                break;
-            }
+            Clock.incrementClock();
+            if(simulationComplete) { break; }
             processor.getMAUnit().performMA();
+            Clock.incrementClock();
             processor.getEXUnit().performEX();
+            Clock.incrementClock();
             processor.getOFUnit().performOF();
+            Clock.incrementClock();
             processor.getIFUnit().performIF();
             Clock.incrementClock();
-
-            // Update statistics
-//            if(i%5 == 0)
-//            {
-//                Statistics.setNumberOfCycles(Statistics.getNumberOfCycles() + 1);
-//            }
+            cycles+=1;
+            numberOfInstructionsExecuted+=1;
         }
 
-        // Set statistics
-//        Statistics.setIPC((float)Statistics.getNumberOfDynamicInstructions() / Statistics.getNumberOfCycles());
-//        Statistics.setFrequency((float)Statistics.getNumberOfCycles() / Clock.getCurrentTime());
+        Statistics.setNumCycles(cycles);
+        Statistics.setDynamicInstCount(numberOfInstructionsExecuted);
+        Statistics.setFrequency((float) Statistics.getNumCycles()/Clock.getCurrentTime());
+        Statistics.setIPC((float) Statistics.getDynamicInstCount()/Statistics.getNumCycles());
     }
+
+//    public static void simulate()
+//    {
+////        Statistics.setNumberOfDynamicInstructions(0);
+////        Statistics.setNumberOfCycles(0);
+//
+////        int i = 0;
+//        while(!simulationComplete)
+//        {
+////            i++;
+////            processor.getIF_EnableLatch().setIsBubbled(false);
+//            processor.getRWUnit().performRW();
+//            if(simulationComplete)
+//            {
+//                break;
+//            }
+//            processor.getMAUnit().performMA();
+//            processor.getEXUnit().performEX();
+//            processor.getOFUnit().performOF();
+//            processor.getIFUnit().performIF();
+//            Clock.incrementClock();
+//
+//            // Update statistics
+////            if(i%5 == 0)
+////            {
+////                Statistics.setNumberOfCycles(Statistics.getNumberOfCycles() + 1);
+////            }
+//        }
+//
+//        // Set statistics
+////        Statistics.setIPC((float)Statistics.getNumberOfDynamicInstructions() / Statistics.getNumberOfCycles());
+////        Statistics.setFrequency((float)Statistics.getNumberOfCycles() / Clock.getCurrentTime());
+//    }
 
     public static void setSimulationComplete(boolean value) {
         simulationComplete = value;

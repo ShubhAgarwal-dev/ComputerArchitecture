@@ -28,5 +28,5 @@ bin/
 ### Mac OS ###
 .DS_Store
 
-bin/
-jar/
+bin/*
+jars/*
