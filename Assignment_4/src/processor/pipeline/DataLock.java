@@ -9,14 +9,14 @@ public class DataLock {
     int src21 = 0;
     int des1,des2,des3;
     Processor containingProcessor;
-    public boolean dataLockDone;
+    public int dataLockDone;
 
     public DataLock(Processor containingProcessor) {
         this.containingProcessor = containingProcessor;
         this.des1 =  0;
         this.des2 =  0;
         this.des3 = 0;
-        this.dataLockDone = false;
+        this.dataLockDone = 0;
     }
 
     private void setSrcDest() {
@@ -36,7 +36,14 @@ public class DataLock {
             this.des1 = this.src11;
             this.src11 = 0;
             this.isSrc1 = false;
+        } else if (opCode >= 25 && opCode <= 28 ) { // for compare instructions
+            this.isSrc2 = true;
+            this.src21 = this.des1;
         }
+        System.out.println("[Debug] (DL) rs1:" + this.src11);
+        System.out.println("[Debug] (DL) rs2:" + this.src21);
+        System.out.println("[Debug] (DL) rd:" + this.des1);
+        System.out.println("\n");
     }
 
     private boolean checkDataHazard() {
@@ -63,14 +70,15 @@ public class DataLock {
         this.containingProcessor.OF_EX_Latch().setOp2(0);
         this.containingProcessor.OF_EX_Latch().setR31(0);
         this.containingProcessor.OF_EX_Latch().setRd(0);
-        System.out.println("DATA LOCK IS EXECUTNG << WHY WHY WHY");
+        System.out.println("[Debug] (DL): DATA LOCK IS EXECUTNG RN << WHY WHY WHY");
     }
 
     public void DLU(){
-        System.out.println("DLU is RUNNING.");
+        System.out.println("[Debug] (DL): DLU is RUNNING.");
         this.setSrcDest();
-        this.dataLockDone = false;
-        if (this.checkDataHazard()) { this.performLock(); this.dataLockDone = true; }
+        this.dataLockDone = 0;
+//        if (this.checkDataHazard()) { this.performLock(); this.dataLockDone += 1; }
+        if (this.checkDataHazard()) { this.performLock(); }
         this.performAppend();
     }
 }

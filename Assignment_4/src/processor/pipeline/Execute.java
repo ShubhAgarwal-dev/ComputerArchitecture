@@ -120,6 +120,7 @@ public class Execute {
 
     public void performEX() {
         if (OF_EX_Latch.isEX_enable()) {
+            System.out.println("[Debug] (EX) Executing state running.");
             int opCode = OF_EX_Latch.getOpCode();
             int immediate = OF_EX_Latch.getImmediate();
             int op1 = OF_EX_Latch.getOp1();

@@ -22,6 +22,7 @@ public class InstructionFetch {
 	{
 		if(IF_EnableLatch.isIF_enable())
 		{
+			System.out.println("[Debug] (IF) Running IF stage.");
 			if(containingProcessor.isBranchTaken()){
 				containingProcessor.getRegisterFile().setProgramCounter(containingProcessor.getBranchPC());
 				containingProcessor.setBranchTaken(false);
@@ -42,6 +43,9 @@ public class InstructionFetch {
 			// disabling and enabling latches
 //			IF_EnableLatch.setIF_enable(false);
 			IF_OF_Latch.setOF_enable(true);
+		} else {
+			this.containingProcessor.DataLockUnit().dataLockDone += 1;
+			System.out.println("[Debug] (IF) STALL: " + this.containingProcessor.DataLockUnit().dataLockDone);
 		}
 	}
 

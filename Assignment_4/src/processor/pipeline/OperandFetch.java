@@ -79,8 +79,10 @@ public class OperandFetch {
 
 
     public void performOF() {
-        if (this.containingProcessor.DataLockUnit().dataLockDone) {
+        if (this.containingProcessor.DataLockUnit().dataLockDone >= 2) {
             this.containingProcessor.IF_EnableLatch.setIF_enable(true);
+            this.containingProcessor.DataLockUnit().dataLockDone = 0;
+
         }
         if (IF_OF_Latch.isOF_enable()) {
 
@@ -144,20 +146,20 @@ public class OperandFetch {
 //			IF_OF_Latch.setOF_enable(false);
             OF_EX_Latch.setEX_enable(true);
 
-//			this.containingProcessor.DataLockUnit().DLU();
-
 //			System.out.println("[Debug] (OF) binCode: " + binaryCodeForInstruction);
-//            System.out.println("[Debug] (OF) PC: " + Misc.getPC(containingProcessor));
-            if (opCode == 22) {
-                System.out.println("[Debug] (OF) Opcode: " + opCode);
-                System.out.println("[Debug] (OF) Rd: " + rd);
-                System.out.println("[Debug] (OF) Op1: " + op1);
-                System.out.println("[Debug] (OF) Rs1: " + rs1);
-                System.out.println("[Debug] (OF) Op2: " + op2);
-                System.out.println("[Debug] (OF) Rs2: " + rs2);
-                System.out.println("[Debug] (OF) Imm: " + immediate);
-                System.out.println("[Debug] (OF) BranchPC: " + branchPC);
-            }
+            System.out.println("[Debug] (OF) PC: " + Misc.getPC(containingProcessor));
+            this.containingProcessor.DataLockUnit().DLU();
+//            System.out.println("[Debug] (OF) INSTRUCTION:" + Integer.toBinaryString(this.containingProcessor.getMainMemory().getWord(Misc.getPC(this.containingProcessor))));
+//            if (opCode == 22) {
+//                System.out.println("[Debug] (OF) Opcode: " + opCode);
+//                System.out.println("[Debug] (OF) Rd: " + rd);
+//                System.out.println("[Debug] (OF) Op1: " + op1);
+//                System.out.println("[Debug] (OF) Rs1: " + rs1);
+//                System.out.println("[Debug] (OF) Op2: " + op2);
+//                System.out.println("[Debug] (OF) Rs2: " + rs2);
+//                System.out.println("[Debug] (OF) Imm: " + immediate);
+//                System.out.println("[Debug] (OF) BranchPC: " + branchPC);
+//            }
 //			System.out.println("[Debug] (OF) Opcode: " + opCode);
 //			System.out.println("[Debug] (OF) Rd: " + rd);
 //			System.out.println("[Debug] (OF) Op1: " + op1);
@@ -166,6 +168,7 @@ public class OperandFetch {
 //			System.out.println("[Debug] (OF) Rs2: " + rs2);
 //			System.out.println("[Debug] (OF) Imm: " + immediate);
 //			System.out.println("[Debug] (OF) BranchPC: " + branchPC);
+//            System.out.println("\n\n");
 
         }
     }

@@ -11,7 +11,7 @@ public class BranchLock {
 
     public void checkBranchHazard() {
         if (this.containingProcessor.isBranchTaken()) {
-            System.out.println("DOING BRANCH LOCK");
+            System.out.println("\t\t[Debug] (BL) DOING BRANCH LOCK");
             this.containingProcessor.IF_OF_Latch().setInstruction(0);
             this.containingProcessor.OF_EX_Latch().setOpCode(0);
             this.containingProcessor.OF_EX_Latch().setOp1(0);
