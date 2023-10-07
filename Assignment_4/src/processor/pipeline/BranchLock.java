@@ -13,8 +13,8 @@ public class BranchLock {
         if (this.containingProcessor.isBranchTaken()) {
             this.containingProcessor.IF_OF_Latch().setInstruction(0);
             this.containingProcessor.OF_EX_Latch().setOpCode(0);
-            this.containingProcessor.OF_EX_Latch().setR1(0);
-            this.containingProcessor.OF_EX_Latch().setR2(0);
+            this.containingProcessor.OF_EX_Latch().setOp1(0);
+            this.containingProcessor.OF_EX_Latch().setOp2(0);
             this.containingProcessor.OF_EX_Latch().setR31(0);
             this.containingProcessor.OF_EX_Latch().setRd(0);
         }
