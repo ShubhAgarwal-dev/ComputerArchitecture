@@ -38,12 +38,14 @@ public class DataLock {
     }
 
     private boolean checkDataHazard() {
+        boolean res = false;
         if (this.isSrc1) {
-            return this.des2 == this.src11 || this.des3 == this.src11;
-        } else if (this.isSrc2) {
-            return this.des2 == this.src21 || this.des3 == this.src21;
+            res = this.des2 == this.src11 || this.des3 == this.src11;
         }
-        return false;
+        if (this.isSrc2) {
+            return res || this.des2 == this.src21 || this.des3 == this.src21;
+        }
+        return res;
     }
 
     private void performAppend()  {
