@@ -137,8 +137,8 @@ public class OperandFetch {
 			OF_EX_Latch.setRd(rd);
 			OF_EX_Latch.setImmediate(immediate);
 			OF_EX_Latch.setR31(r31);
-			OF_EX_Latch.setRs1(rs1);
-			OF_EX_Latch.setRs2(rs2);
+			OF_EX_Latch.setR1(rs1);
+			OF_EX_Latch.setR2(rs2);
 
 
 			// disabling and enabling latches
