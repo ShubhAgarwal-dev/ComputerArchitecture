@@ -20,12 +20,12 @@ public class DataLock {
     private void setSrcDest() {
         int opCode = this.containingProcessor.OF_EX_Latch().getOpCode();
         this.isSrc1 = true;
-        this.src11 = this.containingProcessor.OF_EX_Latch().getOp1();
+        this.src11 = this.containingProcessor.OF_EX_Latch().getR1();
         this.isSrc2  = false;
         this.src21 = 0;
         this.des1 = this.containingProcessor.OF_EX_Latch().getRd();
         if ((opCode <= 21 && (opCode % 2 == 0))) {
-            this.src21 = this.containingProcessor.OF_EX_Latch().getOp2();
+            this.src21 = this.containingProcessor.OF_EX_Latch().getR2();
             this.isSrc2 = true;
         } else if (opCode == 24 || opCode == 29) { // jmp and end
             this.src11 = 0;

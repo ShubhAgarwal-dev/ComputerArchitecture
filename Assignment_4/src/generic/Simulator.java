@@ -85,6 +85,7 @@ public class Simulator {
 //        Statistics.
         int cycles =0;
         int numberOfInstructionsExecuted=0;
+
         while (!simulationComplete) {
 //            System.out.println("Iter:"+cycles);
             processor.getRWUnit().performRW();

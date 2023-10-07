@@ -1,5 +1,0 @@
-Static Instructions= 22
-Dynamic Instructions= 10
-Number of Cycles= 10
-IPC = 1.0
-Frequency = 0.19607843 GHz
