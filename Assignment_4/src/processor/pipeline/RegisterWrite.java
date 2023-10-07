@@ -19,7 +19,6 @@ public class RegisterWrite {
 
     public void performRW() {
         if (MA_RW_Latch.isRW_enable()) {
-            //TODO
 
             // if instruction being processed is an end instruction, remember to call Simulator.setSimulationComplete(true);
 

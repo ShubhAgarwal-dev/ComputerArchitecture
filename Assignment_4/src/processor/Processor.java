@@ -4,6 +4,8 @@ import processor.memorysystem.MainMemory;
 import processor.pipeline.*;
 import processor.memorysystem.RegisterFile;
 
+import javax.sound.midi.Soundbank;
+
 public class Processor {
 	
 	RegisterFile registerFile;
@@ -39,6 +41,7 @@ public class Processor {
 	}
 
 	public void setBranchTaken(boolean branchTaken) {
+		if (branchTaken) { System.out.println("BRANCH IS BEING TAKEN"); }
 		isBranchTaken = branchTaken;
 	}
 

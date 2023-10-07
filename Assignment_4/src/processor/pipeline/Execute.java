@@ -105,15 +105,15 @@ public class Execute {
 
     private void handelBranchTaken(int opCode, int op1, int op2) {
         if (opCode == 24) {
-            containingProcessor.setBranchTaken(true);
+            this.containingProcessor.setBranchTaken(true);
         } else if (opCode == 25) {
-            containingProcessor.setBranchTaken(op1 == op2);
+            this.containingProcessor.setBranchTaken(op1 == op2);
         } else if (opCode == 26) {
-            containingProcessor.setBranchTaken(op1 != op2);
+            this.containingProcessor.setBranchTaken(op1 != op2);
         } else if (opCode == 27) {
-            containingProcessor.setBranchTaken(op1 < op2);
+            this.containingProcessor.setBranchTaken(op1 < op2);
         } else if (opCode == 28) {
-            containingProcessor.setBranchTaken(op1 > op2);
+            this.containingProcessor.setBranchTaken(op1 > op2);
         }
     }
 

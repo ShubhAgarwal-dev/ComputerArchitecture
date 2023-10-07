@@ -63,9 +63,11 @@ public class DataLock {
         this.containingProcessor.OF_EX_Latch().setOp2(0);
         this.containingProcessor.OF_EX_Latch().setR31(0);
         this.containingProcessor.OF_EX_Latch().setRd(0);
+        System.out.println("DATA LOCK IS EXECUTNG << WHY WHY WHY");
     }
 
     public void DLU(){
+        System.out.println("DLU is RUNNING.");
         this.setSrcDest();
         this.dataLockDone = false;
         if (this.checkDataHazard()) { this.performLock(); this.dataLockDone = true; }
