@@ -3,10 +3,8 @@ package processor.pipeline;
 import processor.Processor;
 
 public class DataLock {
-//    int src11,src12, src13;
     boolean isSrc1 = true;
     int src11= 0;
-//    int src21, src22, src23;
     boolean isSrc2 = false;
     int src21 = 0;
     int des1,des2,des3;
@@ -14,12 +12,6 @@ public class DataLock {
 
     public DataLock(Processor containingProcessor) {
         this.containingProcessor = containingProcessor;
-////        this.src11 = 0;
-////        this.src12 = 0;
-////        this.src13 = 0;
-////        this.src21 = 0;
-////        this.src22 = 0;
-////        this.src23 = 0;
         this.des1 =  0;
         this.des2 =  0;
         this.des3 = 0;
@@ -71,9 +63,7 @@ public class DataLock {
 
     public void DLU(){
         this.setSrcDest();
-        if (this.checkDataHazard()) {
-            this.performLock();
-        }
+        if (this.checkDataHazard()) { this.performLock(); }
         this.performAppend();
     }
 }
