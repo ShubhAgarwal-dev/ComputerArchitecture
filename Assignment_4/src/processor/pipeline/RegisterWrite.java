@@ -39,8 +39,8 @@ public class RegisterWrite {
             }
 
 			if(opCode>=0 && opCode<=21 && MA_RW_Latch.getR31()!=-1){
-				containingProcessor.getRegisterFile().setValue(31, MA_RW_Latch.getR31());
-                System.out.println("[Debug] (RW) Write to register 31 data " + MA_RW_Latch.getR31());
+//				containingProcessor.getRegisterFile().setValue(31, MA_RW_Latch.getR31());
+//                System.out.println("[Debug] (RW) Write to register 31 data " + MA_RW_Latch.getR31());
 			}
 
 			if(opCode==29){

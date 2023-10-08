@@ -93,14 +93,18 @@ public class Execute {
 
     private void setR31Register(int overFlow, int underFlow, int remainder, int op1) {
         if (overFlow != 0) {
-            EX_MA_Latch.setR31(overFlow);
+//            EX_MA_Latch.setR31(overFlow);
+            containingProcessor.getRegisterFile().setValue(31,overFlow);
         }
         if (underFlow != -1) {
-            EX_MA_Latch.setR31((int) op1 << (32 - underFlow));
+//            EX_MA_Latch.setR31((int) op1 << (32 - underFlow));
+            containingProcessor.getRegisterFile().setValue(31,(int) op1 << (32 - underFlow));
         }
         if (remainder != -1) {
-            EX_MA_Latch.setR31((int) remainder);
+//            EX_MA_Latch.setR31((int) remainder);
+            containingProcessor.getRegisterFile().setValue(31,(int) remainder);
         }
+
     }
 
     private void handelBranchTaken(int opCode, int op1, int op2) {
@@ -126,7 +130,9 @@ public class Execute {
             int op1 = OF_EX_Latch.getOp1();
             int op2 = OF_EX_Latch.getOp2();
             int rd = OF_EX_Latch.getRd();
-            EX_MA_Latch.setR31(-1);
+//            if(!containingProcessor.isBranchTaken()) {
+//                EX_MA_Latch.setR31(-1);
+//            }
             long calcOpRes = 0;
             long remainder = -1;
             long underflow = -1;
