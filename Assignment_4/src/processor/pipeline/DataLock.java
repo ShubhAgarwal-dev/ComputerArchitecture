@@ -40,11 +40,11 @@ public class DataLock {
             this.isSrc1 = false;
         } else if (opCode == 23) { // store
             this.des1 = this.src11;
-            this.src11 = 0;
-            this.isSrc1 = false;
         } else if (opCode >= 25 && opCode <= 28 ) { // for compare instructions
             this.isSrc2 = true;
             this.src21 = this.des1;
+        } else if (opCode == 22) {
+            System.out.println("[Debug] (DL) LOAD, SRC 1: " + this.src11 + ", SRC 2: " + this.src21 + ", SRC 3: " + this.des1);
         }
         System.out.println("[Debug] (DL) rd:" + this.des1);
         if (this.isSrc1) { System.out.println("[Debug] (DL) rs1:" + this.src11); }
