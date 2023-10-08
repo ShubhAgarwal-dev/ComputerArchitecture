@@ -46,9 +46,9 @@ public class DataLock {
             this.isSrc2 = true;
             this.src21 = this.des1;
         }
-        System.out.println("[Debug] (DL) rs1:" + this.src11);
-        System.out.println("[Debug] (DL) rs2:" + this.src21);
         System.out.println("[Debug] (DL) rd:" + this.des1);
+        if (this.isSrc1) { System.out.println("[Debug] (DL) rs1:" + this.src11); }
+        if (this.isSrc2) { System.out.println("[Debug] (DL) rs2:" + this.src21); }
 //        System.out.println("\n");
     }
 

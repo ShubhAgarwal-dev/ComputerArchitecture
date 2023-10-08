@@ -60,14 +60,19 @@ public class OperandFetch {
         int value;
         if (opCode != 24) {
             // the format is R2I
+            System.out.println("[Debug] (OF) BinCode: "+binaryCodeForInstruction);
             int immediate = getImmediateFromBinaryInstruction(binaryCodeForInstruction);
+            System.out.println("[Debug] (OF) Code: " + immediate);
             value = Misc.getPC(containingProcessor) + immediate;
+            System.out.println("[Debug] (OF) Branch Pc Value " + value);
         } else {
             // the format is RI
             int rd = getOp1FromBinaryInstruction(binaryCodeForInstruction);
             int immediate = getImmediateFromBinaryInstruction(binaryCodeForInstruction);
             value = Misc.getPC(containingProcessor) + rd + immediate;
         }
+        System.out.println("[Debug] (OF) Branch Pc Ret Value " + value);
+
         return value;
     }
 

@@ -26,6 +26,7 @@ public class InstructionFetch {
 		{
 			System.out.println("[Debug] (IF) Running IF stage.");
 			if(containingProcessor.isBranchTaken()){
+				System.out.println("[Debug] (IF) BRANCH PC: " + containingProcessor.getBranchPC());
 				containingProcessor.getRegisterFile().setProgramCounter(containingProcessor.getBranchPC());
 				containingProcessor.setBranchTaken(false);
 //				System.out.println("[Debug] (IF) Branch taken, PC updated to " + containingProcessor.getBranchPC());
