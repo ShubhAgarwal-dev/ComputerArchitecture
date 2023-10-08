@@ -43,7 +43,7 @@ public class DataLock {
         System.out.println("[Debug] (DL) rs1:" + this.src11);
         System.out.println("[Debug] (DL) rs2:" + this.src21);
         System.out.println("[Debug] (DL) rd:" + this.des1);
-        System.out.println("\n");
+//        System.out.println("\n");
     }
 
     private boolean checkDataHazard() {
@@ -78,7 +78,14 @@ public class DataLock {
         this.setSrcDest();
         this.dataLockDone = 0;
 //        if (this.checkDataHazard()) { this.performLock(); this.dataLockDone += 1; }
-        if (this.checkDataHazard()) { this.performLock(); }
+        if (this.checkDataHazard()) {
+            this.performLock();
+            this.src21 = 0;
+            this.src11 = 0;
+            this.des1 = 0;
+            this.des2 = 0;
+            this.des3 = 0;
+        }
         this.performAppend();
     }
 }

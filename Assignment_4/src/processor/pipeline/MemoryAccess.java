@@ -17,18 +17,19 @@ public class MemoryAccess {
 	public void performMA()
 	{
 		if(EX_MA_Latch.isMA_enable()){
+			System.out.println("[Debug] (MA) is running.");
 			int opCode = EX_MA_Latch.getOpCode();
 			if(opCode==22){
 				int memoLocation = EX_MA_Latch.getOpRes();
 				int loadData = containingProcessor.getMainMemory().getWord(memoLocation);
 				MA_RW_Latch.setLoadResult(loadData);
-//				System.out.println("[Debug] (MA) Load from address " + memoLocation + " data " + loadData);
+				System.out.println("[Debug] (MA) Load from address " + memoLocation + " data " + loadData);
 
 			}else if(opCode==23){
 				int data = EX_MA_Latch.getOp1();
 				int memoLocation = EX_MA_Latch.getOpRes();
 				containingProcessor.getMainMemory().setWord(memoLocation,data);
-//				System.out.println("[Debug] (MA) Store to address " + memoLocation + " data " + data);
+				System.out.println("[Debug] (MA) Store to address " + memoLocation + " data " + data);
 
 			}
 		}
@@ -40,6 +41,11 @@ public class MemoryAccess {
 		//disable and enable
 //		EX_MA_Latch.setMA_enable(false);
 		MA_RW_Latch.setRW_enable(true);
+
+//		if (this.containingProcessor.DataLockUnit().dataLockDone > 0) {
+//			this.containingProcessor.DataLockUnit().setSrcDest();
+//			this.containingProcessor.DataLockUnit().performAppend();
+//		}
 	}
 
 }

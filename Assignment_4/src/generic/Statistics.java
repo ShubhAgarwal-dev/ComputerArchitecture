@@ -3,8 +3,6 @@ package generic;
 import java.io.PrintWriter;
 
 public class Statistics {
-
-    // TODO add your statistics here
     static int staticInstCount;
     static int dynamicInstCount;
     static int numCycles;

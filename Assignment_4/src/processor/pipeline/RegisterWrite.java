@@ -29,19 +29,19 @@ public class RegisterWrite {
 
             if (opCode >= 0 && opCode <= 21) {
                 containingProcessor.getRegisterFile().setValue(rd, opResult);
-//                System.out.println("[Debug] (RW) Write to register " + rd + " data " + opResult);
+                System.out.println("[Debug] (RW) Write to register " + rd + " data " + opResult);
 
             }
 
             if (opCode == 22) {
 				containingProcessor.getRegisterFile().setValue(rd,loadResult);
-//                System.out.println("[Debug] (RW) Write register " + rd + " to " + loadResult);
+                System.out.println("[Debug] (RW) Write register " + rd + " to " + loadResult);
 
             }
 
 			if(opCode>=0 && opCode<=21 && MA_RW_Latch.getR31()!=-1){
 				containingProcessor.getRegisterFile().setValue(31, MA_RW_Latch.getR31());
-//                System.out.println("[Debug] (RW) Write to register 31 data " + MA_RW_Latch.getR31());
+                System.out.println("[Debug] (RW) Write to register 31 data " + MA_RW_Latch.getR31());
 			}
 
 			if(opCode==29){
@@ -51,11 +51,6 @@ public class RegisterWrite {
 //                System.out.println("[Debug] (RW) End instruction detected");
 
 			}
-
-            if (this.containingProcessor.DataLockUnit().dataLockDone > 0) {
-                this.containingProcessor.DataLockUnit().setSrcDest();
-                this.containingProcessor.DataLockUnit().performAppend();
-            }
 
 //            MA_RW_Latch.setRW_enable(false);
 //            IF_EnableLatch.setIF_enable(true);

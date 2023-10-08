@@ -23,7 +23,6 @@ public class Simulator {
 
     static void loadProgram(String assemblyProgramFile) {
         /*
-         * TODO
          * 1. load the program into memory according to the program layout described
          *    in the ISA specification (Done)
          * 2. set PC to the address of the first instruction in the main
@@ -98,6 +97,7 @@ public class Simulator {
             processor.getOFUnit().performOF();
 //            Clock.incrementClock();
             processor.getIFUnit().performIF();
+            System.out.println("\n");
             Clock.incrementClock();
             cycles+=1;
             numberOfInstructionsExecuted+=1;
