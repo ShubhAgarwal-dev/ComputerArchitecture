@@ -136,6 +136,7 @@ public class OperandFetch {
             // set branch pc
             if(!containingProcessor.isBranchTaken()) {
                 containingProcessor.setBranchPC(branchPC);
+                OF_EX_Latch.setR31(r31);
             }
 
             // passing necessary values to the next latch
@@ -145,7 +146,6 @@ public class OperandFetch {
             OF_EX_Latch.setOp2(op2);
             OF_EX_Latch.setRd(rd);
             OF_EX_Latch.setImmediate(immediate);
-            OF_EX_Latch.setR31(r31);
             OF_EX_Latch.setR1(rs1);
             OF_EX_Latch.setR2(rs2);
 

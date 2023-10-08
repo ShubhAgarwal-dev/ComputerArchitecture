@@ -40,6 +40,8 @@ public class DataLock {
             this.isSrc1 = false;
         } else if (opCode == 23) { // store
             this.des1 = this.src11;
+            this.src21 = this.containingProcessor.OF_EX_Latch().getRd();
+            this.isSrc2 = true;
         } else if (opCode >= 25 && opCode <= 28 ) { // for compare instructions
             this.isSrc2 = true;
             this.src21 = this.des1;
