@@ -102,6 +102,7 @@ public class Simulator {
             cycles+=1;
             numberOfInstructionsExecuted+=1;
         }
+        processor.getRegisterFile().setProgramCounter(processor.getIFUnit().endPC + 1);
 //
         Statistics.setNumCycles(cycles);
         Statistics.setDynamicInstCount(numberOfInstructionsExecuted);

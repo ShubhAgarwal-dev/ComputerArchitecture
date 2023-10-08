@@ -11,11 +11,17 @@ public class DataLock {
     Processor containingProcessor;
     public int dataLockDone;
 
+    private void init(){
+        this.src21 = 0;
+        this.src11 = 0;
+        this.des1 = 50;
+        this.des2 = 50;
+        this.des3 = 50;
+    }
+
     public DataLock(Processor containingProcessor) {
         this.containingProcessor = containingProcessor;
-        this.des1 =  0;
-        this.des2 =  0;
-        this.des3 = 0;
+        this.init();
         this.dataLockDone = 0;
     }
 
@@ -80,11 +86,7 @@ public class DataLock {
 //        if (this.checkDataHazard()) { this.performLock(); this.dataLockDone += 1; }
         if (this.checkDataHazard()) {
             this.performLock();
-            this.src21 = 0;
-            this.src11 = 0;
-            this.des1 = 0;
-            this.des2 = 0;
-            this.des3 = 0;
+            this.init();
         }
         this.performAppend();
     }

@@ -13,7 +13,7 @@ public class BranchLock {
         if (this.containingProcessor.isBranchTaken()) {
             System.out.println("\t\t[Debug] (BL) DOING BRANCH LOCK");
             if (this.containingProcessor.DataLockUnit().dataLockDone > 0){
-                System.out.println("\t\t\t\t[Debug] (BL) IS BEING DONE WHILE DL IS GOING ON.");
+                System.out.println("\n\n\t\t\t[Debug] (BL) IS BEING DONE WHILE DL IS GOING ON.n\n\n");
                 // What I want to do now is that I want to change the content inside the OF Stage which I can not access because of some MF
 //                this.containingProcessor.getOFUnit().
             }

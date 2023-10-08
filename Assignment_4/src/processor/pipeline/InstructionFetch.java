@@ -9,6 +9,8 @@ public class InstructionFetch {
 	IF_EnableLatchType IF_EnableLatch;
 	IF_OF_LatchType IF_OF_Latch;
 	EX_IF_LatchType EX_IF_Latch;
+
+	public int endPC;
 	
 	public InstructionFetch(Processor containingProcessor, IF_EnableLatchType iF_EnableLatch, IF_OF_LatchType iF_OF_Latch, EX_IF_LatchType eX_IF_Latch)
 	{
@@ -36,6 +38,9 @@ public class InstructionFetch {
 			// Getting the PC
 			int currentPC = Misc.getPC(containingProcessor);
 			int newInstruction = containingProcessor.getMainMemory().getWord(currentPC);
+			if (Integer.toBinaryString(newInstruction).substring(0, 5).equals("11101")){
+				this.endPC = currentPC;
+			}
 
 			//Updating the processor and the latch
 			IF_OF_Latch.setInstruction(newInstruction);

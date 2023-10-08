@@ -149,7 +149,13 @@ public class OperandFetch {
 
 //			System.out.println("[Debug] (OF) binCode: " + binaryCodeForInstruction);
             System.out.println("[Debug] (OF) PC: " + Misc.getPC(containingProcessor));
-            this.containingProcessor.DataLockUnit().DLU();
+//            this.containingProcessor.DataLockUnit().DLU();
+//            I think we can skip the DLU if BL is ACTIVE.
+            if (!this.containingProcessor.isBranchTaken()) { this.containingProcessor.DataLockUnit().DLU(); }
+            else {
+                System.out.println("[Debug] (OF) Skipped DLU check since the BL was active");
+            }
+
 //            System.out.println("[Debug] (OF) INSTRUCTION:" + Integer.toBinaryString(this.containingProcessor.getMainMemory().getWord(Misc.getPC(this.containingProcessor))));
 //            if (opCode == 22) {
 //                System.out.println("[Debug] (OF) Opcode: " + opCode);

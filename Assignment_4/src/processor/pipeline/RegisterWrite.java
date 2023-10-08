@@ -1,7 +1,6 @@
 package processor.pipeline;
 
 import generic.Misc;
-import generic.Simulator;
 import processor.Processor;
 
 import static generic.Simulator.setSimulationComplete;

@@ -19,7 +19,7 @@ public class Execute {
      * {@code @params} opCode,op1,op2,imm
      *
      * @return op1 [operation] op2/imm
-     * @Works_For: opcode>=1 opcode<=7
+     * &#064;Works_For:  opcode>=1 opcode<=7
      */
     private long performArithmetic(int opCode, int op1, int op2, int imm) {
         if (opCode == 0) {
@@ -47,7 +47,7 @@ public class Execute {
      * {@code @prarms:} opCode,op1,op2,imm
      *
      * @return op1 [operation] op2/imm
-     * @Works_For: opcode>=8 opcode<=13
+     * &#064;Works_For:  opcode>=8 opcode<=13
      */
     private long performLogical(int opCode, int op1, int op2, int imm) {
         if (opCode == 8) {
@@ -71,7 +71,7 @@ public class Execute {
      * {@code @prarms:} opCode,op1,op2,imm
      *
      * @return op1 [operation] op2/imm
-     * @Works_For: opcode>=16 opcode<=21
+     * &#064;Works_For:  opcode>=16 opcode<=21
      */
     private long performShift(int opCode, int op1, int op2, int imm) {
         if (opCode == 16) {
