@@ -28,20 +28,15 @@ public class RegisterWrite {
 
             if (opCode >= 0 && opCode <= 21) {
                 containingProcessor.getRegisterFile().setValue(rd, opResult);
-                System.out.println("[Debug] (RW) Write to register->" + rd + ". Data->" + opResult);
+                System.out.println("[Debug] (RW) Write to register-> " + rd + ", Data->" + opResult);
 
             }
 
             if (opCode == 22) {
 				containingProcessor.getRegisterFile().setValue(rd,loadResult);
-                System.out.println("[Debug] (RW) Write register->" + rd + ". Data-> " + loadResult);
+                System.out.println("[Debug] (RW) Write register-> " + rd + ", Data-> " + loadResult);
 
             }
-
-			if(opCode>=0 && opCode<=21 && MA_RW_Latch.getR31()!=-1){
-//				containingProcessor.getRegisterFile().setValue(31, MA_RW_Latch.getR31());
-//                System.out.println("[Debug] (RW) Write to register 31 data " + MA_RW_Latch.getR31());
-			}
 
 			if(opCode==29){
 //                System.out.println("End Instruction Detected");

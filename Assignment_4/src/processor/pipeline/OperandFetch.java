@@ -149,40 +149,14 @@ public class OperandFetch {
             OF_EX_Latch.setR1(rs1);
             OF_EX_Latch.setR2(rs2);
 
-
-            // disabling and enabling latches
-//			IF_OF_Latch.setOF_enable(false);
             OF_EX_Latch.setEX_enable(true);
 
-//			System.out.println("[Debug] (OF) binCode: " + binaryCodeForInstruction);
             System.out.println("[Debug] (OF) PC: " + Misc.getPC(containingProcessor));
-//            this.containingProcessor.DataLockUnit().DLU();
-//            I think we can skip the DLU if BL is ACTIVE.
+
             if (!this.containingProcessor.isBranchTaken()) { this.containingProcessor.DataLockUnit().DLU(); }
             else {
                 System.out.println("[Debug] (OF) Skipped DLU check since the BL was active");
             }
-
-//            System.out.println("[Debug] (OF) INSTRUCTION:" + Integer.toBinaryString(this.containingProcessor.getMainMemory().getWord(Misc.getPC(this.containingProcessor))));
-//            if (opCode == 22) {
-//                System.out.println("[Debug] (OF) Opcode: " + opCode);
-//                System.out.println("[Debug] (OF) Rd: " + rd);
-//                System.out.println("[Debug] (OF) Op1: " + op1);
-//                System.out.println("[Debug] (OF) Rs1: " + rs1);
-//                System.out.println("[Debug] (OF) Op2: " + op2);
-//                System.out.println("[Debug] (OF) Rs2: " + rs2);
-//                System.out.println("[Debug] (OF) Imm: " + immediate);
-//                System.out.println("[Debug] (OF) BranchPC: " + branchPC);
-//            }
-//			System.out.println("[Debug] (OF) Opcode: " + opCode);
-//			System.out.println("[Debug] (OF) Rd: " + rd);
-//			System.out.println("[Debug] (OF) Op1: " + op1);
-//			System.out.println("[Debug] (OF) Rs1: " + rs1);
-//			System.out.println("[Debug] (OF) Op2: " + op2);
-//			System.out.println("[Debug] (OF) Rs2: " + rs2);
-//			System.out.println("[Debug] (OF) Imm: " + immediate);
-//			System.out.println("[Debug] (OF) BranchPC: " + branchPC);
-//            System.out.println("\n\n");
 
         }
     }

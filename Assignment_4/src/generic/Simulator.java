@@ -7,7 +7,6 @@ import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.math.BigInteger;
-import java.nio.ByteBuffer;
 
 public class Simulator {
 
@@ -22,15 +21,6 @@ public class Simulator {
     }
 
     static void loadProgram(String assemblyProgramFile) {
-        /*
-         * 1. load the program into memory according to the program layout described
-         *    in the ISA specification (Done)
-         * 2. set PC to the address of the first instruction in the main
-         * 3. set the following registers:
-         *     x0 = 0
-         *     x1 = 65535
-         *     x2 = 65535
-         */
         try (FileInputStream file = new FileInputStream(assemblyProgramFile)) {
             BufferedInputStream fis = new BufferedInputStream(file); // init the BufferReader as normal readers donot work
             int currLoc = 0; // counter to insert into memory
@@ -52,99 +42,34 @@ public class Simulator {
         processor.getRegisterFile().setValue(2,65535);
     }
 
-//    public static void simulate() {
-//
-////        Statistics.
-//        int cycles =0;
-//        int numberOfInstructionsExecuted=0;
-//        while (!simulationComplete) {
-////            System.out.println("Iter:"+cycles);
-//            processor.getIFUnit().performIF();
-//            Clock.incrementClock();
-//            processor.getOFUnit().performOF();
-//            Clock.incrementClock();
-//            processor.getEXUnit().performEX();
-//            Clock.incrementClock();
-//            processor.getMAUnit().performMA();
-//            Clock.incrementClock();
-//            processor.getRWUnit().performRW();
-//            Clock.incrementClock();
-//            cycles+=1;
-//            numberOfInstructionsExecuted+=1;
-//        }
-//
-//        Statistics.setNumCycles(cycles);
-//        Statistics.setDynamicInstCount(numberOfInstructionsExecuted);
-//        Statistics.setFrequency((float) Statistics.getNumCycles()/Clock.getCurrentTime());
-//        Statistics.setIPC((float) Statistics.getDynamicInstCount()/Statistics.getNumCycles());
-//    }
-
     public static void simulate() {
 
         Statistics.setStalls(0);
         Statistics.setWrong_branch_taken(0);
 
-//        Statistics.
         int cycles =0;
         int numberOfInstructionsExecuted=0;
 
         while (!simulationComplete) {
-//            System.out.println("Iter:"+cycles);
             processor.getRWUnit().performRW();
-//            Clock.incrementClock();
             if(simulationComplete) { break; }
             processor.getMAUnit().performMA();
-//            Clock.incrementClock();
             processor.getEXUnit().performEX();
-//            Clock.incrementClock();
             processor.getOFUnit().performOF();
-//            Clock.incrementClock();
             processor.getIFUnit().performIF();
             System.out.println("\n");
             Clock.incrementClock();
             cycles+=1;
-            numberOfInstructionsExecuted+=1;
+            numberOfInstructionsExecuted+=5;
         }
         processor.getRegisterFile().setProgramCounter(processor.getIFUnit().endPC + 1);
-//
         Statistics.setNumCycles(cycles);
         Statistics.setDynamicInstCount(numberOfInstructionsExecuted);
         Statistics.setFrequency((float) Statistics.getNumCycles()/Clock.getCurrentTime());
-        Statistics.setIPC((float) Statistics.getDynamicInstCount()/Statistics.getNumCycles());
+        float correct_inst = numberOfInstructionsExecuted - Statistics.getStalls() - Statistics.getWrong_branch_taken();
+        Statistics.setIPC((float) correct_inst/Statistics.getNumCycles());
     }
 
-//    public static void simulate()
-//    {
-////        Statistics.setNumberOfDynamicInstructions(0);
-////        Statistics.setNumberOfCycles(0);
-//
-////        int i = 0;
-//        while(!simulationComplete)
-//        {
-////            i++;
-////            processor.getIF_EnableLatch().setIsBubbled(false);
-//            processor.getRWUnit().performRW();
-//            if(simulationComplete)
-//            {
-//                break;
-//            }
-//            processor.getMAUnit().performMA();
-//            processor.getEXUnit().performEX();
-//            processor.getOFUnit().performOF();
-//            processor.getIFUnit().performIF();
-//            Clock.incrementClock();
-//
-//            // Update statistics
-////            if(i%5 == 0)
-////            {
-////                Statistics.setNumberOfCycles(Statistics.getNumberOfCycles() + 1);
-////            }
-//        }
-//
-//        // Set statistics
-////        Statistics.setIPC((float)Statistics.getNumberOfDynamicInstructions() / Statistics.getNumberOfCycles());
-////        Statistics.setFrequency((float)Statistics.getNumberOfCycles() / Clock.getCurrentTime());
-//    }
 
     public static void setSimulationComplete(boolean value) {
         simulationComplete = value;

@@ -179,10 +179,8 @@ public class Execute {
             EX_MA_Latch.setOpCode(opCode);
             EX_MA_Latch.setRd(rd);
             containingProcessor.getBranchLockUnit().checkBranchHazard();
-
-            // enable disable latches
+            
             EX_MA_Latch.setMA_enable(true);
-//            OF_EX_Latch.setEX_enable(false);
         }
 
     }

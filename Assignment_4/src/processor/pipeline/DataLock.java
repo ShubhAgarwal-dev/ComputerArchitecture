@@ -86,7 +86,6 @@ public class DataLock {
         System.out.println("[Debug] (DL): DLU is RUNNING.");
         this.setSrcDest();
         this.dataLockDone = 0;
-//        if (this.checkDataHazard()) { this.performLock(); this.dataLockDone += 1; }
         if (this.checkDataHazard()) {
             Statistics.setStalls(Statistics.getStalls() + 2);
             this.performLock();

@@ -29,14 +29,11 @@ public class InstructionFetch {
 				System.out.println("[Debug] (IF) BRANCH PC: " + containingProcessor.getBranchPC());
 				containingProcessor.getRegisterFile().setProgramCounter(containingProcessor.getBranchPC());
 				containingProcessor.setBranchTaken(false);
-//				System.out.println("[Debug] (IF) Branch taken, PC updated to " + containingProcessor.getBranchPC());
 
 			}else{
 				containingProcessor.getRegisterFile().setProgramCounter(containingProcessor.getRegisterFile().getProgramCounter()+1);
-//				System.out.println("[Debug] (IF) PC incremented to " + containingProcessor.getRegisterFile().getProgramCounter());
 
 			}
-			// Getting the PC
 			int currentPC = Misc.getPC(containingProcessor);
 			int newInstruction = containingProcessor.getMainMemory().getWord(currentPC);
 			System.out.println("[Debug] (IF) inst: "+newInstruction);
@@ -44,11 +41,8 @@ public class InstructionFetch {
 				this.endPC = currentPC;
 			}
 
-			//Updating the processor and the latch
 			IF_OF_Latch.setInstruction(newInstruction);
 
-			// disabling and enabling latches
-//			IF_EnableLatch.setIF_enable(false);
 			IF_OF_Latch.setOF_enable(true);
 		} else {
 			this.containingProcessor.DataLockUnit().dataLockDone += 1;

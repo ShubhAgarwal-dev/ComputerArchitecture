@@ -38,14 +38,7 @@ public class MemoryAccess {
 		MA_RW_Latch.setOpCode(EX_MA_Latch.getOpCode());
 		MA_RW_Latch.setRd(EX_MA_Latch.getRd());
 
-		//disable and enable
-//		EX_MA_Latch.setMA_enable(false);
 		MA_RW_Latch.setRW_enable(true);
-
-//		if (this.containingProcessor.DataLockUnit().dataLockDone > 0) {
-//			this.containingProcessor.DataLockUnit().setSrcDest();
-//			this.containingProcessor.DataLockUnit().performAppend();
-//		}
 	}
 
 }
