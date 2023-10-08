@@ -28,13 +28,13 @@ public class RegisterWrite {
 
             if (opCode >= 0 && opCode <= 21) {
                 containingProcessor.getRegisterFile().setValue(rd, opResult);
-                System.out.println("[Debug] (RW) Write to register " + rd + " data " + opResult);
+                System.out.println("[Debug] (RW) Write to register->" + rd + ". Data->" + opResult);
 
             }
 
             if (opCode == 22) {
 				containingProcessor.getRegisterFile().setValue(rd,loadResult);
-                System.out.println("[Debug] (RW) Write register " + rd + " to " + loadResult);
+                System.out.println("[Debug] (RW) Write register->" + rd + ". Data-> " + loadResult);
 
             }
 
