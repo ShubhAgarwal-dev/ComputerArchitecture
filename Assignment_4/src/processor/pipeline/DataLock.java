@@ -1,5 +1,6 @@
 package processor.pipeline;
 
+import generic.Statistics;
 import processor.Processor;
 
 public class DataLock {
@@ -87,6 +88,7 @@ public class DataLock {
         this.dataLockDone = 0;
 //        if (this.checkDataHazard()) { this.performLock(); this.dataLockDone += 1; }
         if (this.checkDataHazard()) {
+            Statistics.setStalls(Statistics.getStalls() + 2);
             this.performLock();
             this.init();
         }

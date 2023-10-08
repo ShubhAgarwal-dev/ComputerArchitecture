@@ -81,6 +81,9 @@ public class Simulator {
 
     public static void simulate() {
 
+        Statistics.setStalls(0);
+        Statistics.setWrong_branch_taken(0);
+
 //        Statistics.
         int cycles =0;
         int numberOfInstructionsExecuted=0;

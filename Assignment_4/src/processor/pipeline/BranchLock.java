@@ -1,5 +1,6 @@
 package processor.pipeline;
 
+import generic.Statistics;
 import processor.Processor;
 
 public class BranchLock {
@@ -11,6 +12,7 @@ public class BranchLock {
 
     public void checkBranchHazard() {
         if (this.containingProcessor.isBranchTaken()) {
+            Statistics.setWrong_branch_taken(Statistics.getWrong_branch_taken() + 1);
             System.out.println("\t\t[Debug] (BL) DOING BRANCH LOCK");
             if (this.containingProcessor.DataLockUnit().dataLockDone > 0){
                 System.out.println("\n\n\t\t\t[Debug] (BL) IS BEING DONE WHILE DL IS GOING ON.n\n\n");
