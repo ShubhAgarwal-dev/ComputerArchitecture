@@ -87,7 +87,6 @@ public class DataLock {
         this.setSrcDest();
         this.dataLockDone = 0;
         if (this.checkDataHazard()) {
-            Statistics.setStalls(Statistics.getStalls() + 2);
             this.performLock();
             this.init();
         }

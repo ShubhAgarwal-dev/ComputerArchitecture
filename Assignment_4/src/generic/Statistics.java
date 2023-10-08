@@ -10,7 +10,7 @@ public class Statistics {
     static float frequency;
 
     static int stalls;
-    static int wrong_branch_taken;
+    static int numBranchHazards;
 
     public static int getStalls() {
         return stalls;
@@ -20,12 +20,12 @@ public class Statistics {
         Statistics.stalls = stalls;
     }
 
-    public static int getWrong_branch_taken() {
-        return wrong_branch_taken;
+    public static int getNumBranchHazards() {
+        return numBranchHazards;
     }
 
-    public static void setWrong_branch_taken(int wrong_branch_taken) {
-        Statistics.wrong_branch_taken = wrong_branch_taken;
+    public static void setNumBranchHazards(int numBranchHazards) {
+        Statistics.numBranchHazards = numBranchHazards;
     }
 
     public static void setDynamicInstCount(int dynamicInstCount) {
@@ -78,7 +78,7 @@ public class Statistics {
             writer.println("IPC = " + IPC);
             writer.println("Frequency = " + frequency + " GHz");
             writer.println("Stalls = " + stalls);
-            writer.println("Wrong Branch Taken = " + wrong_branch_taken);
+            writer.println("Wrong Branch Taken = " + numBranchHazards);
 
             writer.close();
         } catch (Exception e) {

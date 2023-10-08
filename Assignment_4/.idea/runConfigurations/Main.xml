@@ -1,9 +1,9 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="Main" type="Application" factoryName="Application">
-    <output_file path="logs/log001_prime.log" is_save="true" />
+    <output_file path="logs/log001_evenorodd.log" is_save="true" />
     <option name="MAIN_CLASS_NAME" value="main.Main" />
     <module name="Assignment_4" />
-    <option name="PROGRAM_PARAMETERS" value="./src/configuration/config.xml ./stat/prime.stat ./test_cases/prime.out" />
+    <option name="PROGRAM_PARAMETERS" value="./src/configuration/config.xml ./stat/evenorodd.stat ./test_cases/evenorodd.out" />
     <method v="2">
       <option name="Make" enabled="true" />
     </method>

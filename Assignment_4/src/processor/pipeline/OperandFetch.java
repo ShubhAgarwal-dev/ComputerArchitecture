@@ -1,6 +1,7 @@
 package processor.pipeline;
 
 import generic.Misc;
+import generic.Statistics;
 import processor.Processor;
 
 public class OperandFetch {
@@ -88,7 +89,7 @@ public class OperandFetch {
             this.containingProcessor.IF_EnableLatch.setIF_enable(true);
             this.containingProcessor.IF_OF_Latch().setOF_enable(true);
             this.containingProcessor.DataLockUnit().dataLockDone = 0;
-
+            Statistics.setStalls(Statistics.getStalls() + 1);
         }
         if (IF_OF_Latch.isOF_enable()) {
 
