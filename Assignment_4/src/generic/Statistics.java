@@ -3,13 +3,30 @@ package generic;
 import java.io.PrintWriter;
 
 public class Statistics {
-
-    // TODO add your statistics here
     static int staticInstCount;
     static int dynamicInstCount;
     static int numCycles;
     static float IPC;
     static float frequency;
+
+    static int stalls;
+    static int wrong_branch_taken;
+
+    public static int getStalls() {
+        return stalls;
+    }
+
+    public static void setStalls(int stalls) {
+        Statistics.stalls = stalls;
+    }
+
+    public static int getWrong_branch_taken() {
+        return wrong_branch_taken;
+    }
+
+    public static void setWrong_branch_taken(int wrong_branch_taken) {
+        Statistics.wrong_branch_taken = wrong_branch_taken;
+    }
 
     public static void setDynamicInstCount(int dynamicInstCount) {
         Statistics.dynamicInstCount = dynamicInstCount;
@@ -60,6 +77,8 @@ public class Statistics {
             writer.println("Number of Cycles= " + numCycles);
             writer.println("IPC = " + IPC);
             writer.println("Frequency = " + frequency + " GHz");
+            writer.println("Stalls = " + stalls);
+            writer.println("Wrong Branch Taken = " + wrong_branch_taken);
 
             writer.close();
         } catch (Exception e) {

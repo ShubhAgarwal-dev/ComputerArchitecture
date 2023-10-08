@@ -1,25 +1,28 @@
 package processor.pipeline;
 
+import generic.Statistics;
 import processor.Processor;
 
 public class BranchLock {
     Processor containingProcessor;
-//	boolean insert_bubble;
 
     public BranchLock(Processor containingProcessor) {
         this.containingProcessor = containingProcessor;
     }
 
-    public void checkBrachHazard() {
+    public void checkBranchHazard() {
         if (this.containingProcessor.isBranchTaken()) {
-//			containingProcessor.IF_OF_Latch().setBubble(true);
-//			containingProcessor.OF_EX_Latch().setBubble(true);
-            containingProcessor.IF_OF_Latch().setInstruction(0);
-            containingProcessor.OF_EX_Latch().setOpCode(0);
-            containingProcessor.OF_EX_Latch().setR1(0);
-            containingProcessor.OF_EX_Latch().setR2(0);
-            containingProcessor.OF_EX_Latch().setR31(0);
-            containingProcessor.OF_EX_Latch().setRd(0);
+            Statistics.setWrong_branch_taken(Statistics.getWrong_branch_taken() + 1);
+            System.out.println("\t\t[Debug] (BL) DOING BRANCH LOCK");
+            if (this.containingProcessor.DataLockUnit().dataLockDone > 0){
+                System.out.println("\t\t[Debug] (BL) IS BEING DONE WHILE DL IS GOING ON.");
+            }
+            this.containingProcessor.IF_OF_Latch().setInstruction(0);
+            this.containingProcessor.OF_EX_Latch().setOpCode(0);
+            this.containingProcessor.OF_EX_Latch().setOp1(0);
+            this.containingProcessor.OF_EX_Latch().setOp2(0);
+            this.containingProcessor.OF_EX_Latch().setR31(0);
+            this.containingProcessor.OF_EX_Latch().setRd(0);
         }
     }
 }

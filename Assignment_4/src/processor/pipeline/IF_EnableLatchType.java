@@ -1,10 +1,11 @@
 package processor.pipeline;
 
 public class IF_EnableLatchType {
-
+	
 	boolean IF_enable;
-
-	public IF_EnableLatchType() {
+	
+	public IF_EnableLatchType()
+	{
 		IF_enable = true;
 	}
 

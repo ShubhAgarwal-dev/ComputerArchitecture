@@ -8,12 +8,6 @@ public class OperandFetch {
     IF_OF_LatchType IF_OF_Latch;
     OF_EX_LatchType OF_EX_Latch;
 
-    public OperandFetch(Processor containingProcessor, IF_OF_LatchType iF_OF_Latch, OF_EX_LatchType oF_EX_Latch) {
-        this.containingProcessor = containingProcessor;
-        this.IF_OF_Latch = iF_OF_Latch;
-        this.OF_EX_Latch = oF_EX_Latch;
-    }
-
     private int getOpCodeFromBinaryInstruction(String binaryCodeForInstruction) {
         return Integer.parseInt(binaryCodeForInstruction.substring(0, 5), 2);
     }
@@ -66,19 +60,36 @@ public class OperandFetch {
         int value;
         if (opCode != 24) {
             // the format is R2I
+//            System.out.println("[Debug] (OF) BinCode: "+binaryCodeForInstruction);
             int immediate = getImmediateFromBinaryInstruction(binaryCodeForInstruction);
+//            System.out.println("[Debug] (OF) Code: " + immediate);
             value = Misc.getPC(containingProcessor) + immediate;
+//            System.out.println("[Debug] (OF) Branch Pc Value " + value);
         } else {
             // the format is RI
             int rd = getOp1FromBinaryInstruction(binaryCodeForInstruction);
             int immediate = getImmediateFromBinaryInstruction(binaryCodeForInstruction);
             value = Misc.getPC(containingProcessor) + rd + immediate;
         }
+//        System.out.println("[Debug] (OF) Branch Pc Ret Value " + value);
+
         return value;
     }
 
+    public OperandFetch(Processor containingProcessor, IF_OF_LatchType iF_OF_Latch, OF_EX_LatchType oF_EX_Latch) {
+        this.containingProcessor = containingProcessor;
+        this.IF_OF_Latch = iF_OF_Latch;
+        this.OF_EX_Latch = oF_EX_Latch;
+    }
+
+
     public void performOF() {
-//        if (IF_OF_Latch.isOF_enable() && !IF_OF_Latch.isBubble()) {
+        if (this.containingProcessor.DataLockUnit().dataLockDone >= 2) {
+            this.containingProcessor.IF_EnableLatch.setIF_enable(true);
+            this.containingProcessor.IF_OF_Latch().setOF_enable(true);
+            this.containingProcessor.DataLockUnit().dataLockDone = 0;
+
+        }
         if (IF_OF_Latch.isOF_enable()) {
 
             // Getting the instruction and adjusting its size
@@ -94,13 +105,11 @@ public class OperandFetch {
             int branchPC = getBranchPC(binaryCodeForInstruction, opCode);
 
             // op1
-            int op1 = containingProcessor.getRegisterFile()
-                    .getValue(getOp1FromBinaryInstruction(binaryCodeForInstruction));
-
+            int op1 = containingProcessor.getRegisterFile().getValue(getOp1FromBinaryInstruction(binaryCodeForInstruction));
+            int rs1 = getOp1FromBinaryInstruction(binaryCodeForInstruction);
             // op2
-            int op2 = containingProcessor.getRegisterFile()
-                    .getValue(getOp2FromBinaryInstruction(binaryCodeForInstruction));
-
+            int op2 = containingProcessor.getRegisterFile().getValue(getOp2FromBinaryInstruction(binaryCodeForInstruction));
+            int rs2 = getOp2FromBinaryInstruction(binaryCodeForInstruction);
             // rd
             int rd;
             if (opCode <= 21 && opCode % 2 != 0) {
@@ -123,38 +132,31 @@ public class OperandFetch {
             // r31
             int r31 = containingProcessor.getRegisterFile().getValue(31);
 
+
             // set branch pc
-            containingProcessor.setBranchPC(branchPC);
+            if(!containingProcessor.isBranchTaken()) {
+                containingProcessor.setBranchPC(branchPC);
+                OF_EX_Latch.setR31(r31);
+            }
 
             // passing necessary values to the next latch
-            OF_EX_Latch.setInstruction(binaryCodeForInstruction);
             OF_EX_Latch.setEX_enable(true);
             OF_EX_Latch.setOpCode(opCode);
-            OF_EX_Latch.setR1(op1);
-            OF_EX_Latch.setR2(op2);
+            OF_EX_Latch.setOp1(op1);
+            OF_EX_Latch.setOp2(op2);
             OF_EX_Latch.setRd(rd);
             OF_EX_Latch.setImmediate(immediate);
-            OF_EX_Latch.setR31(r31);
+            OF_EX_Latch.setR1(rs1);
+            OF_EX_Latch.setR2(rs2);
 
-            // Applying Data Lock Condition
-            containingProcessor.getDataLockUnit().setInstOFString(binaryCodeForInstruction);
-            containingProcessor.getDataLockUnit().applyDataLock(OF_EX_Latch);
-
-            // disabling and enabling latches
-//            IF_OF_Latch.setOF_enable(false);
             OF_EX_Latch.setEX_enable(true);
-//            OF_EX_Latch.setBubble(IF_OF_Latch.isBubble());
 
-            // System.out.println("[Debug] (OF) binCode: " + binaryCodeForInstruction);
-            // System.out.println("[Debug] (OF) PC: " + Misc.getPC(containingProcessor));
-            // System.out.println("[Debug] (OF) Opcode: " + opCode);
-            // System.out.println("[Debug] (OF) Rs1: " + rs1);
-            // System.out.println("[Debug] (OF) Rs2: " + rs2);
-            // System.out.println("[Debug] (OF) Rd: " + rd);
-            // System.out.println("[Debug] (OF) Op1: " + op1);
-            // System.out.println("[Debug] (OF) Op2: " + op2);
-            // System.out.println("[Debug] (OF) Imm: " + immediate);
-            // System.out.println("[Debug] (OF) BranchPC: " + branchPC);
+            System.out.println("[Debug] (OF) PC: " + Misc.getPC(containingProcessor));
+
+            if (!this.containingProcessor.isBranchTaken()) { this.containingProcessor.DataLockUnit().DLU(); }
+            else {
+                System.out.println("[Debug] (OF) Skipped DLU check since the BL was active");
+            }
 
         }
     }

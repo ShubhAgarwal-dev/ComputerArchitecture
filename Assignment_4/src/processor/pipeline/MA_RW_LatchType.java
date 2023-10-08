@@ -5,18 +5,10 @@ public class MA_RW_LatchType {
     boolean RW_enable;
 
     private int loadResult, opResult, opCode, rd, r31;
-    private String instruction;
+
 
     public MA_RW_LatchType() {
         RW_enable = false;
-    }
-
-    public String getInstruction() {
-        return instruction;
-    }
-
-    public void setInstruction(String instruction) {
-        this.instruction = instruction;
     }
 
     public int getLoadResult() {

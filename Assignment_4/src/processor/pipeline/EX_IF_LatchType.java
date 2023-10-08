@@ -2,17 +2,12 @@ package processor.pipeline;
 
 public class EX_IF_LatchType {
 
-	private boolean isBranchTaken = false;
-
-	public EX_IF_LatchType() {
+	private boolean isBranchTaken=false;
+	public EX_IF_LatchType()
+	{
 
 	}
-
-	public void setBranchTaken(boolean value) {
-		this.isBranchTaken = value;
-	}
-
-	public boolean isBranchTaken(){
-		return isBranchTaken;
+	public void setBranchTaken(boolean value){
+		this.isBranchTaken=value;
 	}
 }
