@@ -66,7 +66,7 @@ public class Simulator {
         Statistics.setNumCycles(cycles);
         Statistics.setDynamicInstCount(numberOfInstructionsExecuted - 4);
         Statistics.setFrequency((float) Statistics.getNumCycles()/Clock.getCurrentTime());
-        float correct_inst = numberOfInstructionsExecuted - Statistics.getStalls()*3 - Statistics.getNumBranchHazards()*2;
+        float correct_inst = numberOfInstructionsExecuted - Statistics.getStalls() * 2 - Statistics.getNumBranchHazards();
         Statistics.setIPC((float) correct_inst/Statistics.getNumCycles());
     }
 
