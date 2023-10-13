@@ -98,11 +98,11 @@ public class Execute {
         }
         if (underFlow != -1) {
 //            EX_MA_Latch.setR31((int) op1 << (32 - underFlow));
-            containingProcessor.getRegisterFile().setValue(31,(int) op1 << (32 - underFlow));
+            containingProcessor.getRegisterFile().setValue(31, op1 << (32 - underFlow));
         }
         if (remainder != -1) {
 //            EX_MA_Latch.setR31((int) remainder);
-            containingProcessor.getRegisterFile().setValue(31,(int) remainder);
+            containingProcessor.getRegisterFile().setValue(31, remainder);
         }
 
     }
@@ -147,9 +147,9 @@ public class Execute {
                 calcOpRes = performLogical(opCode, op1, op2, immediate);
             } else if (opCode == 14 || opCode == 15) {
                 if (opCode == 14) {
-                    calcOpRes = (long) ((op1 < op2) ? 1 : 0);
+                    calcOpRes = (op1 < op2) ? 1 : 0;
                 } else {
-                    calcOpRes = (long) ((op1 < immediate) ? 1 : 0);
+                    calcOpRes = (op1 < immediate) ? 1 : 0;
                 }
             } else if (opCode >= 16 && opCode <= 21) {
                 calcOpRes = performShift(opCode, op1, op2, immediate);

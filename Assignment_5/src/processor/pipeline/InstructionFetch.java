@@ -37,7 +37,7 @@ public class InstructionFetch {
 			int currentPC = Misc.getPC(containingProcessor);
 			int newInstruction = containingProcessor.getMainMemory().getWord(currentPC);
 			System.out.println("[Debug] (IF) inst: "+newInstruction);
-			if ((Integer.toBinaryString(newInstruction)+"0".repeat(32-Integer.toBinaryString(newInstruction).length())).substring(0, 5).equals("11101")){
+			if ((Integer.toBinaryString(newInstruction)+"0".repeat(32-Integer.toBinaryString(newInstruction).length())).startsWith("11101")){
 				this.endPC = currentPC;
 			}
 

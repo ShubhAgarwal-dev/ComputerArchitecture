@@ -111,6 +111,6 @@ public class Configuration {
 		}
 	    Element NodeElmnt = (Element) nodeLst.item(0);
 	    NodeList resultNode = NodeElmnt.getChildNodes();
-	    return ((Node) resultNode.item(0)).getNodeValue();
+	    return resultNode.item(0).getNodeValue();
 	}
 }

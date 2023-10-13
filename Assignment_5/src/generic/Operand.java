@@ -2,9 +2,9 @@ package generic;
 
 public class Operand {
 	
-	public enum OperandType {Register, Immediate, Label};
-	
-	OperandType operandType;
+	public enum OperandType {Register, Immediate, Label}
+
+    OperandType operandType;
 	int value;
 	String labelValue; 	//only applicable for Label type;
 						//Note that Label type is only applicable for functional emulation of assembly file
@@ -31,7 +31,7 @@ public class Operand {
 	{
 		if(operandType == OperandType.Register || operandType == OperandType.Immediate)
 		{
-			return "[" + operandType.toString() + ":" + value + "]";
+			return "[" + operandType + ":" + value + "]";
 		}
 		else
 		{
