@@ -1,5 +1,6 @@
 package processor;
 
+import generic.EventQueue;
 import processor.memorysystem.MainMemory;
 import processor.pipeline.*;
 import processor.memorysystem.RegisterFile;
@@ -7,7 +8,12 @@ import processor.memorysystem.RegisterFile;
 import javax.sound.midi.Soundbank;
 
 public class Processor {
-	
+
+	public EventQueue getEventQueue() {
+		return eventQueue;
+	}
+
+	EventQueue eventQueue;
 	RegisterFile registerFile;
 	MainMemory mainMemory;
 	
@@ -51,6 +57,7 @@ public class Processor {
 	{
 		registerFile = new RegisterFile();
 		mainMemory = new MainMemory();
+		eventQueue = new EventQueue();
 		
 		IF_EnableLatch = new IF_EnableLatchType();
 		IF_OF_Latch = new IF_OF_LatchType();

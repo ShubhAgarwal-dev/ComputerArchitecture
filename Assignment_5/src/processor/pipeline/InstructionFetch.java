@@ -1,6 +1,7 @@
 package processor.pipeline;
 
 import generic.Misc;
+import processor.Clock;
 import processor.Processor;
 
 public class InstructionFetch {

@@ -34,17 +34,6 @@ class EventComparator implements Comparator<Event>
 	@Override
     public int compare(Event x, Event y)
     {
-		if(x.getEventTime() < y.getEventTime())
-		{
-			return -1;
-		}
-		else if(x.getEventTime() > y.getEventTime())
-		{
-			return 1;
-		}
-		else
-		{
-			return 0;
-		}
+		return Long.compare(x.getEventTime(), y.getEventTime());
     }
 }

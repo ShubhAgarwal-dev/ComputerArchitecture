@@ -55,11 +55,11 @@ public class Simulator {
             if(simulationComplete) { break; }
             processor.getMAUnit().performMA();
             processor.getEXUnit().performEX();
+            processor.getEventQueue().processEvents();
             processor.getOFUnit().performOF();
             processor.getIFUnit().performIF();
             System.out.println("\n");
             Clock.incrementClock();
-            cycles+=1;
             numberOfInstructionsExecuted+=1;
         }
         processor.getRegisterFile().setProgramCounter(processor.getIFUnit().endPC + 1);

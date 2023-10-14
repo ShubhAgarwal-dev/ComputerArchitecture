@@ -1,10 +1,16 @@
 package processor.pipeline;
 
+import generic.Element;
+import generic.Event;
 import generic.Statistics;
 import processor.Processor;
 
-public class BranchLock {
+public class BranchLock implements Element {
     Processor containingProcessor;
+
+    @Override
+    public void handleEvent(Event event){
+    }
 
     public BranchLock(Processor containingProcessor) {
         this.containingProcessor = containingProcessor;

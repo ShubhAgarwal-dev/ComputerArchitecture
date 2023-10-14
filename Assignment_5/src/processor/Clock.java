@@ -7,6 +7,8 @@ public class Clock {
 	{
 		currentTime++;
 	}
+
+	public static void incrementClock(int clock) { currentTime += clock; }
 	
 	public static long getCurrentTime()
 	{
