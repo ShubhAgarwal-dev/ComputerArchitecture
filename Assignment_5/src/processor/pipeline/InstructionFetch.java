@@ -50,6 +50,7 @@ public class InstructionFetch implements Element {
 							currentPC
 					)
 			);
+            IF_EnableLatch.setIF_Buzy(true);
         } else {
             this.containingProcessor.DataLockUnit().dataLockDone += 1;
             System.out.println("[Debug] (IF) STALL: " + this.containingProcessor.DataLockUnit().dataLockDone);

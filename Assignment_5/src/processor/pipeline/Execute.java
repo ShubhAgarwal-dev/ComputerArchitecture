@@ -1,8 +1,10 @@
 package processor.pipeline;
 
+import configuration.Configuration;
 import generic.Element;
 import generic.Event;
 import generic.Simulator;
+import generic.events.ALUResponseEvent;
 import processor.Clock;
 import processor.Processor;
 import processor.latches.EX_IF_LatchType;
@@ -14,6 +16,8 @@ public class Execute implements Element {
     OF_EX_LatchType OF_EX_Latch;
     EX_MA_LatchType EX_MA_Latch;
     EX_IF_LatchType EX_IF_Latch;
+
+    int opCode, immediate, op1, op2, rd, opRes;
 
     public Execute(Processor containingProcessor, OF_EX_LatchType oF_EX_Latch, EX_MA_LatchType eX_MA_Latch, EX_IF_LatchType eX_IF_Latch) {
         this.containingProcessor = containingProcessor;
@@ -131,15 +135,46 @@ public class Execute implements Element {
 
     public void performEX() {
         if (OF_EX_Latch.isEX_enable()) {
+            if(OF_EX_Latch.isEX_enable()){
+                return;
+            }
             System.out.println("[Debug] (EX) Executing state running.");
-            int opCode = OF_EX_Latch.getOpCode();
-            int immediate = OF_EX_Latch.getImmediate();
-            int op1 = OF_EX_Latch.getOp1();
-            int op2 = OF_EX_Latch.getOp2();
-            int rd = OF_EX_Latch.getRd();
-//            if(!containingProcessor.isBranchTaken()) {
-//                EX_MA_Latch.setR31(-1);
-//            }
+
+            int latency = 0;
+            if(OF_EX_Latch.getOpCode()==4 || OF_EX_Latch.getOpCode()==5){
+                latency = Configuration.multiplier_latency;
+            }else if(OF_EX_Latch.getOpCode()==6 || OF_EX_Latch.getOpCode()==7){
+                latency = Configuration.divider_latency;
+            }else{
+                latency = Configuration.ALU_latency;
+            }
+
+
+            Simulator.getEventQueue().addEvent(new ALUResponseEvent(
+                    Clock.getCurrentTime() + latency,
+                    this,
+                    this
+            ));
+            OF_EX_Latch.setEX_Buzy(true);
+
+            containingProcessor.getBranchLockUnit().checkBranchHazard();
+            EX_MA_Latch.setMA_enable(true);
+        }
+
+    }
+
+    @Override
+    public void handleEvent(Event event) {
+        if (EX_MA_Latch.isMA_Buzy()) {
+            event.setEventTime(Clock.getCurrentTime() + 1);
+            Simulator.getEventQueue().addEvent(event);
+        }else{
+            ALUResponseEvent e = (ALUResponseEvent) event;
+            opCode = OF_EX_Latch.getOpCode();
+            immediate = OF_EX_Latch.getImmediate();
+            op1 = OF_EX_Latch.getOp1();
+            op2 = OF_EX_Latch.getOp2();
+            rd = OF_EX_Latch.getRd();
             long calcOpRes = 0;
             long remainder = -1;
             long underflow = -1;
@@ -171,7 +206,7 @@ public class Execute implements Element {
                 handelBranchTaken(opCode, op1, op2);
             }
 
-            int opRes = (int) calcOpRes;
+            opRes = (int) calcOpRes;
             int overflow = (int) (calcOpRes >> 32);
 
             // passing data to latch
@@ -185,20 +220,8 @@ public class Execute implements Element {
             EX_MA_Latch.setOpRes(opRes);
             EX_MA_Latch.setOpCode(opCode);
             EX_MA_Latch.setRd(rd);
-            containingProcessor.getBranchLockUnit().checkBranchHazard();
-
             EX_MA_Latch.setMA_enable(true);
-        }
-
-    }
-
-    @Override
-    public void handleEvent(Event event) {
-        if (EX_MA_Latch.isMA_Buzy()) {
-            event.setEventTime(Clock.getCurrentTime() + 1);
-            Simulator.getEventQueue().addEvent(event);
-        }else{
-
+            OF_EX_Latch.setEX_Buzy(false);
         }
     }
 
