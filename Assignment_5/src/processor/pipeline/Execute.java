@@ -160,7 +160,6 @@ public class Execute implements Element {
             containingProcessor.getBranchLockUnit().checkBranchHazard();
             EX_MA_Latch.setMA_enable(true);
         }
-
     }
 
     @Override
