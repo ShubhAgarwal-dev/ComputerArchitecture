@@ -35,18 +35,18 @@ public class RegisterWrite {
             }
 
             if (opCode == 22) {
-				containingProcessor.getRegisterFile().setValue(rd,loadResult);
+                containingProcessor.getRegisterFile().setValue(rd, loadResult);
                 System.out.println("[Debug] (RW) Write register-> " + rd + ", Data-> " + loadResult);
 
             }
 
-			if(opCode==29){
+            if (opCode == 29) {
 //                System.out.println("End Instruction Detected");
-				containingProcessor.getRegisterFile().setProgramCounter(Misc.getPC(containingProcessor)+1);
-				setSimulationComplete(true);
+                containingProcessor.getRegisterFile().setProgramCounter(Misc.getPC(containingProcessor) + 1);
+                setSimulationComplete(true);
 //                System.out.println("[Debug] (RW) End instruction detected");
 
-			}
+            }
 
 //            MA_RW_Latch.setRW_enable(false);
 //            IF_EnableLatch.setIF_enable(true);

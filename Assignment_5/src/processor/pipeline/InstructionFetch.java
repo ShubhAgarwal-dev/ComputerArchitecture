@@ -1,7 +1,10 @@
 package processor.pipeline;
 
 import configuration.Configuration;
-import generic.*;
+import generic.Element;
+import generic.Event;
+import generic.Misc;
+import generic.Simulator;
 import generic.events.MemoryReadEvent;
 import generic.events.MemoryResponseEvent;
 import processor.Clock;
@@ -17,6 +20,9 @@ public class InstructionFetch implements Element {
     Processor containingProcessor;
     IF_EnableLatchType IF_EnableLatch;
     EX_IF_LatchType EX_IF_Latch;
+
+    public MemoryReadEvent currEvent;
+
 
     public InstructionFetch(Processor containingProcessor, IF_EnableLatchType iF_EnableLatch, IF_OF_LatchType iF_OF_Latch, EX_IF_LatchType eX_IF_Latch) {
         this.containingProcessor = containingProcessor;
@@ -41,15 +47,13 @@ public class InstructionFetch implements Element {
 
             }
             int currentPC = Misc.getPC(containingProcessor);
-
-			Simulator.getEventQueue().addEvent(
-					new MemoryReadEvent(
-							Clock.getCurrentTime()+ Configuration.mainMemoryLatency,
-							this,
-							containingProcessor.getMainMemory(),
-							currentPC
-					)
-			);
+            currEvent = new MemoryReadEvent(
+                    Clock.getCurrentTime() + Configuration.mainMemoryLatency,
+                    this,
+                    containingProcessor.getMainMemory(),
+                    currentPC
+            );
+            Simulator.getEventQueue().addEvent(currEvent);
             IF_EnableLatch.setIF_Buzy(true);
         } else {
             this.containingProcessor.DataLockUnit().dataLockDone += 1;
@@ -62,12 +66,12 @@ public class InstructionFetch implements Element {
         if (IF_OF_Latch.isOF_Buzy()) {
             event.setEventTime(Clock.getCurrentTime() + 1);
             Simulator.getEventQueue().addEvent(event);
-        }else{
-			MemoryResponseEvent e = (MemoryResponseEvent) event;
-			IF_OF_Latch.setInstruction(e.getValue());
-			IF_OF_Latch.setOF_enable(true);
-			IF_EnableLatch.setIF_Buzy(false);
-		}
+        } else {
+            MemoryResponseEvent e = (MemoryResponseEvent) event;
+            IF_OF_Latch.setInstruction(e.getValue());
+            IF_OF_Latch.setOF_enable(true);
+            IF_EnableLatch.setIF_Buzy(false);
+        }
     }
 
 }

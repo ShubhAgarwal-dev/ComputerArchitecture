@@ -3,6 +3,7 @@ package processor.memorysystem;
 import generic.*;
 import generic.events.MemoryReadEvent;
 import generic.events.MemoryResponseEvent;
+import generic.events.MemoryWriteEvent;
 import processor.Clock;
 
 public class MainMemory implements Element {
@@ -47,13 +48,8 @@ public class MainMemory implements Element {
 			MemoryResponseEvent e = (MemoryResponseEvent) event;
             e.getRequestingElement().handleEvent(e);
         } else if (event.getEventType() == Event.EventType.MemoryWrite) {
-            MemoryReadEvent e = (MemoryReadEvent) event;
-            Simulator.getEventQueue().addEvent(new MemoryResponseEvent(
-                    Clock.getCurrentTime(),
-                    this,
-                    event.getRequestingElement(),
-                    getWord(((MemoryReadEvent) event).getAddressToReadFrom())
-            ));
+            MemoryWriteEvent e = (MemoryWriteEvent) event;
+            e.getRequestingElement().handleEvent(e);
         }
     }
 }

@@ -19,6 +19,8 @@ public class EventQueue {
 		queue.add(event);
 	}
 
+	public void removeEvent(Event event){queue.remove(event);}
+
 	public void processEvents()
 	{
 		while(!queue.isEmpty() && queue.peek().getEventTime() <= Clock.getCurrentTime())

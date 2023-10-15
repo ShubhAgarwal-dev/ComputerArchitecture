@@ -2,6 +2,7 @@ package processor.locks;
 
 import generic.Element;
 import generic.Event;
+import generic.Simulator;
 import generic.Statistics;
 import processor.Processor;
 
@@ -29,6 +30,7 @@ public class BranchLock implements Element {
             this.containingProcessor.OF_EX_Latch().setOp2(0);
             this.containingProcessor.OF_EX_Latch().setR31(0);
             this.containingProcessor.OF_EX_Latch().setRd(0);
+            Simulator.getEventQueue().removeEvent(this.containingProcessor.getIFUnit().currEvent);
         }
     }
 }

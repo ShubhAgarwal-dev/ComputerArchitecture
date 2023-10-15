@@ -55,7 +55,7 @@ public class Execute implements Element {
     }
 
     /**
-     * {@code @prarms:} opCode,op1,op2,imm
+     * {@code @prams:} opCode,op1,op2,imm
      *
      * @return op1 [operation] op2/imm
      * &#064;Works_For:  opcode>=8 opcode<=13
@@ -79,7 +79,7 @@ public class Execute implements Element {
     }
 
     /**
-     * {@code @prarms:} opCode,op1,op2,imm
+     * {@code @prams:} opCode,op1,op2,imm
      *
      * @return op1 [operation] op2/imm
      * &#064;Works_For:  opcode>=16 opcode<=21
@@ -135,11 +135,10 @@ public class Execute implements Element {
 
     public void performEX() {
         if (OF_EX_Latch.isEX_enable()) {
-            if(OF_EX_Latch.isEX_enable()){
+            if(OF_EX_Latch.isEX_Buzy()){
                 return;
             }
             System.out.println("[Debug] (EX) Executing state running.");
-
             int latency = 0;
             if(OF_EX_Latch.getOpCode()==4 || OF_EX_Latch.getOpCode()==5){
                 latency = Configuration.multiplier_latency;
@@ -148,17 +147,12 @@ public class Execute implements Element {
             }else{
                 latency = Configuration.ALU_latency;
             }
-
-
             Simulator.getEventQueue().addEvent(new ALUResponseEvent(
                     Clock.getCurrentTime() + latency,
                     this,
                     this
             ));
             OF_EX_Latch.setEX_Buzy(true);
-
-            containingProcessor.getBranchLockUnit().checkBranchHazard();
-            EX_MA_Latch.setMA_enable(true);
         }
     }
 
@@ -167,6 +161,7 @@ public class Execute implements Element {
         if (EX_MA_Latch.isMA_Buzy()) {
             event.setEventTime(Clock.getCurrentTime() + 1);
             Simulator.getEventQueue().addEvent(event);
+            return;
         }else{
             ALUResponseEvent e = (ALUResponseEvent) event;
             opCode = OF_EX_Latch.getOpCode();
@@ -219,6 +214,7 @@ public class Execute implements Element {
             EX_MA_Latch.setOpRes(opRes);
             EX_MA_Latch.setOpCode(opCode);
             EX_MA_Latch.setRd(rd);
+            containingProcessor.getBranchLockUnit().checkBranchHazard();
             EX_MA_Latch.setMA_enable(true);
             OF_EX_Latch.setEX_Buzy(false);
         }
