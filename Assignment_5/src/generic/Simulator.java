@@ -13,16 +13,15 @@ public class Simulator {
     static Processor processor;
     static boolean simulationComplete;
 
-    static EventQueue eventQueue;
+    static EventQueue eventQueue = new EventQueue();
 
     public static EventQueue getEventQueue() {
         return eventQueue;
     }
 
-    public static void setupSimulation(String assemblyProgramFile, Processor p)  {
+    public static void setupSimulation(String assemblyProgramFile, Processor p) {
         Simulator.processor = p;
         loadProgram(assemblyProgramFile);
-
         simulationComplete = false;
     }
 
@@ -32,20 +31,20 @@ public class Simulator {
             int currLoc = 0; // counter to insert into memory
             byte[] bytes = new byte[4]; // reading 4 words at a time
             fis.read(bytes);
-            processor.getRegisterFile().setProgramCounter(new BigInteger(bytes).intValue()-1);
+            processor.getRegisterFile().setProgramCounter(new BigInteger(bytes).intValue() - 1);
             while (fis.read(bytes) != -1) {
                 int val = new BigInteger(bytes).intValue();
-                processor.getMainMemory().setWord(currLoc,val); // converting the bytes array to int and inserting it to memory
-                currLoc+=1;
+                processor.getMainMemory().setWord(currLoc, val); // converting the bytes array to int and inserting it to memory
+                currLoc += 1;
             }
-            Statistics.setStaticInstCount(currLoc-processor.getRegisterFile().getProgramCounter());
+            Statistics.setStaticInstCount(currLoc - processor.getRegisterFile().getProgramCounter());
 
         } catch (IOException e) {
             e.printStackTrace();
         }
-        processor.getRegisterFile().setValue(0,0);
-        processor.getRegisterFile().setValue(1,65535);
-        processor.getRegisterFile().setValue(2,65535);
+        processor.getRegisterFile().setValue(0, 0);
+        processor.getRegisterFile().setValue(1, 65535);
+        processor.getRegisterFile().setValue(2, 65535);
     }
 
     public static void simulate() {
@@ -53,27 +52,30 @@ public class Simulator {
         Statistics.setStalls(0);
         Statistics.setNumBranchHazards(0);
 
-        int cycles =0;
-        int numberOfInstructionsExecuted=0;
+        int cycles = 0;
+        int numberOfInstructionsExecuted = 0;
+
 
         while (!simulationComplete) {
             processor.getRWUnit().performRW();
-            if(simulationComplete) { break; }
+            if (simulationComplete) {
+                break;
+            }
             processor.getMAUnit().performMA();
             processor.getEXUnit().performEX();
-            eventQueue.processEvents();;
+            eventQueue.processEvents();
             processor.getOFUnit().performOF();
             processor.getIFUnit().performIF();
             System.out.println("\n");
             Clock.incrementClock();
-            numberOfInstructionsExecuted+=1;
+            numberOfInstructionsExecuted += 1;
         }
         processor.getRegisterFile().setProgramCounter(processor.getIFUnit().endPC + 1);
         Statistics.setNumCycles(cycles);
         Statistics.setDynamicInstCount(numberOfInstructionsExecuted - 4);
-        Statistics.setFrequency((float) Statistics.getNumCycles()/Clock.getCurrentTime());
+        Statistics.setFrequency((float) Statistics.getNumCycles() / Clock.getCurrentTime());
         float correct_inst = numberOfInstructionsExecuted - Statistics.getStalls() * 2 - Statistics.getNumBranchHazards();
-        Statistics.setIPC(correct_inst /Statistics.getNumCycles());
+        Statistics.setIPC(correct_inst / Statistics.getNumCycles());
     }
 
 

@@ -10,7 +10,6 @@ import processor.memorysystem.RegisterFile;
 
 public class Processor {
 
-	EventQueue eventQueue;
 	RegisterFile registerFile;
 	MainMemory mainMemory;
 	
@@ -54,7 +53,6 @@ public class Processor {
 	{
 		registerFile = new RegisterFile();
 		mainMemory = new MainMemory();
-		eventQueue = new EventQueue();
 		
 		IF_EnableLatch = new IF_EnableLatchType();
 		IF_OF_Latch = new IF_OF_LatchType();

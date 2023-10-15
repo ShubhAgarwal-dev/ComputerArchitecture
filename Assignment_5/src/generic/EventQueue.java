@@ -11,21 +11,21 @@ public class EventQueue {
 	
 	public EventQueue()
 	{
-		queue = new PriorityQueue<Event>(new EventComparator());
+		this.queue = new PriorityQueue<Event>(new EventComparator());
 	}
 	
 	public void addEvent(Event event)
 	{
-		queue.add(event);
+		this.queue.add(event);
 	}
 
-	public void removeEvent(Event event){queue.remove(event);}
+	public void removeEvent(Event event){this.queue.remove(event);}
 
 	public void processEvents()
 	{
-		while(!queue.isEmpty() && queue.peek().getEventTime() <= Clock.getCurrentTime())
+		while(!this.queue.isEmpty() && this.queue.peek().getEventTime() <= Clock.getCurrentTime())
 		{
-			Event event = queue.poll();
+			Event event = this.queue.poll();
 			if(event!=null) {
 				event.getProcessingElement().handleEvent(event);
 			}
