@@ -3,6 +3,8 @@ package processor.pipeline;
 import generic.Misc;
 import generic.Statistics;
 import processor.Processor;
+import processor.latches.IF_OF_LatchType;
+import processor.latches.OF_EX_LatchType;
 
 public class OperandFetch {
     Processor containingProcessor;

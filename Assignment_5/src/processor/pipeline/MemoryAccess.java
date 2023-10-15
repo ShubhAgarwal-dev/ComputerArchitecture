@@ -1,6 +1,8 @@
 package processor.pipeline;
 
 import processor.Processor;
+import processor.latches.EX_MA_LatchType;
+import processor.latches.MA_RW_LatchType;
 
 public class MemoryAccess {
 	Processor containingProcessor;

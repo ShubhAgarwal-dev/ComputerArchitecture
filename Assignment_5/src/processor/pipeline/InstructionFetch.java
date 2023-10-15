@@ -1,54 +1,72 @@
 package processor.pipeline;
 
-import generic.Misc;
+import configuration.Configuration;
+import generic.*;
+import generic.events.MemoryReadEvent;
+import generic.events.MemoryResponseEvent;
 import processor.Clock;
 import processor.Processor;
+import processor.latches.EX_IF_LatchType;
+import processor.latches.IF_EnableLatchType;
+import processor.latches.IF_OF_LatchType;
 
-public class InstructionFetch {
-	
-	Processor containingProcessor;
-	IF_EnableLatchType IF_EnableLatch;
-	IF_OF_LatchType IF_OF_Latch;
-	EX_IF_LatchType EX_IF_Latch;
+public class InstructionFetch implements Element {
 
-	public int endPC;
-	
-	public InstructionFetch(Processor containingProcessor, IF_EnableLatchType iF_EnableLatch, IF_OF_LatchType iF_OF_Latch, EX_IF_LatchType eX_IF_Latch)
-	{
-		this.containingProcessor = containingProcessor;
-		this.IF_EnableLatch = iF_EnableLatch;
-		this.IF_OF_Latch = iF_OF_Latch;
-		this.EX_IF_Latch = eX_IF_Latch;
-	}
-	
-	public void performIF()
-	{
-		if(IF_EnableLatch.isIF_enable())
-		{
-			System.out.println("[Debug] (IF) Running IF stage.");
-			if(containingProcessor.isBranchTaken()){
-				System.out.println("[Debug] (IF) BRANCH PC: " + containingProcessor.getBranchPC());
-				containingProcessor.getRegisterFile().setProgramCounter(containingProcessor.getBranchPC());
-				containingProcessor.setBranchTaken(false);
+    public IF_OF_LatchType IF_OF_Latch;
+    public int endPC;
+    Processor containingProcessor;
+    IF_EnableLatchType IF_EnableLatch;
+    EX_IF_LatchType EX_IF_Latch;
 
-			}else{
-				containingProcessor.getRegisterFile().setProgramCounter(containingProcessor.getRegisterFile().getProgramCounter()+1);
+    public InstructionFetch(Processor containingProcessor, IF_EnableLatchType iF_EnableLatch, IF_OF_LatchType iF_OF_Latch, EX_IF_LatchType eX_IF_Latch) {
+        this.containingProcessor = containingProcessor;
+        this.IF_EnableLatch = iF_EnableLatch;
+        this.IF_OF_Latch = iF_OF_Latch;
+        this.EX_IF_Latch = eX_IF_Latch;
+    }
 
-			}
-			int currentPC = Misc.getPC(containingProcessor);
-			int newInstruction = containingProcessor.getMainMemory().getWord(currentPC);
-			System.out.println("[Debug] (IF) inst: "+newInstruction);
-			if ((Integer.toBinaryString(newInstruction)+"0".repeat(32-Integer.toBinaryString(newInstruction).length())).startsWith("11101")){
-				this.endPC = currentPC;
-			}
+    public void performIF() {
+        if (IF_EnableLatch.isIF_enable()) {
+            if (IF_EnableLatch.isIF_Buzy()) {
+                return;
+            }
+            System.out.println("[Debug] (IF) Running IF stage.");
+            if (containingProcessor.isBranchTaken()) {
+                System.out.println("[Debug] (IF) BRANCH PC: " + containingProcessor.getBranchPC());
+                containingProcessor.getRegisterFile().setProgramCounter(containingProcessor.getBranchPC());
+                containingProcessor.setBranchTaken(false);
 
-			IF_OF_Latch.setInstruction(newInstruction);
+            } else {
+                containingProcessor.getRegisterFile().setProgramCounter(containingProcessor.getRegisterFile().getProgramCounter() + 1);
 
+            }
+            int currentPC = Misc.getPC(containingProcessor);
+
+			Simulator.getEventQueue().addEvent(
+					new MemoryReadEvent(
+							Clock.getCurrentTime()+ Configuration.mainMemoryLatency,
+							this,
+							containingProcessor.getMainMemory(),
+							currentPC
+					)
+			);
+        } else {
+            this.containingProcessor.DataLockUnit().dataLockDone += 1;
+            System.out.println("[Debug] (IF) STALL: " + this.containingProcessor.DataLockUnit().dataLockDone);
+        }
+    }
+
+    @Override
+    public void handleEvent(Event event) {
+        if (IF_OF_Latch.isOF_Buzy()) {
+            event.setEventTime(Clock.getCurrentTime() + 1);
+            Simulator.getEventQueue().addEvent(event);
+        }else{
+			MemoryResponseEvent e = (MemoryResponseEvent) event;
+			IF_OF_Latch.setInstruction(e.getValue());
 			IF_OF_Latch.setOF_enable(true);
-		} else {
-			this.containingProcessor.DataLockUnit().dataLockDone += 1;
-			System.out.println("[Debug] (IF) STALL: " + this.containingProcessor.DataLockUnit().dataLockDone);
+			IF_EnableLatch.setIF_Buzy(false);
 		}
-	}
+    }
 
 }

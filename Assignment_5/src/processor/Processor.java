@@ -1,17 +1,14 @@
 package processor;
 
 import generic.EventQueue;
+import processor.latches.*;
+import processor.locks.BranchLock;
+import processor.locks.DataLock;
 import processor.memorysystem.MainMemory;
 import processor.pipeline.*;
 import processor.memorysystem.RegisterFile;
 
-import javax.sound.midi.Soundbank;
-
 public class Processor {
-
-	public EventQueue getEventQueue() {
-		return eventQueue;
-	}
 
 	EventQueue eventQueue;
 	RegisterFile registerFile;
@@ -73,6 +70,7 @@ public class Processor {
 		RWUnit = new RegisterWrite(this, MA_RW_Latch, IF_EnableLatch);
 		BranchLockUnit = new BranchLock(this);
 		DataLockUnit = new DataLock(this);
+
 	}
 	
 	public void printState(int memoryStartingAddress, int memoryEndingAddress)

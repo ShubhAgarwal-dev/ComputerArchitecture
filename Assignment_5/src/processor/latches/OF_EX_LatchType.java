@@ -1,8 +1,18 @@
-package processor.pipeline;
+package processor.latches;
 
 public class OF_EX_LatchType {
 
     boolean EX_enable;
+
+    boolean EX_Buzy;
+
+    public boolean isEX_Buzy() {
+        return EX_Buzy;
+    }
+
+    public void setEX_Buzy(boolean EX_Buzy) {
+        this.EX_Buzy = EX_Buzy;
+    }
 
     private int opCode, rd, op1, op2, immediate, r31, r1, r2;
 

@@ -2,6 +2,8 @@ package processor.pipeline;
 
 import generic.Misc;
 import processor.Processor;
+import processor.latches.IF_EnableLatchType;
+import processor.latches.MA_RW_LatchType;
 
 import static generic.Simulator.setSimulationComplete;
 

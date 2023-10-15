@@ -1,4 +1,4 @@
-package processor.pipeline;
+package processor.latches;
 
 public class EX_MA_LatchType {
 	
@@ -6,6 +6,15 @@ public class EX_MA_LatchType {
 
 	private int  opRes, op1, op2, opCode, rd, r31;
 
+	public boolean isMA_Buzy() {
+		return MA_Buzy;
+	}
+
+	public void setMA_Buzy(boolean MA_Buzy) {
+		this.MA_Buzy = MA_Buzy;
+	}
+
+	boolean MA_Buzy;
 
 	public int getOpRes() {
 		return opRes;

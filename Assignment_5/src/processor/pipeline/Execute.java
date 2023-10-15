@@ -1,8 +1,15 @@
 package processor.pipeline;
 
+import generic.Element;
+import generic.Event;
+import generic.Simulator;
+import processor.Clock;
 import processor.Processor;
+import processor.latches.EX_IF_LatchType;
+import processor.latches.EX_MA_LatchType;
+import processor.latches.OF_EX_LatchType;
 
-public class Execute {
+public class Execute implements Element {
     Processor containingProcessor;
     OF_EX_LatchType OF_EX_Latch;
     EX_MA_LatchType EX_MA_Latch;
@@ -94,7 +101,7 @@ public class Execute {
     private void setR31Register(int overFlow, int underFlow, int remainder, int op1) {
         if (overFlow != 0) {
 //            EX_MA_Latch.setR31(overFlow);
-            containingProcessor.getRegisterFile().setValue(31,overFlow);
+            containingProcessor.getRegisterFile().setValue(31, overFlow);
         }
         if (underFlow != -1) {
 //            EX_MA_Latch.setR31((int) op1 << (32 - underFlow));
@@ -179,10 +186,20 @@ public class Execute {
             EX_MA_Latch.setOpCode(opCode);
             EX_MA_Latch.setRd(rd);
             containingProcessor.getBranchLockUnit().checkBranchHazard();
-            
+
             EX_MA_Latch.setMA_enable(true);
         }
 
+    }
+
+    @Override
+    public void handleEvent(Event event) {
+        if (EX_MA_Latch.isMA_Buzy()) {
+            event.setEventTime(Clock.getCurrentTime() + 1);
+            Simulator.getEventQueue().addEvent(event);
+        }else{
+
+        }
     }
 
 }

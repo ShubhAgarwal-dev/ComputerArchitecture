@@ -30,3 +30,5 @@ bin/
 
 bin/*
 jars/*
+.idea/
+Assignment_5.iml

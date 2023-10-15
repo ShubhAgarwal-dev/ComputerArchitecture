@@ -13,6 +13,12 @@ public class Simulator {
     static Processor processor;
     static boolean simulationComplete;
 
+    static EventQueue eventQueue;
+
+    public static EventQueue getEventQueue() {
+        return eventQueue;
+    }
+
     public static void setupSimulation(String assemblyProgramFile, Processor p)  {
         Simulator.processor = p;
         loadProgram(assemblyProgramFile);
@@ -55,7 +61,7 @@ public class Simulator {
             if(simulationComplete) { break; }
             processor.getMAUnit().performMA();
             processor.getEXUnit().performEX();
-            processor.getEventQueue().processEvents();
+            eventQueue.processEvents();;
             processor.getOFUnit().performOF();
             processor.getIFUnit().performIF();
             System.out.println("\n");

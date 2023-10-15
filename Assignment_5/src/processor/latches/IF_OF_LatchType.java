@@ -1,11 +1,24 @@
-package processor.pipeline;
+package processor.latches;
 
 public class IF_OF_LatchType {
 	
 	boolean OF_enable;
 	int instruction;
 	int pc;
-	
+
+	boolean OF_Buzy;
+
+
+
+	public boolean isOF_Buzy() {
+		return OF_Buzy;
+	}
+
+	public void setOF_Buzy(boolean OF_Buzy) {
+		this.OF_Buzy = OF_Buzy;
+	}
+
+
 	public IF_OF_LatchType()
 	{
 		OF_enable = false;

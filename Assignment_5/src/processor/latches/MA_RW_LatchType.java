@@ -1,8 +1,18 @@
-package processor.pipeline;
+package processor.latches;
 
 public class MA_RW_LatchType {
 
     boolean RW_enable;
+
+    boolean RW_Buzy;
+
+    public boolean isRW_Buzy() {
+        return RW_Buzy;
+    }
+
+    public void setRW_Buzy(boolean RW_Buzy) {
+        this.RW_Buzy = RW_Buzy;
+    }
 
     private int loadResult, opResult, opCode, rd, r31;
 
