@@ -1,4 +1,4 @@
-package generic;
+package generic.event;
 
 import java.util.Comparator;
 import java.util.PriorityQueue;
@@ -24,7 +24,8 @@ public class EventQueue {
 		while(!queue.isEmpty() && queue.peek().getEventTime() <= Clock.getCurrentTime())
 		{
 			Event event = queue.poll();
-			event.getProcessingElement().handleEvent(event);
+            assert event != null;
+            event.getProcessingElement().handleEvent(event);
 		}
 	}
 }
@@ -34,17 +35,6 @@ class EventComparator implements Comparator<Event>
 	@Override
     public int compare(Event x, Event y)
     {
-		if(x.getEventTime() < y.getEventTime())
-		{
-			return -1;
-		}
-		else if(x.getEventTime() > y.getEventTime())
-		{
-			return 1;
-		}
-		else
-		{
-			return 0;
-		}
+		return Long.compare(x.getEventTime(), y.getEventTime());
     }
 }

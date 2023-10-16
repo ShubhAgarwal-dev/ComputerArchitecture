@@ -1,8 +1,13 @@
-package processor.pipeline;
+package processor.pipeline.components;
 
+import generic.event.Element;
+import generic.event.Event;
 import processor.Processor;
+import processor.pipeline.latches.EX_IF_LatchType;
+import processor.pipeline.latches.EX_MA_LatchType;
+import processor.pipeline.latches.OF_EX_LatchType;
 
-public class Execute {
+public class Execute implements Element {
     Processor containingProcessor;
     OF_EX_LatchType OF_EX_Latch;
     EX_MA_LatchType EX_MA_Latch;
@@ -185,4 +190,7 @@ public class Execute {
 
     }
 
+    @Override
+    public void handleEvent(Event event) {
+    }
 }

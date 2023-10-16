@@ -1,8 +1,10 @@
-package processor.pipeline;
+package processor.pipeline.latches;
 
 public class OF_EX_LatchType {
 
     boolean EX_enable;
+
+    public boolean is_EX_busy;
 
     private int opCode, rd, op1, op2, immediate, r31, r1, r2;
 

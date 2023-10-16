@@ -1,8 +1,10 @@
-package processor.pipeline;
+package processor.pipeline.latches;
 
 public class MA_RW_LatchType {
 
     boolean RW_enable;
+
+    public boolean is_RW_busy;
 
     private int loadResult, opResult, opCode, rd, r31;
 

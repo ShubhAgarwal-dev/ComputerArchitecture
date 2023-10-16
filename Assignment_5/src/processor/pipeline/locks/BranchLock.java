@@ -1,4 +1,4 @@
-package processor.pipeline;
+package processor.pipeline.locks;
 
 import generic.Statistics;
 import processor.Processor;

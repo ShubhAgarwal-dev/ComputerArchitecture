@@ -1,8 +1,12 @@
-package processor.pipeline;
+package processor.pipeline.components;
 
+import generic.event.Element;
+import generic.event.Event;
 import processor.Processor;
+import processor.pipeline.latches.EX_MA_LatchType;
+import processor.pipeline.latches.MA_RW_LatchType;
 
-public class MemoryAccess {
+public class MemoryAccess implements Element {
 	Processor containingProcessor;
 	EX_MA_LatchType EX_MA_Latch;
 	MA_RW_LatchType MA_RW_Latch;
@@ -41,4 +45,7 @@ public class MemoryAccess {
 		MA_RW_Latch.setRW_enable(true);
 	}
 
+	@Override
+	public void handleEvent(Event event) {
+	}
 }

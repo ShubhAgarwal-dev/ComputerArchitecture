@@ -1,10 +1,14 @@
-package processor.pipeline;
+package processor.pipeline.components;
 
 import generic.Misc;
 import generic.Statistics;
+import generic.event.Element;
+import generic.event.Event;
 import processor.Processor;
+import processor.pipeline.latches.IF_OF_LatchType;
+import processor.pipeline.latches.OF_EX_LatchType;
 
-public class OperandFetch {
+public class OperandFetch implements Element {
     Processor containingProcessor;
     IF_OF_LatchType IF_OF_Latch;
     OF_EX_LatchType OF_EX_Latch;
@@ -162,4 +166,7 @@ public class OperandFetch {
         }
     }
 
+    @Override
+    public void handleEvent(Event event) {
+    }
 }

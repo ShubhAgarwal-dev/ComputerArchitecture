@@ -1,9 +1,14 @@
-package processor.pipeline;
+package processor.pipeline.components;
 
 import generic.Misc;
+import generic.event.Element;
+import generic.event.Event;
 import processor.Processor;
+import processor.pipeline.latches.EX_IF_LatchType;
+import processor.pipeline.latches.IF_EnableLatchType;
+import processor.pipeline.latches.IF_OF_LatchType;
 
-public class InstructionFetch {
+public class InstructionFetch implements Element {
 	
 	Processor containingProcessor;
 	IF_EnableLatchType IF_EnableLatch;
@@ -50,4 +55,7 @@ public class InstructionFetch {
 		}
 	}
 
+	@Override
+	public void handleEvent(Event event) {
+	}
 }

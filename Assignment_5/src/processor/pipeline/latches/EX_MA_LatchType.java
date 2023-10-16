@@ -1,8 +1,10 @@
-package processor.pipeline;
+package processor.pipeline.latches;
 
 public class EX_MA_LatchType {
 	
 	boolean MA_enable;
+
+	public boolean is_MA_busy;
 
 	private int  opRes, op1, op2, opCode, rd, r31;
 

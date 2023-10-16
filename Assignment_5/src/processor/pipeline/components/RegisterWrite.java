@@ -1,11 +1,15 @@
-package processor.pipeline;
+package processor.pipeline.components;
 
 import generic.Misc;
+import generic.event.Element;
+import generic.event.Event;
 import processor.Processor;
+import processor.pipeline.latches.IF_EnableLatchType;
+import processor.pipeline.latches.MA_RW_LatchType;
 
 import static generic.Simulator.setSimulationComplete;
 
-public class RegisterWrite {
+public class RegisterWrite implements Element {
     Processor containingProcessor;
     MA_RW_LatchType MA_RW_Latch;
     IF_EnableLatchType IF_EnableLatch;
@@ -51,4 +55,7 @@ public class RegisterWrite {
         }
     }
 
+    @Override
+    public void handleEvent(Event event) {
+    }
 }

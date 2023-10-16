@@ -1,8 +1,10 @@
-package processor.pipeline;
+package processor.pipeline.latches;
 
 public class IF_EnableLatchType {
 	
 	boolean IF_enable;
+
+	public boolean is_IF_busy;
 	
 	public IF_EnableLatchType()
 	{

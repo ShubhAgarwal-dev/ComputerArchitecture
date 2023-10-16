@@ -2,6 +2,7 @@ package generic;
 
 import processor.Clock;
 import processor.Processor;
+import generic.event.EventQueue;
 
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
@@ -12,6 +13,13 @@ public class Simulator {
 
     static Processor processor;
     static boolean simulationComplete;
+
+    static EventQueue eventQueue = new EventQueue();
+
+    public static EventQueue getEventQueue() {
+        return eventQueue;
+    }
+
 
     public static void setupSimulation(String assemblyProgramFile, Processor p)  {
         Simulator.processor = p;

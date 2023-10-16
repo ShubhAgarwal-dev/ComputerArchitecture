@@ -1,10 +1,12 @@
-package processor.pipeline;
+package processor.pipeline.latches;
 
 public class IF_OF_LatchType {
 	
 	boolean OF_enable;
 	int instruction;
 	int pc;
+
+	public boolean is_OF_busy;
 	
 	public IF_OF_LatchType()
 	{

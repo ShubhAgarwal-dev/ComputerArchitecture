@@ -1,8 +1,11 @@
 package processor;
 
 import processor.memorysystem.MainMemory;
-import processor.pipeline.*;
 import processor.memorysystem.RegisterFile;
+import processor.pipeline.components.*;
+import processor.pipeline.latches.*;
+import processor.pipeline.locks.BranchLock;
+import processor.pipeline.locks.DataLock;
 
 import javax.sound.midi.Soundbank;
 
