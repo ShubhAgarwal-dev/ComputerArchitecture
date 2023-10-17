@@ -1,6 +1,9 @@
 package processor.memorysystem;
 
-public class MainMemory {
+import generic.event.Element;
+import generic.event.Event;
+
+public class MainMemory implements Element {
 	int[] memory;
 	
 	public MainMemory()
@@ -31,5 +34,9 @@ public class MainMemory {
 		}
 		sb.append("\n");
 		return sb.toString();
+	}
+
+	@Override
+	public void handleEvent(Event event) {
 	}
 }

@@ -135,9 +135,9 @@ public class Execute implements Element {
             int op1 = OF_EX_Latch.getOp1();
             int op2 = OF_EX_Latch.getOp2();
             int rd = OF_EX_Latch.getRd();
-//            if(!containingProcessor.isBranchTaken()) {
-//                EX_MA_Latch.setR31(-1);
-//            }
+            if(!containingProcessor.isBranchTaken()) {
+                EX_MA_Latch.setR31(-1);
+            }
             long calcOpRes = 0;
             long remainder = -1;
             long underflow = -1;
