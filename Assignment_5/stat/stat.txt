@@ -1,0 +1,7 @@
+Static Instructions= 10
+Dynamic Instructions= 241
+Number of Cycles= 0
+IPC = Infinity
+Frequency = 0.0 GHz
+Stalls = 2
+Wrong Branch Taken = 0
