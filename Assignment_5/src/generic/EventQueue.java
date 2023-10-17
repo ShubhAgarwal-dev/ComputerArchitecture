@@ -27,6 +27,10 @@ public class EventQueue {
 		{
 			Event event = this.queue.poll();
 			if(event!=null) {
+				System.out.println("[DEBUG][EQ] Clock Cycle: "+ Clock.getCurrentTime());
+				System.out.println("[DEBUG][EQ] Event Type: "+ event.getEventType());
+				System.out.println("[DEBUG][EQ] Requesting Element: "+ event.getRequestingElement());
+				System.out.println("[DEBUG][EQ] Processing Element: "+ event.getProcessingElement());
 				event.getProcessingElement().handleEvent(event);
 			}
 		}

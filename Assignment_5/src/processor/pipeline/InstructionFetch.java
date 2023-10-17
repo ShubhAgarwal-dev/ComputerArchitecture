@@ -13,6 +13,9 @@ import processor.latches.EX_IF_LatchType;
 import processor.latches.IF_EnableLatchType;
 import processor.latches.IF_OF_LatchType;
 
+import javax.sound.midi.Soundbank;
+import java.sql.SQLOutput;
+
 public class InstructionFetch implements Element {
 
     public IF_OF_LatchType IF_OF_Latch;
@@ -34,11 +37,12 @@ public class InstructionFetch implements Element {
     public void performIF() {
         if (IF_EnableLatch.isIF_enable()) {
             if (IF_EnableLatch.isIF_Buzy()) {
+                System.out.println("[Debug][IF] IF Busy.");
                 return;
             }
-            System.out.println("[Debug] (IF) Running IF stage.");
+            System.out.println("[Debug][IF] Running IF stage.");
             if (containingProcessor.isBranchTaken()) {
-                System.out.println("[Debug] (IF) BRANCH PC: " + containingProcessor.getBranchPC());
+                System.out.println("[Debug][IF] BRANCH PC: " + containingProcessor.getBranchPC());
                 containingProcessor.getRegisterFile().setProgramCounter(containingProcessor.getBranchPC());
                 containingProcessor.setBranchTaken(false);
 
@@ -54,21 +58,26 @@ public class InstructionFetch implements Element {
                     currentPC
             );
             Simulator.getEventQueue().addEvent(currEvent);
+            System.out.println("[Debug][IF] Memory Read Event Added");
+            System.out.println("[Debug][IF] Current PC: "+currentPC);
             IF_EnableLatch.setIF_Buzy(true);
         } else {
             this.containingProcessor.DataLockUnit().dataLockDone += 1;
-            System.out.println("[Debug] (IF) STALL: " + this.containingProcessor.DataLockUnit().dataLockDone);
+            System.out.println("[Debug][IF] STALL: " + this.containingProcessor.DataLockUnit().dataLockDone);
         }
     }
 
     @Override
     public void handleEvent(Event event) {
         if (IF_OF_Latch.isOF_Buzy()) {
+            System.out.println("[DEBUG][IF] Handling IF OF Busy");
             event.setEventTime(Clock.getCurrentTime() + 1);
             Simulator.getEventQueue().addEvent(event);
         } else {
             MemoryResponseEvent e = (MemoryResponseEvent) event;
             IF_OF_Latch.setInstruction(e.getValue());
+            System.out.println("[DEBUG][IF] Handling IF Memory Response");
+            System.out.println("[DEBUG][IF] Instruction: "+e.getValue());
             IF_OF_Latch.setOF_enable(true);
             IF_EnableLatch.setIF_Buzy(false);
         }

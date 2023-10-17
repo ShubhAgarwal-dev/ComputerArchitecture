@@ -1,0 +1,11 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Main" type="Application" factoryName="Application">
+    <output_file path="D:\Sem\ComputerArchitecture\Assignment_5\logs\evenorodd.log" is_save="true" />
+    <option name="MAIN_CLASS_NAME" value="main.Main" />
+    <module name="Assignment_5" />
+    <option name="PROGRAM_PARAMETERS" value="./src/configuration/config.xml ./stat/stat.txt ./test_cases/evenorodd.out" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

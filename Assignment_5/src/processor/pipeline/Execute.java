@@ -135,23 +135,27 @@ public class Execute implements Element {
 
     public void performEX() {
         if (OF_EX_Latch.isEX_enable()) {
-            if(OF_EX_Latch.isEX_Buzy()){
+            if (OF_EX_Latch.isEX_Buzy()) {
+                System.out.println("[Debug][EX] EX Buzy.");
                 return;
             }
-            System.out.println("[Debug] (EX) Executing state running.");
+            System.out.println("[Debug][EX] Executing state running.");
             int latency = 0;
-            if(OF_EX_Latch.getOpCode()==4 || OF_EX_Latch.getOpCode()==5){
+            if (OF_EX_Latch.getOpCode() == 4 || OF_EX_Latch.getOpCode() == 5) {
                 latency = Configuration.multiplier_latency;
-            }else if(OF_EX_Latch.getOpCode()==6 || OF_EX_Latch.getOpCode()==7){
+            } else if (OF_EX_Latch.getOpCode() == 6 || OF_EX_Latch.getOpCode() == 7) {
                 latency = Configuration.divider_latency;
-            }else{
+            } else {
                 latency = Configuration.ALU_latency;
             }
+            System.out.println("[DEBUG][EX] OpCode: " + OF_EX_Latch.getOpCode());
+            System.out.println("[DEBUG][EX] Latency: " + latency);
             Simulator.getEventQueue().addEvent(new ALUResponseEvent(
                     Clock.getCurrentTime() + latency,
                     this,
                     this
             ));
+            System.out.println("[DEBUG][EX] ALU Response Event Added");
             OF_EX_Latch.setEX_Buzy(true);
         }
     }
@@ -159,10 +163,10 @@ public class Execute implements Element {
     @Override
     public void handleEvent(Event event) {
         if (EX_MA_Latch.isMA_Buzy()) {
+            System.out.println("[DEBUG][EX] Handling EX MA Busy");
             event.setEventTime(Clock.getCurrentTime() + 1);
             Simulator.getEventQueue().addEvent(event);
-            return;
-        }else{
+        } else {
             ALUResponseEvent e = (ALUResponseEvent) event;
             opCode = OF_EX_Latch.getOpCode();
             immediate = OF_EX_Latch.getImmediate();
@@ -205,10 +209,10 @@ public class Execute implements Element {
 
             // passing data to latch
             setR31Register(overflow, (int) underflow, (int) remainder, op1);
-
-            System.out.println("[Debug] (EX) ALU Result: " + opRes);
-            System.out.println("[Debug] (EX) r31: " + EX_MA_Latch.getR31());
-            System.out.println("[Debug] (EX) isBranchTaken: " + containingProcessor.isBranchTaken());
+            System.out.println("[DEBUG][EX] Handling ALU Response");
+            System.out.println("[Debug][EX] ALU Result: " + opRes);
+            System.out.println("[Debug][EX] r31: " + EX_MA_Latch.getR31());
+            System.out.println("[Debug][EX] isBranchTaken: " + containingProcessor.isBranchTaken());
             EX_MA_Latch.setOp1(op1);
             EX_MA_Latch.setOp2(op2);
             EX_MA_Latch.setOpRes(opRes);
@@ -217,6 +221,8 @@ public class Execute implements Element {
             containingProcessor.getBranchLockUnit().checkBranchHazard();
             EX_MA_Latch.setMA_enable(true);
             OF_EX_Latch.setEX_Buzy(false);
+            OF_EX_Latch.setEX_enable(false);
+            System.out.println("[Debug][EX] EX Disabled");
         }
     }
 

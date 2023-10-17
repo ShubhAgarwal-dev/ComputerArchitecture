@@ -37,6 +37,7 @@ public class MainMemory implements Element {
     @Override
     public void handleEvent(Event event) {
         if (event.getEventType() == Event.EventType.MemoryRead) {
+            System.out.println("[DEBUG][MM] Handling Memory Read Event");
             MemoryReadEvent e = (MemoryReadEvent) event;
             Simulator.getEventQueue().addEvent(new MemoryResponseEvent(
                     Clock.getCurrentTime(),
@@ -44,10 +45,13 @@ public class MainMemory implements Element {
                     event.getRequestingElement(),
                     getWord(((MemoryReadEvent) event).getAddressToReadFrom())
             ));
+            System.out.println("[DEBUG][MM] Added Memory Response Event");
         } else if (event.getEventType() == Event.EventType.MemoryResponse) {
+            System.out.println("[DEBUG][MM] Handling Memory Response Event");
 			MemoryResponseEvent e = (MemoryResponseEvent) event;
             e.getRequestingElement().handleEvent(e);
         } else if (event.getEventType() == Event.EventType.MemoryWrite) {
+            System.out.println("[DEBUG][MM] Handling Memory Write Event");
             MemoryWriteEvent e = (MemoryWriteEvent) event;
             e.getRequestingElement().handleEvent(e);
         }

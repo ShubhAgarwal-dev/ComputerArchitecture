@@ -57,6 +57,7 @@ public class Simulator {
 
 
         while (!simulationComplete) {
+            System.out.println("[Debug] Cycle Number: "+Clock.getCurrentTime());
             processor.getRWUnit().performRW();
             if (simulationComplete) {
                 break;

@@ -1,9 +1,16 @@
 package processor.locks;
 
+import generic.Element;
+import generic.Event;
+import generic.Simulator;
 import generic.Statistics;
+import generic.events.MemoryResponseEvent;
+import generic.events.OFEvent;
+import processor.Clock;
 import processor.Processor;
+import processor.pipeline.OperandFetch;
 
-public class DataLock {
+public class DataLock implements Element {
     boolean isSrc1 = true;
     int src11= 0;
     boolean isSrc2 = false;
@@ -47,11 +54,11 @@ public class DataLock {
             this.isSrc2 = true;
             this.src21 = this.des1;
         } else if (opCode == 22) {
-            System.out.println("[Debug] (DL) LOAD, SRC 1: " + this.src11 + ", SRC 2: " + this.src21 + ", SRC 3: " + this.des1);
+            System.out.println("[Debug][DL] LOAD, SRC 1: " + this.src11 + ", SRC 2: " + this.src21 + ", SRC 3: " + this.des1);
         }
-        System.out.println("[Debug] (DL) rd:" + this.des1);
-        if (this.isSrc1) { System.out.println("[Debug] (DL) rs1:" + this.src11); }
-        if (this.isSrc2) { System.out.println("[Debug] (DL) rs2:" + this.src21); }
+        System.out.println("[Debug][DL] rd:" + this.des1);
+        if (this.isSrc1) { System.out.println("[Debug][DL] rs1:" + this.src11); }
+        if (this.isSrc2) { System.out.println("[Debug][DL] rs2:" + this.src21); }
 //        System.out.println("\n");
     }
 
@@ -74,16 +81,17 @@ public class DataLock {
     private void performLock() {
         this.containingProcessor.IF_EnableLatch().setIF_enable(false);
         this.containingProcessor.IF_OF_Latch().setOF_enable(false);
+        Simulator.getEventQueue().addEvent(new OFEvent(Clock.getCurrentTime()+1,this, containingProcessor.getOFUnit(),containingProcessor.IF_OF_Latch().getInstruction()));
         this.containingProcessor.OF_EX_Latch().setOpCode(0);
         this.containingProcessor.OF_EX_Latch().setOp1(0);
         this.containingProcessor.OF_EX_Latch().setOp2(0);
         this.containingProcessor.OF_EX_Latch().setR31(0);
         this.containingProcessor.OF_EX_Latch().setRd(0);
-        System.out.println("[Debug] (DL): DATA LOCK IS EXECUTNG RN << WHY WHY WHY");
+        System.out.println("[Debug][DL]: DATA LOCK IS EXECUTING RN << WHY WHY WHY");
     }
 
     public void DLU(){
-        System.out.println("[Debug] (DL): DLU is RUNNING.");
+        System.out.println("[Debug][DL]: DLU is RUNNING.");
         this.setSrcDest();
         this.dataLockDone = 0;
         if (this.checkDataHazard()) {
@@ -91,5 +99,10 @@ public class DataLock {
             this.init();
         }
         this.performAppend();
+    }
+
+    @Override
+    public void handleEvent(Event event) {
+
     }
 }

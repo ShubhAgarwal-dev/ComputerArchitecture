@@ -6,6 +6,8 @@ public class EX_MA_LatchType {
 
 	private int  opRes, op1, op2, opCode, rd, r31;
 
+	boolean MA_Buzy;
+
 	public boolean isMA_Buzy() {
 		return MA_Buzy;
 	}
@@ -14,7 +16,6 @@ public class EX_MA_LatchType {
 		this.MA_Buzy = MA_Buzy;
 	}
 
-	boolean MA_Buzy;
 
 	public int getOpRes() {
 		return opRes;
