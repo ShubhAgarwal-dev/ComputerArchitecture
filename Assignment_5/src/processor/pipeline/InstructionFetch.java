@@ -43,7 +43,7 @@ public class InstructionFetch implements Element {
             System.out.println("[Debug][IF] Running IF stage.");
             if (containingProcessor.isBranchTaken()) {
                 System.out.println("[Debug][IF] BRANCH PC: " + containingProcessor.getBranchPC());
-                containingProcessor.getRegisterFile().setProgramCounter(containingProcessor.getBranchPC());
+                containingProcessor.getRegisterFile().setProgramCounter(containingProcessor.getBranchPC()-1);
                 containingProcessor.setBranchTaken(false);
 
             } else {
