@@ -1,0 +1,7 @@
+Static Instructions= 17
+Dynamic Instructions= 56
+Number of Cycles= 2004
+IPC = 0.006487026
+Frequency = 1.0 GHz
+Stalls = 18
+Wrong Branch Taken = 7

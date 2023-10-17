@@ -54,9 +54,6 @@ public class Simulator {
         Statistics.setStalls(0);
         Statistics.setNumBranchHazards(0);
 
-        int cycles = 0;
-        int numberOfInstructionsExecuted = 0;
-
 
         while (!simulationComplete) {
             System.out.println("[Debug] Cycle Number: "+Clock.getCurrentTime());
@@ -71,13 +68,12 @@ public class Simulator {
             processor.getIFUnit().performIF();
             System.out.println("\n");
             Clock.incrementClock();
-            numberOfInstructionsExecuted += 1;
         }
         processor.getRegisterFile().setProgramCounter(processor.getIFUnit().endPC+1);
-        Statistics.setNumCycles(cycles);
-        Statistics.setDynamicInstCount(numberOfInstructionsExecuted - 4);
+        Statistics.setNumCycles((int) Clock.getCurrentTime());
+//        Statistics.setDynamicInstCount(numberOfInstructionsExecuted - 4);
         Statistics.setFrequency((float) Statistics.getNumCycles() / Clock.getCurrentTime());
-        float correct_inst = numberOfInstructionsExecuted - Statistics.getStalls() * 2 - Statistics.getNumBranchHazards();
+        float correct_inst = Statistics.getDynamicInstCount() - Statistics.getStalls() * 2 - Statistics.getNumBranchHazards();
         Statistics.setIPC(correct_inst / Statistics.getNumCycles());
     }
 

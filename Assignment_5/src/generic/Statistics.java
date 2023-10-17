@@ -3,9 +3,9 @@ package generic;
 import java.io.PrintWriter;
 
 public class Statistics {
-    static int staticInstCount;
-    static int dynamicInstCount;
-    static int numCycles;
+    static int staticInstCount = 0;
+    static int dynamicInstCount = 0;
+    static int numCycles = 0;
     static float IPC;
     static float frequency;
 

@@ -1,10 +1,7 @@
 package processor.pipeline;
 
 import configuration.Configuration;
-import generic.Element;
-import generic.Event;
-import generic.Misc;
-import generic.Simulator;
+import generic.*;
 import generic.events.MemoryReadEvent;
 import generic.events.MemoryResponseEvent;
 import processor.Clock;
@@ -87,6 +84,7 @@ public class InstructionFetch implements Element {
             event.setEventTime(Clock.getCurrentTime() + 1);
             Simulator.getEventQueue().addEvent(event);
         } else {
+            Statistics.setDynamicInstCount(Statistics.getDynamicInstCount() + 1);
             MemoryResponseEvent e = (MemoryResponseEvent) event;
             IF_OF_Latch.setInstruction(e.getValue());
             System.out.println("[DEBUG][IF] Handling IF Memory Response");
