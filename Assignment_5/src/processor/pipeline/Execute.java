@@ -211,7 +211,7 @@ public class Execute implements Element {
             setR31Register(overflow, (int) underflow, (int) remainder, op1);
             System.out.println("[DEBUG][EX] Handling ALU Response");
             System.out.println("[Debug][EX] ALU Result: " + opRes);
-            System.out.println("[Debug][EX] r31: " + EX_MA_Latch.getR31());
+            System.out.println("[Debug][EX] r31: " + containingProcessor.getRegisterFile().getValue(31));
             System.out.println("[Debug][EX] isBranchTaken: " + containingProcessor.isBranchTaken());
             EX_MA_Latch.setOp1(op1);
             EX_MA_Latch.setOp2(op2);

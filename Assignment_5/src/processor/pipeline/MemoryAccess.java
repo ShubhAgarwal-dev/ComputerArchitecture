@@ -30,7 +30,7 @@ public class MemoryAccess implements Element {
                 System.out.println("[Debug][MA] MA Busy.");
                 return;
             }
-            System.out.println("[Debug][MA] is running.");
+            System.out.println("[Debug][MA] MA is running.");
             int opCode = EX_MA_Latch.getOpCode();
             if (opCode == 22) {
                 int memoLocation = EX_MA_Latch.getOpRes();
@@ -58,6 +58,13 @@ public class MemoryAccess implements Element {
                 );
                 System.out.println("[Debug][MA] Memory Write Event Added.");
                 EX_MA_Latch.setMA_Buzy(true);
+            }else{
+                EX_MA_Latch.setMA_enable(false);
+                MA_RW_Latch.setOpResult(EX_MA_Latch.getOpRes());
+                MA_RW_Latch.setR31(EX_MA_Latch.getR31());
+                MA_RW_Latch.setOpCode(EX_MA_Latch.getOpCode());
+                MA_RW_Latch.setRd(EX_MA_Latch.getRd());
+                MA_RW_Latch.setRW_enable(true);
             }
         }
     }
