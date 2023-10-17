@@ -71,7 +71,7 @@ public class Simulator {
             Clock.incrementClock();
             numberOfInstructionsExecuted += 1;
         }
-        processor.getRegisterFile().setProgramCounter(processor.getIFUnit().endPC + 1);
+        processor.getRegisterFile().setProgramCounter(processor.getIFUnit().endPC+1);
         Statistics.setNumCycles(cycles);
         Statistics.setDynamicInstCount(numberOfInstructionsExecuted - 4);
         Statistics.setFrequency((float) Statistics.getNumCycles() / Clock.getCurrentTime());

@@ -57,6 +57,10 @@ public class InstructionFetch implements Element {
                     containingProcessor.getMainMemory(),
                     currentPC
             );
+            int newInstruction = containingProcessor.getMainMemory().getWord(currentPC);
+            if ((Integer.toBinaryString(newInstruction)+"0".repeat(32-Integer.toBinaryString(newInstruction).length())).substring(0, 5).equals("11101")){
+                this.endPC = currentPC;
+            }
             Simulator.getEventQueue().addEvent(currEvent);
             System.out.println("[Debug][IF] Memory Read Event Added");
             System.out.println("[Debug][IF] Current PC: "+currentPC);
