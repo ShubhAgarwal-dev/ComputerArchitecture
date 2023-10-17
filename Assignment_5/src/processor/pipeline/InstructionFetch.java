@@ -51,6 +51,15 @@ public class InstructionFetch implements Element {
 
             }
             int currentPC = Misc.getPC(containingProcessor);
+
+            if (Simulator.PrimeDebug) {
+                if (currentPC == 11){
+                    System.out.println("[Debug][IF] Getting Inside Prime << ERROR ALERT <<");
+                }
+                if (currentPC == 14){
+                    System.out.println("[Debug][IF] Getting Inside Not Prime << NOT AN ERROR ALERT <<");
+                }
+            }
             currEvent = new MemoryReadEvent(
                     Clock.getCurrentTime() + Configuration.mainMemoryLatency,
                     this,
