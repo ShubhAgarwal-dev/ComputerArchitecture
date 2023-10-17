@@ -27,6 +27,7 @@ public class BranchLock implements Element {
                 System.out.println("\t\t[Debug][BL] IS BEING DONE WHILE DL IS GOING ON.");
             }
 //            this.containingProcessor.IF_OF_Latch().setInstruction(0);
+            Simulator.getEventQueue().removeEvent(containingProcessor.getIFUnit().currEvent);
             Simulator.getEventQueue().addEvent(new MemoryResponseEvent(Clock.getCurrentTime()-10, this, containingProcessor.getIFUnit(), 0));
 //            this.containingProcessor.OF_EX_Latch().setOpCode(0);
 //            this.containingProcessor.OF_EX_Latch().setOp1(0);

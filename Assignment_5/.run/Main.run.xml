@@ -1,9 +1,9 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="Main" type="Application" factoryName="Application">
-    <output_file path="D:\Sem\ComputerArchitecture\Assignment_5\logs\prime.log" is_save="true" />
+    <output_file path="D:\Sem\ComputerArchitecture\Assignment_5\logs\descending.log" is_save="true" />
     <option name="MAIN_CLASS_NAME" value="main.Main" />
     <module name="Assignment_5" />
-    <option name="PROGRAM_PARAMETERS" value="./src/configuration/config.xml ./stat/stat.txt ./test_cases/prime.out" />
+    <option name="PROGRAM_PARAMETERS" value="./src/configuration/config.xml ./stat/stat.txt ./test_cases/descending.out" />
     <method v="2">
       <option name="Make" enabled="true" />
     </method>
