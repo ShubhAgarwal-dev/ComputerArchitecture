@@ -1,7 +1,7 @@
 Static Instructions= 17
-Dynamic Instructions= 723
+Dynamic Instructions= 1873
 Number of Cycles= 0
 IPC = Infinity
 Frequency = 0.0 GHz
-Stalls = 5
-Wrong Branch Taken = 4
+Stalls = 12
+Wrong Branch Taken = 10

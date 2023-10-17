@@ -121,6 +121,7 @@ public class Execute implements Element {
     private void handelBranchTaken(int opCode, int op1, int op2) {
         if (opCode == 24) {
             this.containingProcessor.setBranchTaken(true);
+            System.out.println("[Debug][EX] Jumping");
         } else if (opCode == 25) {
             this.containingProcessor.setBranchTaken(op1 == op2);
         } else if (opCode == 26) {

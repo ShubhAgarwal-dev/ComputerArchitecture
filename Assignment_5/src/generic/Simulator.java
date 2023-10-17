@@ -19,6 +19,8 @@ public class Simulator {
         return eventQueue;
     }
 
+    public static boolean PrimeDebug = true;
+
     public static void setupSimulation(String assemblyProgramFile, Processor p) {
         Simulator.processor = p;
         loadProgram(assemblyProgramFile);
