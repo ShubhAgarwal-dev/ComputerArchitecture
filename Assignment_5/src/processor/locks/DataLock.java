@@ -81,7 +81,8 @@ public class DataLock implements Element {
     private void performLock() {
         this.containingProcessor.IF_EnableLatch().setIF_enable(false);
         this.containingProcessor.IF_OF_Latch().setOF_enable(false);
-        Simulator.getEventQueue().addEvent(new OFEvent(Clock.getCurrentTime()+1,this, containingProcessor.getOFUnit(),containingProcessor.IF_OF_Latch().getInstruction()));
+        Simulator.getEventQueue().addEvent(new OFEvent(Clock.getCurrentTime()+1,this,
+                containingProcessor.getOFUnit(),containingProcessor.IF_OF_Latch().getInstruction()));
         this.containingProcessor.OF_EX_Latch().setOpCode(0);
         this.containingProcessor.OF_EX_Latch().setOp1(0);
         this.containingProcessor.OF_EX_Latch().setOp2(0);

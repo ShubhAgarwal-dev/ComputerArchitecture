@@ -1,5 +1,6 @@
 package processor.locks;
 
+import configuration.Configuration;
 import generic.Element;
 import generic.Event;
 import generic.Simulator;
@@ -28,7 +29,8 @@ public class BranchLock implements Element {
             }
 //            this.containingProcessor.IF_OF_Latch().setInstruction(0);
             Simulator.getEventQueue().removeEvent(containingProcessor.getIFUnit().currEvent);
-            Simulator.getEventQueue().addEvent(new MemoryResponseEvent(Clock.getCurrentTime()-10, this, containingProcessor.getIFUnit(), 0));
+            Simulator.getEventQueue().addEvent(new MemoryResponseEvent(Clock.getCurrentTime() -
+                    Configuration.mainMemoryLatency * (long) 10, this, containingProcessor.getIFUnit(), 0));
 //            this.containingProcessor.OF_EX_Latch().setOpCode(0);
 //            this.containingProcessor.OF_EX_Latch().setOp1(0);
 //            this.containingProcessor.OF_EX_Latch().setOp2(0);
