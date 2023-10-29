@@ -5,12 +5,8 @@ import processor.interlocks.DataLock;
 import processor.memorysystem.Cache;
 import processor.memorysystem.MainMemory;
 import processor.memorysystem.RegisterFile;
-import processor.pipeline.stages.RegisterWrite;
 import processor.pipeline.latch.*;
-import processor.pipeline.stages.Execute;
-import processor.pipeline.stages.InstructionFetch;
-import processor.pipeline.stages.MemoryAccess;
-import processor.pipeline.stages.OperandFetch;
+import processor.pipeline.stages.*;
 
 public class Processor {
 
@@ -30,11 +26,11 @@ public class Processor {
     MemoryAccess MAUnit;
     RegisterWrite RWUnit;
 
-    DataLock dataLockUnit; // The Data-Interlock unit of the processor
-    BranchLock branchLockUnit; // The Control-Interlock unit of the processor
+    DataLock dataLockUnit;
+    BranchLock branchLockUnit;
 
-    Cache l1iCache; // L1i Cache
-    Cache l1dCache; // L1d Cache
+    Cache l1iCache;
+    Cache l1dCache;
 
     public Processor() {
         registerFile = new RegisterFile();
@@ -53,7 +49,7 @@ public class Processor {
         MAUnit = new MemoryAccess(this, EX_MA_Latch, MA_RW_Latch);
         RWUnit = new RegisterWrite(this, MA_RW_Latch, IF_EnableLatch);
 
-        // Initializing Data-Interlock unit and Control-Interlock unit
+
         dataLockUnit =
                 new DataLock(this, IF_EnableLatch, IF_OF_Latch, EX_MA_Latch, MA_RW_Latch);
         branchLockUnit = new BranchLock(IF_OF_Latch, EX_IF_Latch);
@@ -105,7 +101,7 @@ public class Processor {
         return RWUnit;
     }
 
-    // Getter and Setter Methods for Interlock units defined above
+
     public DataLock getDataInterlockUnit() {
         return dataLockUnit;
     }

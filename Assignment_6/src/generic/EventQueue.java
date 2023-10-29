@@ -20,10 +20,10 @@ public class EventQueue {
     public void processEvents() {
         while (!queue.isEmpty() && queue.peek().getEventTime() <= Clock.getCurrentTime()) {
             Event event = queue.poll();
-            // System.out.println("--------------------------------"); // TEST
-            // System.out.println("Triggering Event: \n" + event); // TEST
+
+
             event.getProcessingElement().handleEvent(event);
-            // System.out.println("--------------------------------"); // TEST
+
         }
     }
 }
