@@ -1,15 +1,7 @@
 package processor.memorysystem;
 
 import configuration.Configuration;
-import generic.CacheReadEvent;
-import generic.CacheResponseEvent;
-import generic.CacheWriteEvent;
-import generic.Element;
-import generic.Event;
-import generic.MemoryReadEvent;
-import generic.MemoryResponseEvent;
-import generic.MemoryWriteEvent;
-import generic.Simulator;
+import generic.*;
 import processor.Clock;
 import processor.Processor;
 

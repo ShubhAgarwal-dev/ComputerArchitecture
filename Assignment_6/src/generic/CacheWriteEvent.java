@@ -6,7 +6,7 @@ public class CacheWriteEvent extends Event {
     int value;
 
     public CacheWriteEvent(long eventTime, Element requestingElement, Element processingElement,
-            int address, int value) {
+                           int address, int value) {
         super(eventTime, EventType.CacheWrite, requestingElement, processingElement);
         this.addressToWriteTo = address;
         this.value = value;
