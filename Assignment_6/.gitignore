@@ -27,3 +27,8 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+
+bin/*
+jars/*
+.idea/
+Assignment_5.iml

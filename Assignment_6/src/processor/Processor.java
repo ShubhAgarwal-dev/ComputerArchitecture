@@ -12,8 +12,8 @@ import processor.pipeline.MA_RW_LatchType;
 import processor.pipeline.MemoryAccess;
 import processor.pipeline.OF_EX_LatchType;
 import processor.pipeline.OperandFetch;
-import processor.pipeline.RegisterFile;
-import processor.pipeline.RegisterWrite;
+import processor.memorysystem.RegisterFile;
+import processor.memorysystem.RegisterWrite;
 
 // Importing the Interlocks
 import processor.interlocks.DataInterlock;

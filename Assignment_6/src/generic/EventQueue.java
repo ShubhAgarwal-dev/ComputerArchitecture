@@ -18,7 +18,7 @@ public class EventQueue {
 	}
 
 	public void processEvents() {
-		while (queue.isEmpty() == false && queue.peek().getEventTime() <= Clock.getCurrentTime()) {
+		while (!queue.isEmpty() && queue.peek().getEventTime() <= Clock.getCurrentTime()) {
 			Event event = queue.poll();
 			// System.out.println("--------------------------------"); // TEST
 			// System.out.println("Triggering Event: \n" + event); // TEST

@@ -1,4 +1,4 @@
-package processor.pipeline;
+package processor.memorysystem;
 
 public class RegisterFile {
 	int[] registerFile;

@@ -5,6 +5,10 @@ import generic.Misc;
 import generic.Statistics;
 import processor.Processor;
 import generic.Simulator;
+import processor.memorysystem.MainMemory;
+import processor.memorysystem.RegisterFile;
+
+import java.util.ArrayList;
 
 public class Main {
 
@@ -25,6 +29,23 @@ public class Main {
 										// wish to print. this is an empty set.
 
 		Statistics.printStatistics(args[1]);
+		System.out.println("Hash of the Processor State = "+getHashCode(processor.getRegisterFile(), processor.getMainMemory()));
+	}
+
+	static int getHashCode(RegisterFile registerState, MainMemory memoryState) {
+		ArrayList<Integer> hash = new ArrayList<Integer>();
+
+		hash.add(registerState.getProgramCounter());
+
+		for(int i=0;i<32;i++) {
+			hash.add(registerState.getValue(i));
+		}
+
+		for(int i=0;i<65536;i++) {
+			hash.add(memoryState.getWord(i));
+		}
+
+		return hash.hashCode();
 	}
 
 }

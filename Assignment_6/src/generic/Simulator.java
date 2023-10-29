@@ -73,56 +73,22 @@ public class Simulator {
 
 		int count = 0;
 
-		while (simulationComplete == false) { // while simulation doesn't complete
-			if (count > 800) {
-				// return;
-			}
-			++count;
-			// System.out.println("====================== Clock: " + Clock.getCurrentTime()
-			// + " ==================="); // TEST
-
-			processor.getRWUnit().performRW(); // Register Write Stage
-
-			// System.out.println("======================\n"); // TEST
-
-			processor.getMAUnit().performMA(); // Memory Access Stage
-
-			// System.out.println("======================\n"); // TEST
-
-			processor.getEXUnit().performEX(); // Execution Stage
-
-			// System.out.println("======================\n"); // TEST
-
+		while (!simulationComplete) { // while simulation doesn't complete
+			processor.getRWUnit().performRW();
+			if (simulationComplete) {break;}
+			processor.getMAUnit().performMA();
+			processor.getEXUnit().performEX();
 			eventQueue.processEvents();
-
-			// System.out.println("======================\n"); // TEST
-
-			processor.getOFUnit().performOF(); // Operand Fetch Stage
-
-			// System.out.println("======================\n"); // TEST
-
-			processor.getIFUnit().performIF(); // Instruction Fetch Stage
-
-			// System.out.println("##### Mem: " + processor.getMainMemory().isMainBusy()); // TEST
-			// System.out.println("##### L1i: " + processor.getL1iCache().isCacheBusy()); // TEST
-			// System.out.println("##### L1d: " + processor.getL1dCache().isCacheBusy()); // TEST
-
-			Clock.incrementClock(); // Incrementing Clock
+			processor.getOFUnit().performOF();
+			processor.getIFUnit().performIF();
+			Clock.incrementClock();
 
 		}
-
-		// set statistics
-		// The current clock time will be the number of cycles occur
-		Statistics.setNumberOfCycles((int) Clock.getCurrentTime());
-
-		// Setting the number of instructions
-		Statistics.setNumberOfInstructions(numInst);
-
-		// Setting the number of times the OF stage needed to stall because of a data hazard
-		Statistics.setNumberOfDataHazards(numDataHazards);
-
-		// Setting the number of times an instruction on a wrong branch path entered the pipeline
-		Statistics.setNumberOfNop(numNop);
+		processor.getRegisterFile().setProgramCounter(processor.getRegisterFile().getProgramCounter() - 1);
+		Statistics.setNumCycles((int) Clock.getCurrentTime());
+		Statistics.setFrequency((float) Statistics.getNumCycles() / Clock.getCurrentTime());
+		float correct_inst = Statistics.getDynamicInstCount() - Statistics.getStalls() * 2 - Statistics.getNumBranchHazards();
+		Statistics.setIPC(correct_inst / Statistics.getNumCycles());
 	}
 
 	public static void setSimulationComplete(boolean value) {
