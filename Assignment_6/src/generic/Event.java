@@ -2,52 +2,54 @@ package generic;
 
 public class Event {
 
-	public enum EventType {
-		ExecutionComplete, MemoryRead, MemoryResponse, MemoryWrite, StoreEvent, CacheRead, CacheWrite, CacheResponse
-	};
+    public enum EventType {
+        ExecutionComplete, MemoryRead, MemoryResponse, MemoryWrite, StoreEvent, CacheRead, CacheWrite, CacheResponse
+    }
 
-	long eventTime;
-	Element requestingElement;
-	Element processingElement;
-	EventType eventType;
+    ;
 
-	public Event(long eventTime, EventType eventType, Element requestingElement,
-			Element processingElement) {
-		this.eventTime = eventTime;
-		this.eventType = eventType;
-		this.requestingElement = requestingElement;
-		this.processingElement = processingElement;
-	}
+    long eventTime;
+    Element requestingElement;
+    Element processingElement;
+    EventType eventType;
 
-	public long getEventTime() {
-		return eventTime;
-	}
+    public Event(long eventTime, EventType eventType, Element requestingElement,
+                 Element processingElement) {
+        this.eventTime = eventTime;
+        this.eventType = eventType;
+        this.requestingElement = requestingElement;
+        this.processingElement = processingElement;
+    }
 
-	public void setEventTime(long eventTime) {
-		this.eventTime = eventTime;
-	}
+    public long getEventTime() {
+        return eventTime;
+    }
 
-	public Element getRequestingElement() {
-		return requestingElement;
-	}
+    public void setEventTime(long eventTime) {
+        this.eventTime = eventTime;
+    }
 
-	public void setRequestingElement(Element requestingElement) {
-		this.requestingElement = requestingElement;
-	}
+    public Element getRequestingElement() {
+        return requestingElement;
+    }
 
-	public Element getProcessingElement() {
-		return processingElement;
-	}
+    public void setRequestingElement(Element requestingElement) {
+        this.requestingElement = requestingElement;
+    }
 
-	public void setProcessingElement(Element processingElement) {
-		this.processingElement = processingElement;
-	}
+    public Element getProcessingElement() {
+        return processingElement;
+    }
 
-	public EventType getEventType() {
-		return eventType;
-	}
+    public void setProcessingElement(Element processingElement) {
+        this.processingElement = processingElement;
+    }
 
-	public void setEventType(EventType eventType) {
-		this.eventType = eventType;
-	}
+    public EventType getEventType() {
+        return eventType;
+    }
+
+    public void setEventType(EventType eventType) {
+        this.eventType = eventType;
+    }
 }

@@ -1,43 +1,43 @@
 package generic;
 
+import processor.Clock;
+
 import java.util.Comparator;
 import java.util.PriorityQueue;
 
-import processor.Clock;
-
 public class EventQueue {
 
-	PriorityQueue<Event> queue;
+    PriorityQueue<Event> queue;
 
-	public EventQueue() {
-		queue = new PriorityQueue<Event>(new EventComparator());
-	}
+    public EventQueue() {
+        queue = new PriorityQueue<Event>(new EventComparator());
+    }
 
-	public void addEvent(Event event) {
-		queue.add(event);
-	}
+    public void addEvent(Event event) {
+        queue.add(event);
+    }
 
-	public void processEvents() {
-		while (!queue.isEmpty() && queue.peek().getEventTime() <= Clock.getCurrentTime()) {
-			Event event = queue.poll();
-			// System.out.println("--------------------------------"); // TEST
-			// System.out.println("Triggering Event: \n" + event); // TEST
-			event.getProcessingElement().handleEvent(event);
-			// System.out.println("--------------------------------"); // TEST
-		}
-	}
+    public void processEvents() {
+        while (!queue.isEmpty() && queue.peek().getEventTime() <= Clock.getCurrentTime()) {
+            Event event = queue.poll();
+            // System.out.println("--------------------------------"); // TEST
+            // System.out.println("Triggering Event: \n" + event); // TEST
+            event.getProcessingElement().handleEvent(event);
+            // System.out.println("--------------------------------"); // TEST
+        }
+    }
 }
 
 
 class EventComparator implements Comparator<Event> {
-	@Override
-	public int compare(Event x, Event y) {
-		if (x.getEventTime() < y.getEventTime()) {
-			return -1;
-		} else if (x.getEventTime() > y.getEventTime()) {
-			return 1;
-		} else {
-			return 0;
-		}
-	}
+    @Override
+    public int compare(Event x, Event y) {
+        if (x.getEventTime() < y.getEventTime()) {
+            return -1;
+        } else if (x.getEventTime() > y.getEventTime()) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
 }

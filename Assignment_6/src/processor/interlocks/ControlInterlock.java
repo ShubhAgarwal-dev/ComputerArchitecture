@@ -1,8 +1,8 @@
 package processor.interlocks;
 
-import processor.pipeline.IF_OF_LatchType;
 import generic.Simulator;
-import processor.pipeline.EX_IF_LatchType;
+import processor.pipeline.latch.EX_IF_LatchType;
+import processor.pipeline.latch.IF_OF_LatchType;
 
 // Control-Interlock Class to implement the functionality of Control-Interlock
 public class ControlInterlock {

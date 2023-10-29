@@ -5,7 +5,7 @@ public class CacheResponseEvent extends Event {
     int value;
 
     public CacheResponseEvent(long eventTime, Element requestingElement, Element processingElement,
-            int value) {
+                              int value) {
         super(eventTime, EventType.CacheResponse, requestingElement, processingElement);
         this.value = value;
     }

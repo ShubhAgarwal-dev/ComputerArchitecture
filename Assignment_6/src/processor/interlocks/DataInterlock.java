@@ -1,17 +1,16 @@
 package processor.interlocks;
 
-import processor.pipeline.IF_EnableLatchType;
-import processor.pipeline.IF_OF_LatchType;
-import processor.pipeline.EX_MA_LatchType;
-import processor.pipeline.MA_RW_LatchType;
-import processor.Processor;
-
 import generic.Instruction;
-import generic.Simulator;
 import generic.Instruction.OperationType;
+import generic.Misc;
 import generic.Operand;
 import generic.Operand.OperandType;
-import generic.Misc;
+import generic.Simulator;
+import processor.Processor;
+import processor.pipeline.latch.EX_MA_LatchType;
+import processor.pipeline.latch.IF_EnableLatchType;
+import processor.pipeline.latch.IF_OF_LatchType;
+import processor.pipeline.latch.MA_RW_LatchType;
 
 // DataInterlock class to implement the functionality of Data-Interlock
 public class DataInterlock {
@@ -25,7 +24,7 @@ public class DataInterlock {
 
     // Constructor
     public DataInterlock(Processor containingProcessor, IF_EnableLatchType iF_EnableLatch,
-            IF_OF_LatchType iF_OF_Latch, EX_MA_LatchType eX_MA_Latch, MA_RW_LatchType mA_RW_Latch) {
+                         IF_OF_LatchType iF_OF_Latch, EX_MA_LatchType eX_MA_Latch, MA_RW_LatchType mA_RW_Latch) {
         this.containingProcessor = containingProcessor;
         this.IF_EnableLatch = iF_EnableLatch;
         this.IF_OF_Latch = iF_OF_Latch;
@@ -266,12 +265,12 @@ public class DataInterlock {
         } else {
             String copyString = '0' + binaryString.substring(1); // Considering only first n-1 bits
             int ans = Integer.parseInt(copyString, 2); // The integer corresponding to first n-1
-                                                       // bits
+            // bits
 
             // For length 32, we can't compute 2^31 in int data type
             if (binaryString.length() == 32) {
                 if (binaryString.charAt(0) == '1') { // If the binary string represents negative
-                                                     // number
+                    // number
 
                     int power = (1 << 30); // 2^30 // We can't store 2^31 in 4 bytes
                     // Subtracting 2^31 i.e 2*(2^30) out of it
@@ -280,7 +279,7 @@ public class DataInterlock {
                 }
             } else {
                 if (binaryString.charAt(0) == '1') { // If the binary string represents negative
-                                                     // number
+                    // number
                     int power = (1 << (binaryString.length() - 1));
                     ans -= power;
                 }
