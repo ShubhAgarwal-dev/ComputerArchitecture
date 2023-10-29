@@ -22,21 +22,21 @@ public class IF_EnableLatchType {
         IF_enable = iF_enable;
     }
 
+    public boolean getStall() {
+        return this.isStall;
+    }
+
     // Getter and setter methods for isStall variable
     public void setStall(boolean isStall) {
         this.isStall = isStall;
     }
 
-    public boolean getStall() {
-        return this.isStall;
+    public boolean isIFBusy() {
+        return isIFBusy;
     }
 
     public void setIFBusy(boolean isIFBusy) {
         this.isIFBusy = isIFBusy;
-    }
-
-    public boolean isIFBusy() {
-        return isIFBusy;
     }
 
 }

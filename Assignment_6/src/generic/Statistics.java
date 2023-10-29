@@ -28,44 +28,44 @@ public class Statistics {
         Statistics.numBranchHazards = numBranchHazards;
     }
 
-    public static void setDynamicInstCount(int dynamicInstCount) {
-        Statistics.dynamicInstCount = dynamicInstCount;
-    }
-
     public static int getDynamicInstCount() {
         return dynamicInstCount;
     }
 
-    public static void setStaticInstCount(int staticInstCount) {
-        Statistics.staticInstCount = staticInstCount;
+    public static void setDynamicInstCount(int dynamicInstCount) {
+        Statistics.dynamicInstCount = dynamicInstCount;
     }
 
     public static int getStaticInstCount() {
         return staticInstCount;
     }
 
-    public static void setNumCycles(int numCycles) {
-        Statistics.numCycles = numCycles;
+    public static void setStaticInstCount(int staticInstCount) {
+        Statistics.staticInstCount = staticInstCount;
     }
 
     public static int getNumCycles() {
         return numCycles;
     }
 
-    public static void setIPC(float IPC) {
-        Statistics.IPC = IPC;
+    public static void setNumCycles(int numCycles) {
+        Statistics.numCycles = numCycles;
     }
 
     public static float getIPC() {
         return IPC;
     }
 
-    public static void setFrequency(float frequency) {
-        Statistics.frequency = frequency;
+    public static void setIPC(float IPC) {
+        Statistics.IPC = IPC;
     }
 
     public static float getFrequency() {
         return frequency;
+    }
+
+    public static void setFrequency(float frequency) {
+        Statistics.frequency = frequency;
     }
 
     public static void printStatistics(String statFile) {

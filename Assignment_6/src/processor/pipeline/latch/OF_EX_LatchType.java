@@ -82,20 +82,20 @@ public class OF_EX_LatchType {
         isImmediate = isImm;
     }
 
-    public void setEXBusy(boolean isEXBusy) {
-        this.isEXBusy = isEXBusy;
-    }
-
     public boolean isEXBusy() {
         return isEXBusy;
     }
 
-    public void setEXMABusy(boolean isEXMABusy) {
-        this.isEXMABusy = isEXMABusy;
+    public void setEXBusy(boolean isEXBusy) {
+        this.isEXBusy = isEXBusy;
     }
 
     public boolean isEXMABusy() {
         return isEXMABusy;
+    }
+
+    public void setEXMABusy(boolean isEXMABusy) {
+        this.isEXMABusy = isEXMABusy;
     }
 
     public boolean isValidInst() {

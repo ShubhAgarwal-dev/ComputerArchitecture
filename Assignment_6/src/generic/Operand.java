@@ -2,21 +2,17 @@ package generic;
 
 public class Operand {
 
-    public enum OperandType {
-        Register, Immediate, Label
-    }
+    OperandType operandType;
 
     ;
-
-    OperandType operandType;
     int value;
     String labelValue; // only applicable for Label type;
-    // Note that Label type is only applicable for functional emulation of
-    // assembly file
 
     public OperandType getOperandType() {
         return operandType;
     }
+    // Note that Label type is only applicable for functional emulation of
+    // assembly file
 
     public void setOperandType(OperandType operandType) {
         this.operandType = operandType;
@@ -44,5 +40,9 @@ public class Operand {
         } else {
             return "[" + operandType.toString() + ":" + labelValue + "]";
         }
+    }
+
+    public enum OperandType {
+        Register, Immediate, Label
     }
 }

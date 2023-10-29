@@ -69,12 +69,12 @@ public class EX_MA_LatchType {
         this.isMABusy = isMABusy;
     }
 
-    public void setValidInst(boolean isValidInst) {
-        this.isValidInst = isValidInst;
-    }
-
     public boolean isValidInst() {
         return isValidInst;
+    }
+
+    public void setValidInst(boolean isValidInst) {
+        this.isValidInst = isValidInst;
     }
 
 }

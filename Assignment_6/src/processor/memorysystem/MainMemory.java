@@ -6,10 +6,9 @@ import processor.Clock;
 
 // Implementing the Element interface for MainMemory Class
 public class MainMemory implements Element {
+    public int MAIN_MEMORY_SIZE = 65536;
     int[] memory;
     boolean isMainBusy; // As Main Memory has only 1 port
-
-    public int MAIN_MEMORY_SIZE = 65536;
 
     public MainMemory() {
         memory = new int[65536];

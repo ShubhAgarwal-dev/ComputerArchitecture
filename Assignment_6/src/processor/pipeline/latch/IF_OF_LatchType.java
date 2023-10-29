@@ -41,28 +41,28 @@ public class IF_OF_LatchType {
         currentPC = currPC;
     }
 
-    public void setNop(boolean isNop) {
-        this.isNop = isNop;
-    }
-
     public boolean getNop() {
         return this.isNop;
     }
 
-    public void setStall(boolean isStall) {
-        this.isStall = isStall;
+    public void setNop(boolean isNop) {
+        this.isNop = isNop;
     }
 
     public boolean getStall() {
         return this.isStall;
     }
 
-    public void setOFBusy(boolean isOFBusy) {
-        this.isOFBusy = isOFBusy;
+    public void setStall(boolean isStall) {
+        this.isStall = isStall;
     }
 
     public boolean isOFBusy() {
         return isOFBusy;
+    }
+
+    public void setOFBusy(boolean isOFBusy) {
+        this.isOFBusy = isOFBusy;
     }
 
     public boolean isValidInst() {
