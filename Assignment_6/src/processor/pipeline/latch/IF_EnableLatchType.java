@@ -4,9 +4,9 @@ public class IF_EnableLatchType {
 
     boolean IF_enable;
 
-    boolean isStall; // whether IF stage is stall or not
+    boolean isStall;
 
-    boolean isIFBusy; // whether IF stage is Busy
+    boolean isIFBusy;
 
     public IF_EnableLatchType() {
         IF_enable = true;
@@ -26,7 +26,7 @@ public class IF_EnableLatchType {
         return this.isStall;
     }
 
-    // Getter and setter methods for isStall variable
+
     public void setStall(boolean isStall) {
         this.isStall = isStall;
     }

@@ -2,7 +2,7 @@ package generic;
 
 public class ExecutionCompleteEvent extends Event {
 
-    // Required variables to be passed to MA stage once execution completes
+
     Instruction inst;
     int aluResult, excess, op;
     boolean isBranchTaken;
@@ -20,7 +20,7 @@ public class ExecutionCompleteEvent extends Event {
         this.branchPC = branchPC;
     }
 
-    // Getters for above variables
+
     public Instruction getInst() {
         return inst;
     }

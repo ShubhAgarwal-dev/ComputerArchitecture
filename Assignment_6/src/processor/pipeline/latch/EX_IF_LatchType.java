@@ -2,8 +2,8 @@ package processor.pipeline.latch;
 
 public class EX_IF_LatchType {
 
-    boolean isBranchTaken; // whether branch is taken or not
-    int branchPC; // The branchPC taken
+    boolean isBranchTaken;
+    int branchPC;
 
 
     public EX_IF_LatchType() {
@@ -11,8 +11,8 @@ public class EX_IF_LatchType {
         branchPC = 0;
     }
 
-    // ==============================
-    // Getters and Setters for above mentioned values
+
+
     public boolean getIsBranchTaken() {
         return isBranchTaken;
     }

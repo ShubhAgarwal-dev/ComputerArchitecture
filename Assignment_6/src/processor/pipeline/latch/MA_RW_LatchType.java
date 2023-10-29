@@ -5,10 +5,10 @@ import generic.Instruction;
 public class MA_RW_LatchType {
 
     boolean RW_enable;
-    Instruction inst; // Instruction as control signals
-    int ldResult, aluResult, excess; // load result, alu result, excess bits
+    Instruction inst;
+    int ldResult, aluResult, excess;
 
-    // whether RW stage has valid instruction or not
+
     boolean isValidInst;
 
     public MA_RW_LatchType() {
@@ -26,8 +26,8 @@ public class MA_RW_LatchType {
         RW_enable = rW_enable;
     }
 
-    // =================================================
-    // Getters and Setters for above values
+
+
     public Instruction getInstruction() {
         return inst;
     }

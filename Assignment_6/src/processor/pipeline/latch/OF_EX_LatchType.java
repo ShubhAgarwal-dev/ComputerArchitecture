@@ -5,15 +5,15 @@ import generic.Instruction;
 public class OF_EX_LatchType {
 
     boolean EX_enable;
-    Instruction inst; // Instruction representing control signals
-    // op1, op2, imm, branchTarget values
+    Instruction inst;
+
     int operand1, operand2, immediate, branchTarget;
-    // control signal, if value is immediate or not
+
     boolean isImmediate;
 
-    // isEXBusy -> if EX stage is busy due to its own event
-    // isEXMABusy -> if EX stage is set to busy because MA was busy
-    // isValidInst -> whether instruction is valid or not
+
+
+
     boolean isEXBusy, isEXMABusy, isValidInst;
 
     public OF_EX_LatchType() {
@@ -32,8 +32,8 @@ public class OF_EX_LatchType {
         EX_enable = eX_enable;
     }
 
-    // =================================================================
-    // Getters and Setters for above values
+
+
     public Instruction getInstruction() {
         return inst;
     }

@@ -31,8 +31,8 @@ public class Configuration {
     public static int L1d_associativity;
     public static String L1d_replacementPolicy;
 
-    public static int CACHE_LINE_SIZE = 4; // Size in Bytes
-    public static int INSTRUCTION_SIZE = 4; // Size in Bytes
+    public static int CACHE_LINE_SIZE = 4;
+    public static int INSTRUCTION_SIZE = 4;
 
     public static int L2_numberOfLines;
     public static int L2_latency;
@@ -102,12 +102,12 @@ public class Configuration {
         mainMemoryLatency = Integer.parseInt(getImmediateString("MainMemoryLatency", elmnt));
     }
 
-    private static String getImmediateString(String tagName, Element parent) // Get the immediate
-    // string value of a
-    // particular tag
-    // name under a
-    // particular parent
-    // tag
+    private static String getImmediateString(String tagName, Element parent)
+
+
+
+
+
     {
         NodeList nodeLst = parent.getElementsByTagName(tagName);
         if (nodeLst.item(0) == null) {
