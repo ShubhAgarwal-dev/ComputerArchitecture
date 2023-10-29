@@ -1,7 +1,7 @@
 package processor;
 
-import processor.interlocks.ControlInterlock;
-import processor.interlocks.DataInterlock;
+import processor.interlocks.BranchLock;
+import processor.interlocks.DataLock;
 import processor.memorysystem.Cache;
 import processor.memorysystem.MainMemory;
 import processor.memorysystem.RegisterFile;
@@ -26,8 +26,8 @@ public class Processor {
     MemoryAccess MAUnit;
     RegisterWrite RWUnit;
 
-    DataInterlock DataInterlockUnit;
-    ControlInterlock ControlInterlockUnit;
+    DataLock dataLockUnit;
+    BranchLock branchLockUnit;
 
     Cache l1iCache;
     Cache l1dCache;
@@ -50,9 +50,9 @@ public class Processor {
         RWUnit = new RegisterWrite(this, MA_RW_Latch, IF_EnableLatch);
 
 
-        DataInterlockUnit =
-                new DataInterlock(this, IF_EnableLatch, IF_OF_Latch, EX_MA_Latch, MA_RW_Latch);
-        ControlInterlockUnit = new ControlInterlock(IF_OF_Latch, EX_IF_Latch);
+        dataLockUnit =
+                new DataLock(this, IF_EnableLatch, IF_OF_Latch, EX_MA_Latch, MA_RW_Latch);
+        branchLockUnit = new BranchLock(IF_OF_Latch, EX_IF_Latch);
 
         l1iCache = new Cache(this, 0);
         l1dCache = new Cache(this, 1);
@@ -102,20 +102,20 @@ public class Processor {
     }
 
 
-    public DataInterlock getDataInterlockUnit() {
-        return DataInterlockUnit;
+    public DataLock getDataInterlockUnit() {
+        return dataLockUnit;
     }
 
-    public void setDataInterlockUnit(DataInterlock dataInterlockUnit) {
-        DataInterlockUnit = dataInterlockUnit;
+    public void setDataInterlockUnit(DataLock dataLockUnit) {
+        this.dataLockUnit = dataLockUnit;
     }
 
-    public ControlInterlock getControlInterlockUnit() {
-        return ControlInterlockUnit;
+    public BranchLock getControlInterlockUnit() {
+        return branchLockUnit;
     }
 
-    public void setControlInterlockUnit(ControlInterlock controlInterlockUnit) {
-        ControlInterlockUnit = controlInterlockUnit;
+    public void setControlInterlockUnit(BranchLock branchLockUnit) {
+        this.branchLockUnit = branchLockUnit;
     }
 
     public Cache getL1iCache() {

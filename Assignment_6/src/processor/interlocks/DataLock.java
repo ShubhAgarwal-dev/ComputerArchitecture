@@ -13,7 +13,7 @@ import processor.pipeline.latch.IF_OF_LatchType;
 import processor.pipeline.latch.MA_RW_LatchType;
 
 
-public class DataInterlock {
+public class DataLock {
 
 
     Processor containingProcessor;
@@ -23,8 +23,8 @@ public class DataInterlock {
     MA_RW_LatchType MA_RW_Latch;
 
 
-    public DataInterlock(Processor containingProcessor, IF_EnableLatchType iF_EnableLatch,
-                         IF_OF_LatchType iF_OF_Latch, EX_MA_LatchType eX_MA_Latch, MA_RW_LatchType mA_RW_Latch) {
+    public DataLock(Processor containingProcessor, IF_EnableLatchType iF_EnableLatch,
+                    IF_OF_LatchType iF_OF_Latch, EX_MA_LatchType eX_MA_Latch, MA_RW_LatchType mA_RW_Latch) {
         this.containingProcessor = containingProcessor;
         this.IF_EnableLatch = iF_EnableLatch;
         this.IF_OF_Latch = iF_OF_Latch;

@@ -93,8 +93,6 @@ public class Execute implements Element {
         switch (inst.getOperationType()) {
             case add:
             case addi: {
-
-
                 this.aluResult = getResult(op1 + second);
                 this.isBranchTaken = false;
                 break;
@@ -102,8 +100,6 @@ public class Execute implements Element {
 
             case sub:
             case subi: {
-
-
                 this.aluResult = getResult(op1 - second);
                 this.isBranchTaken = false;
                 break;
@@ -111,8 +107,6 @@ public class Execute implements Element {
 
             case mul:
             case muli: {
-
-
                 this.aluResult = getResult(op1 * second);
                 this.isBranchTaken = false;
                 break;
@@ -120,9 +114,6 @@ public class Execute implements Element {
 
             case div:
             case divi: {
-
-
-
                 this.aluResult = getResult(op1 / second);
                 this.excess = (int) (op1 % second);
                 this.isBranchTaken = false;
@@ -131,8 +122,6 @@ public class Execute implements Element {
 
             case and:
             case andi: {
-
-
                 this.aluResult = getResult(op1 & second);
                 this.isBranchTaken = false;
                 break;
@@ -140,8 +129,6 @@ public class Execute implements Element {
 
             case or:
             case ori: {
-
-
                 this.aluResult = getResult(op1 | second);
                 this.isBranchTaken = false;
                 break;
@@ -149,8 +136,6 @@ public class Execute implements Element {
 
             case xor:
             case xori: {
-
-
                 this.aluResult = getResult(op1 ^ second);
                 this.isBranchTaken = false;
                 break;
@@ -158,8 +143,6 @@ public class Execute implements Element {
 
             case slt:
             case slti: {
-
-
                 this.aluResult = (op1 < second) ? 1 : 0;
                 this.isBranchTaken = false;
                 break;
@@ -167,8 +150,6 @@ public class Execute implements Element {
 
             case sll:
             case slli: {
-
-
                 this.aluResult = getResult(op1 << second);
                 this.isBranchTaken = false;
                 break;
@@ -176,8 +157,6 @@ public class Execute implements Element {
 
             case srl:
             case srli: {
-
-
                 this.aluResult = getResult(op1 >>> second);
                 this.isBranchTaken = false;
                 break;
@@ -185,92 +164,43 @@ public class Execute implements Element {
 
             case sra:
             case srai: {
-
-
                 this.aluResult = getResult(op1 >> second);
                 this.isBranchTaken = false;
                 break;
             }
 
             case load: {
-
-
-                this.aluResult = getResult(op1 + imm);
-                this.isBranchTaken = false;
+                executerLoad(op1, imm);
                 break;
             }
 
             case store: {
-
-
-
-                this.aluResult = getResult(op2 + imm);
-                this.op = (int) op1;
-                this.isBranchTaken = false;
+                executeStore(op2, imm, (int) op1);
                 break;
             }
 
             case beq: {
-                if (op1 == op2) {
-
-
-
-                    this.isBranchTaken = true;
-                    this.branchPC = OF_EX_Latch.getBranchTarget();
-                } else {
-
-                    this.isBranchTaken = false;
-                }
+                executeComp(op1 == op2);
                 break;
             }
 
             case bne: {
-                if (op1 != op2) {
-
-
-
-                    this.isBranchTaken = true;
-                    this.branchPC = OF_EX_Latch.getBranchTarget();
-                } else {
-
-                    this.isBranchTaken = false;
-                }
+                executeComp(op1 != op2);
                 break;
             }
 
             case blt: {
-                if (op1 < op2) {
-
-
-
-                    this.isBranchTaken = true;
-                    this.branchPC = OF_EX_Latch.getBranchTarget();
-                } else {
-
-                    this.isBranchTaken = false;
-                }
+                executeComp(op1 < op2);
                 break;
             }
 
             case bgt: {
-                if (op1 > op2) {
-
-
-
-                    this.isBranchTaken = true;
-                    this.branchPC = OF_EX_Latch.getBranchTarget();
-                } else {
-
-                    this.isBranchTaken = false;
-                }
+                executeComp(op1 > op2);
                 break;
             }
 
             case jmp: {
-                EX_IF_Latch.setIsBranchTaken(true);
-                EX_IF_Latch.setBranchPC(OF_EX_Latch.getBranchTarget());
-                this.isBranchTaken = true;
-                this.branchPC = OF_EX_Latch.getBranchTarget();
+                executeJmp();
                 break;
             }
 
@@ -286,6 +216,33 @@ public class Execute implements Element {
         }
 
 
+    }
+
+    private void executerLoad(long op1, long imm) {
+        this.aluResult = getResult(op1 + imm);
+        this.isBranchTaken = false;
+    }
+
+    private void executeStore(long op2, long imm, int op1) {
+        this.aluResult = getResult(op2 + imm);
+        this.op = op1;
+        this.isBranchTaken = false;
+    }
+
+    private void executeComp(boolean op1) {
+        if (op1) {
+            this.isBranchTaken = true;
+            this.branchPC = OF_EX_Latch.getBranchTarget();
+        } else {
+            this.isBranchTaken = false;
+        }
+    }
+
+    private void executeJmp() {
+        EX_IF_Latch.setIsBranchTaken(true);
+        EX_IF_Latch.setBranchPC(OF_EX_Latch.getBranchTarget());
+        this.isBranchTaken = true;
+        this.branchPC = OF_EX_Latch.getBranchTarget();
     }
 
 
