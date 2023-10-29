@@ -3,10 +3,10 @@ package processor.pipeline.latch;
 public class IF_OF_LatchType {
 
     boolean OF_enable;
-    int instruction, currentPC; // Current pc to get value of current Program Counter
-    boolean isNop, isStall; // Whether instruction is nop or not, whether OF stage is stall or not
+    int instruction, currentPC;
+    boolean isNop, isStall;
 
-    // whether OF stage is busy or not, whether instruction in OF stage is valid or not
+
     boolean isOFBusy, isValidInst;
 
     public IF_OF_LatchType() {
@@ -31,8 +31,8 @@ public class IF_OF_LatchType {
         this.instruction = instruction;
     }
 
-    // ====================
-    // Getters and setter methods for above defined variables
+
+
     public int getCurrentPC() {
         return currentPC;
     }

@@ -10,10 +10,10 @@ public class Simulator {
     static Processor processor;
     static boolean simulationComplete;
 
-    static int numInst; // Number of instructions executed
-    static int numDataHazards; // Number of times the OF stage needed to stall because of a data
-    // hazard
-    static int numNop; // Number of times an instruction on a wrong branch path entered the pipeline
+    static int numInst;
+    static int numDataHazards;
+
+    static int numNop;
 
     static EventQueue eventQueue;
 
@@ -23,7 +23,7 @@ public class Simulator {
 
         simulationComplete = false;
 
-        numInst = numDataHazards = numNop = 0; // Initializing them to all 0's
+        numInst = numDataHazards = numNop = 0;
 
         eventQueue = new EventQueue();
     }
@@ -31,27 +31,27 @@ public class Simulator {
     static void loadProgram(String assemblyProgramFile) {
 
         try {
-            FileInputStream fis = new FileInputStream(assemblyProgramFile); // Input file provided
-            DataInputStream dis = new DataInputStream(fis); // DIS object for reading binary numbers
+            FileInputStream fis = new FileInputStream(assemblyProgramFile);
+            DataInputStream dis = new DataInputStream(fis);
             try {
                 try {
-                    int pc = -1, address = 0; // Program counter and current address
-                    while (dis.available() > 0) { // While we can read from the file
-                        int num = dis.readInt(); // Reading 4 byte number
-                        if (pc == -1) { // The first integer is Header which is main function
-                            // address which is initial pc
-                            pc = num; // setting pc to num
-                            // Setting pc in processor
+                    int pc = -1, address = 0;
+                    while (dis.available() > 0) {
+                        int num = dis.readInt();
+                        if (pc == -1) {
+
+                            pc = num;
+
                             Simulator.processor.getRegisterFile().setProgramCounter(pc);
                         } else {
-                            // Rest of the integers will be stored in memory
+
                             Simulator.processor.getMainMemory().setWord(address, num);
-                            ++address; // Incrementing the address
+                            ++address;
                         }
                     }
                 } catch (EOFException e) {
                 }
-                dis.close(); // Closing the dis file object
+                dis.close();
             } catch (IOException e) {
                 Misc.printErrorAndExit(e.toString());
             }
@@ -59,16 +59,16 @@ public class Simulator {
             Misc.printErrorAndExit(e.toString());
         }
 
-        Simulator.processor.getRegisterFile().setValue(0, 0); // Setting x0 = 0
-        Simulator.processor.getRegisterFile().setValue(1, 65535); // Setting x1 = 65535
-        Simulator.processor.getRegisterFile().setValue(2, 65535); // Setting x2 = 65535
+        Simulator.processor.getRegisterFile().setValue(0, 0);
+        Simulator.processor.getRegisterFile().setValue(1, 65535);
+        Simulator.processor.getRegisterFile().setValue(2, 65535);
     }
 
     public static void simulate() {
 
         int count = 0;
 
-        while (!simulationComplete) { // while simulation doesn't complete
+        while (!simulationComplete) {
             processor.getRWUnit().performRW();
             if (simulationComplete) {
                 break;
@@ -92,17 +92,17 @@ public class Simulator {
         simulationComplete = value;
     }
 
-    // Function to increment the numInst by 1
+
     public static void incNumInst() {
         ++numInst;
     }
 
-    // Function to increment numDataHazards by 1
+
     public static void incNumDataHazards() {
         ++numDataHazards;
     }
 
-    // Function to increment numNop by 1
+
     public static void incNop() {
         ++numNop;
     }

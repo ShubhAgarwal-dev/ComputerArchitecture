@@ -6,7 +6,7 @@ public class RegisterFile {
 
     public RegisterFile() {
         registerFile = new int[32];
-        registerFile[0] = 0; // %xo is always 0 [RISC V]
+        registerFile[0] = 0;
     }
 
     public int getValue(int registerNumber) {
@@ -34,7 +34,7 @@ public class RegisterFile {
         sb.append("\nRegister File Contents:\n\n");
         sb.append("PC" + "\t: " + programCounter + "\n\n");
 
-        sb.append("x" + 0 + "\t: " + registerFile[0] + "\n"); // %xo is always 0 [RISC V]
+        sb.append("x" + 0 + "\t: " + registerFile[0] + "\n");
         for (int i = 1; i < 32; i++) {
             sb.append("x" + i + "\t: " + registerFile[i] + "\n");
         }

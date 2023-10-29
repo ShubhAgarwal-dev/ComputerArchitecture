@@ -5,11 +5,11 @@ import generic.Instruction;
 public class EX_MA_LatchType {
 
     boolean MA_enable;
-    Instruction inst; // Instruction as control signals
-    int aluResult, excess, op; // AluResult obtained, excess bits to store in x31 register, operand
-    // value to store for a store operation
+    Instruction inst;
+    int aluResult, excess, op;
 
-    // whether MA Stage is busy or not, whether MA stage has valid instruction or not
+
+
     boolean isMABusy, isValidInst;
 
     public EX_MA_LatchType() {
@@ -27,8 +27,8 @@ public class EX_MA_LatchType {
         MA_enable = mA_enable;
     }
 
-    // =================================
-    // Getters and Setters for above values
+
+
     public Instruction getInstruction() {
         return inst;
     }

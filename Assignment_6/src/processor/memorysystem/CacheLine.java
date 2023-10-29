@@ -1,6 +1,6 @@
 package processor.memorysystem;
 
-// CacheLine Class representing one Cache Line
+
 public class CacheLine {
 
     int size;

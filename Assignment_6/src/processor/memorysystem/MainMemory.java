@@ -4,11 +4,11 @@ import configuration.Configuration;
 import generic.*;
 import processor.Clock;
 
-// Implementing the Element interface for MainMemory Class
+
 public class MainMemory implements Element {
     public int MAIN_MEMORY_SIZE = 65536;
     int[] memory;
-    boolean isMainBusy; // As Main Memory has only 1 port
+    boolean isMainBusy;
 
     public MainMemory() {
         memory = new int[65536];
@@ -44,15 +44,15 @@ public class MainMemory implements Element {
         return sb.toString();
     }
 
-    // Handle Event Function to handle events requested/processed by Main Memory
+
     @Override
     public void handleEvent(Event e) {
-        if (e.getEventType() == Event.EventType.MemoryRead) { // If Memory Read event
+        if (e.getEventType() == Event.EventType.MemoryRead) {
             MemoryReadEvent event = (MemoryReadEvent) e;
 
-            // System.out.println("Event Triggered From Main Memory: \n" + event); // TEST
 
-            // Adding response event with Main Memory Latency and required memory variable required
+
+
             Simulator.getEventQueue()
                     .addEvent(new MemoryResponseEvent(
                             Clock.getCurrentTime() + Configuration.mainMemoryLatency, this,
@@ -61,15 +61,15 @@ public class MainMemory implements Element {
 
             isMainBusy = true;
 
-        } else if (e.getEventType() == Event.EventType.MemoryWrite) { // If Memory Write Event
+        } else if (e.getEventType() == Event.EventType.MemoryWrite) {
             MemoryWriteEvent event = (MemoryWriteEvent) e;
 
-            // System.out.println("Event Triggered From Main Memory: \n" + event); // TEST
 
-            // Setting the given value at the given address
+
+
             setWord(event.getAddressToWriteTo(), event.getValue());
 
-            // Adding response event with Main Memory Latency
+
             Simulator.getEventQueue().addEvent(new MemoryResponseEvent(
                     Clock.getCurrentTime() + Configuration.mainMemoryLatency, this,
                     event.getRequestingElement(), event.getValue(), event.getAddressToWriteTo()));

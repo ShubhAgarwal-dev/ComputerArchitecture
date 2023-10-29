@@ -6,13 +6,13 @@ public class Operand {
 
     ;
     int value;
-    String labelValue; // only applicable for Label type;
+    String labelValue;
 
     public OperandType getOperandType() {
         return operandType;
     }
-    // Note that Label type is only applicable for functional emulation of
-    // assembly file
+
+
 
     public void setOperandType(OperandType operandType) {
         this.operandType = operandType;

@@ -20,29 +20,29 @@ public class RegisterWrite {
     }
 
     public void performRW() {
-        // System.out.println("RW Stage"); // TEST
+
 
         if (MA_RW_Latch.isRW_enable()) {
-            if (MA_RW_Latch.isValidInst()) { // If there is a valid instruction
-                Instruction inst = MA_RW_Latch.getInstruction(); // Instruction as control signals
+            if (MA_RW_Latch.isValidInst()) {
+                Instruction inst = MA_RW_Latch.getInstruction();
 
-                // System.out.println("Instruction: \n" + inst); // TEST
+
 
                 MA_RW_Latch.setValidInst(false);
 
-                if (inst != null) { // If instruction is not a null (or nop) instruction
+                if (inst != null) {
 
 
-                    int ldResult = MA_RW_Latch.getLdResult(); // Load result
-                    int aluResult = MA_RW_Latch.getAluResult(); // ALU result
+                    int ldResult = MA_RW_Latch.getLdResult();
+                    int aluResult = MA_RW_Latch.getAluResult();
 
-                    int excess = MA_RW_Latch.getExcess(); // excess bits
-                    containingProcessor.getRegisterFile().setValue(31, excess); // setting excess
-                    // bits to x31
-                    // register
+                    int excess = MA_RW_Latch.getExcess();
+                    containingProcessor.getRegisterFile().setValue(31, excess);
 
-                    int rd = 0; // Destination register where we need to store result
-                    if (inst.getDestinationOperand() != null) { // If it is not an end instruction
+
+
+                    int rd = 0;
+                    if (inst.getDestinationOperand() != null) {
                         rd = inst.getDestinationOperand().getValue();
                     }
 
@@ -59,7 +59,7 @@ public class RegisterWrite {
                         case sll:
                         case srl:
                         case sra:
-                            // R2I type
+
                         case addi:
                         case subi:
                         case muli:
@@ -71,13 +71,13 @@ public class RegisterWrite {
                         case slli:
                         case srli:
                         case srai: {
-                            // Storing ALU result at destination register
+
                             containingProcessor.getRegisterFile().setValue(rd, aluResult);
                             break;
                         }
 
                         case load: {
-                            // Storing Load register at destination register
+
                             containingProcessor.getRegisterFile().setValue(rd, ldResult);
                             break;
                         }
@@ -87,13 +87,13 @@ public class RegisterWrite {
                         case bne:
                         case blt:
                         case bgt:
-                            // RI type :
+
                         case jmp:
                             break;
 
                         case end: {
-                            // if instruction being processed is an end instruction
-                            Simulator.setSimulationComplete(true); // Setting simulation as complete
+
+                            Simulator.setSimulationComplete(true);
                             break;
                         }
 
@@ -101,17 +101,17 @@ public class RegisterWrite {
                             Misc.printErrorAndExit("Unknown Instruction!!");
                     }
                 } else {
-                    // System.out.println("NOP Received"); // TEST
+
                 }
 
             } else {
-                // System.out.println("Invalid Instruction"); // TEST
+
             }
 
             MA_RW_Latch.setRW_enable(false);
             IF_EnableLatch.setIF_enable(true);
         } else {
-            // System.out.println("RW Not Enabled"); // TEST
+
         }
     }
 

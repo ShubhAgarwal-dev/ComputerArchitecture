@@ -26,11 +26,11 @@ public class Processor {
     MemoryAccess MAUnit;
     RegisterWrite RWUnit;
 
-    DataInterlock DataInterlockUnit; // The Data-Interlock unit of the processor
-    ControlInterlock ControlInterlockUnit; // The Control-Interlock unit of the processor
+    DataInterlock DataInterlockUnit;
+    ControlInterlock ControlInterlockUnit;
 
-    Cache l1iCache; // L1i Cache
-    Cache l1dCache; // L1d Cache
+    Cache l1iCache;
+    Cache l1dCache;
 
     public Processor() {
         registerFile = new RegisterFile();
@@ -49,7 +49,7 @@ public class Processor {
         MAUnit = new MemoryAccess(this, EX_MA_Latch, MA_RW_Latch);
         RWUnit = new RegisterWrite(this, MA_RW_Latch, IF_EnableLatch);
 
-        // Initializing Data-Interlock unit and Control-Interlock unit
+
         DataInterlockUnit =
                 new DataInterlock(this, IF_EnableLatch, IF_OF_Latch, EX_MA_Latch, MA_RW_Latch);
         ControlInterlockUnit = new ControlInterlock(IF_OF_Latch, EX_IF_Latch);
@@ -101,7 +101,7 @@ public class Processor {
         return RWUnit;
     }
 
-    // Getter and Setter Methods for Interlock units defined above
+
     public DataInterlock getDataInterlockUnit() {
         return DataInterlockUnit;
     }
