@@ -1,11 +1,8 @@
 package processor.interlocks;
 
-import generic.Instruction;
+import generic.*;
 import generic.Instruction.OperationType;
-import generic.Misc;
-import generic.Operand;
 import generic.Operand.OperandType;
-import generic.Simulator;
 import processor.Processor;
 import processor.pipeline.latch.EX_MA_LatchType;
 import processor.pipeline.latch.IF_EnableLatchType;
@@ -44,6 +41,7 @@ public class DataLock {
             IF_OF_Latch.setStall(true);
 
             Simulator.updateNumberOfDataHazard();
+            Statistics.setDynamicInstCount(Statistics.getDynamicInstCount() - 1);
         } else {
 
             IF_EnableLatch.setStall(false);

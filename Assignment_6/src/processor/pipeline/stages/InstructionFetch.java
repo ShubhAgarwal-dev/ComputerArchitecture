@@ -1,6 +1,10 @@
 package processor.pipeline.stages;
 
 import generic.*;
+import generic.event.CacheReadEvent;
+import generic.event.CacheResponseEvent;
+import generic.event.Element;
+import generic.event.Event;
 import processor.Clock;
 import processor.Processor;
 import processor.pipeline.latch.EX_IF_LatchType;
@@ -28,8 +32,6 @@ public class InstructionFetch implements Element {
 
 
     public void performIF() {
-
-
         if (IF_EnableLatch.isIF_enable()) {
             if (!IF_EnableLatch.isIFBusy()) {
                 if (!IF_EnableLatch.getStall()) {
@@ -79,6 +81,7 @@ public class InstructionFetch implements Element {
         IF_OF_Latch.setNop(false);
         IF_OF_Latch.setCurrentPC(previousPC);
         IF_OF_Latch.setOF_enable(true);
+        Statistics.setDynamicInstCount(Statistics.getDynamicInstCount() + 1);
     }
 
     private void mountNOP() {

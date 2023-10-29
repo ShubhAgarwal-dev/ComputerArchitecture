@@ -1,4 +1,4 @@
-package generic;
+package generic.event;
 
 
 public class CacheReadEvent extends Event {

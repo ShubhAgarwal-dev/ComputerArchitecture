@@ -9,6 +9,26 @@ public class Statistics {
     static float IPC;
     static float frequency;
 
+    public static int getCache_misses() {
+        return cache_misses;
+    }
+
+    public static void setCache_misses(int cache_misses) {
+        Statistics.cache_misses = cache_misses;
+    }
+
+    static int cache_misses=0;
+
+    public static int getCache_hit() {
+        return cache_hit;
+    }
+
+    public static void setCache_hit(int cache_hit) {
+        Statistics.cache_hit = cache_hit;
+    }
+
+    static int cache_hit = 0;
+
     static int stalls;
     static int numBranchHazards;
 

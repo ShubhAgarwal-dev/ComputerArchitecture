@@ -1,4 +1,4 @@
-package generic;
+package generic.event;
 
 import processor.Clock;
 

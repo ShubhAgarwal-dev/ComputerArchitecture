@@ -2,6 +2,7 @@ package processor.pipeline.stages;
 
 import generic.*;
 import generic.Instruction.OperationType;
+import generic.event.*;
 import processor.Clock;
 import processor.Processor;
 import processor.pipeline.latch.EX_MA_LatchType;

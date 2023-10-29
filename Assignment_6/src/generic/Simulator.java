@@ -1,5 +1,6 @@
 package generic;
 
+import generic.event.EventQueue;
 import processor.Clock;
 import processor.Processor;
 
@@ -65,9 +66,6 @@ public class Simulator {
     }
 
     public static void simulate() {
-
-        int count = 0;
-
         while (!simulationComplete) {
             processor.getRWUnit().performRW();
             if (simulationComplete) {
@@ -83,9 +81,11 @@ public class Simulator {
         }
         processor.getRegisterFile().setProgramCounter(processor.getRegisterFile().getProgramCounter() - 1);
         Statistics.setNumCycles((int) Clock.getCurrentTime());
-        Statistics.setFrequency((float) Statistics.getNumCycles() / Clock.getCurrentTime());
-        float correct_inst = Statistics.getDynamicInstCount() - Statistics.getStalls() * 2 - Statistics.getNumBranchHazards();
-        Statistics.setIPC(correct_inst / Statistics.getNumCycles());
+        Statistics.setIPC((float) Statistics.getDynamicInstCount() / Statistics.getNumCycles());
+        Statistics.setStalls(numberOfDataHazards);
+        Statistics.setNumBranchHazards(numberOfNOPs);
+        Statistics.setNumBranchHazards(numberOfNOPs);
+        Statistics.setFrequency((float) Statistics.getDynamicInstCount()/Statistics.getNumCycles());
     }
 
     public static void setSimulationComplete(boolean value) {

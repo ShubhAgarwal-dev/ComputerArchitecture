@@ -1,4 +1,4 @@
-package generic;
+package generic.event;
 
 public class CacheResponseEvent extends Event {
 

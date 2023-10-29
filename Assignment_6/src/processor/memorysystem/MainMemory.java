@@ -2,6 +2,7 @@ package processor.memorysystem;
 
 import configuration.Configuration;
 import generic.*;
+import generic.event.*;
 import processor.Clock;
 
 

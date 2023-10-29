@@ -2,6 +2,7 @@ package processor.memorysystem;
 
 import configuration.Configuration;
 import generic.*;
+import generic.event.*;
 import processor.Clock;
 import processor.Processor;
 
@@ -46,16 +47,17 @@ public class Cache implements Element {
     }
 
 
-    public boolean cacheReadHandler(int address, Element processingElement) {
+    public boolean cacheRead(int address, Element processingElement) {
 
         for (int i = 0; i < numCacheLines && buffer[i] != null; ++i) {
             int index = buffer[i].findIndexOf(address);
             if (index != -1) {
                 updateCacheEvent(processingElement, i, index);
+                Statistics.setCache_hit(Statistics.getCache_hit() + 1);
                 return true;
             }
         }
-        cacheMissHandler(address);
+        HandleCacheMiss(address);
         return false;
     }
 
@@ -66,7 +68,7 @@ public class Cache implements Element {
     }
 
 
-    public void cacheWriteHandler(int address, int value, Element processingElement) {
+    public void cacheWrite(int address, int value, Element processingElement) {
         MemoryWriteEvent newMemoEvent = new MemoryWriteEvent(Clock.getCurrentTime(), this, containingProcessor.getMainMemory(), address, value);
         Simulator.getEventQueue().addEvent(newMemoEvent);
 
@@ -75,7 +77,8 @@ public class Cache implements Element {
     }
 
 
-    public void cacheMissHandler(int address) {
+    public void HandleCacheMiss(int address) {
+        Statistics.setCache_misses(Statistics.getCache_misses()+1);
         if (containingProcessor.getMainMemory().isMainMemoBuzy()) {
             return;
         }
@@ -112,7 +115,7 @@ public class Cache implements Element {
 
         if (e.getEventType() == Event.EventType.CacheRead) {
             CacheReadEvent event = (CacheReadEvent) e;
-            boolean cacheHit = cacheReadHandler(event.getAddr(), e.getRequestingElement());
+            boolean cacheHit = cacheRead(event.getAddr(), e.getRequestingElement());
             if (!cacheHit) {
                 e.setEventTime(Clock.getCurrentTime() + 1);
                 Simulator.getEventQueue().addEvent(e);
@@ -124,7 +127,7 @@ public class Cache implements Element {
                 Simulator.getEventQueue().addEvent(e);
             } else {
                 CacheWriteEvent event = (CacheWriteEvent) e;
-                cacheWriteHandler(event.getAddr(), event.getVal(), event.getRequestingElement());
+                cacheWrite(event.getAddr(), event.getVal(), event.getRequestingElement());
                 isCacheBusy = true;
             }
 

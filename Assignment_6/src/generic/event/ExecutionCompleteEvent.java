@@ -1,4 +1,6 @@
-package generic;
+package generic.event;
+
+import generic.Instruction;
 
 public class ExecutionCompleteEvent extends Event {
 
