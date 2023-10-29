@@ -2,30 +2,30 @@ package generic;
 
 public class CacheWriteEvent extends Event {
 
-    int addressToWriteTo;
-    int value;
+    int addr;
+    int val;
 
     public CacheWriteEvent(long eventTime, Element requestingElement, Element processingElement,
-                           int address, int value) {
+                           int address, int val) {
         super(eventTime, EventType.CacheWrite, requestingElement, processingElement);
-        this.addressToWriteTo = address;
-        this.value = value;
+        this.addr = address;
+        this.val = val;
     }
 
-    public int getAddressToWriteTo() {
-        return addressToWriteTo;
+    public int getAddr() {
+        return addr;
     }
 
-    public void setAddressToWriteTo(int addressToWriteTo) {
-        this.addressToWriteTo = addressToWriteTo;
+    public void setAddr(int addr) {
+        this.addr = addr;
     }
 
-    public int getValue() {
-        return value;
+    public int getVal() {
+        return val;
     }
 
-    public void setValue(int value) {
-        this.value = value;
+    public void setVal(int val) {
+        this.val = val;
     }
 
 }

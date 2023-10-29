@@ -32,6 +32,14 @@ public class CacheLine {
         data[index] = value;
     }
 
+    public int getDataAt(int index) {
+        return data[index];
+    }
+
+    public void setDataAt(int index, int value) {
+        data[index] = value;
+    }
+
     public int getAddressAt(int index) {
         return tag[index];
     }
@@ -40,12 +48,5 @@ public class CacheLine {
         tag[index] = address;
     }
 
-    public int getDataAt(int index) {
-        return data[index];
-    }
-
-    public void setDataAt(int index, int value) {
-        data[index] = value;
-    }
 
 }

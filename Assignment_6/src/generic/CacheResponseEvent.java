@@ -2,20 +2,20 @@ package generic;
 
 public class CacheResponseEvent extends Event {
 
-    int value;
+    int val;
 
     public CacheResponseEvent(long eventTime, Element requestingElement, Element processingElement,
-                              int value) {
+                              int val) {
         super(eventTime, EventType.CacheResponse, requestingElement, processingElement);
-        this.value = value;
+        this.val = val;
     }
 
-    public int getValue() {
-        return value;
+    public int getVal() {
+        return val;
     }
 
-    public void setValue(int value) {
-        this.value = value;
+    public void setVal(int val) {
+        this.val = val;
     }
 
 }

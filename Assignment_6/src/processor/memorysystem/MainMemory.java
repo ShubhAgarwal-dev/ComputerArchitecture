@@ -6,7 +6,6 @@ import processor.Clock;
 
 
 public class MainMemory implements Element {
-    public int MAIN_MEMORY_SIZE = 65536;
     int[] memory;
     boolean isMainBusy;
 
@@ -23,11 +22,11 @@ public class MainMemory implements Element {
         memory[address] = value;
     }
 
-    public boolean isMainBusy() {
+    public boolean isMainMemoBuzy() {
         return isMainBusy;
     }
 
-    public void setMainBusy(boolean isMainBusy) {
+    public void setMainMemoBuzy(boolean isMainBusy) {
         this.isMainBusy = isMainBusy;
     }
 
@@ -49,33 +48,21 @@ public class MainMemory implements Element {
     public void handleEvent(Event e) {
         if (e.getEventType() == Event.EventType.MemoryRead) {
             MemoryReadEvent event = (MemoryReadEvent) e;
-
-
-
-
-            Simulator.getEventQueue()
-                    .addEvent(new MemoryResponseEvent(
-                            Clock.getCurrentTime() + Configuration.mainMemoryLatency, this,
-                            event.getRequestingElement(), getWord(event.getAddressToReadFrom()),
-                            event.getAddressToReadFrom()));
-
+            MemoryResponseEvent newMemoResponseEvent = new MemoryResponseEvent(
+                    Clock.getCurrentTime() + Configuration.mainMemoryLatency, this,
+                    event.getRequestingElement(), getWord(event.getAddressToReadFrom()),
+                    event.getAddressToReadFrom());
+            Simulator.getEventQueue().addEvent(newMemoResponseEvent);
             isMainBusy = true;
 
         } else if (e.getEventType() == Event.EventType.MemoryWrite) {
-            MemoryWriteEvent event = (MemoryWriteEvent) e;
-
-
-
-
-            setWord(event.getAddressToWriteTo(), event.getValue());
-
-
-            Simulator.getEventQueue().addEvent(new MemoryResponseEvent(
+            MemoryWriteEvent currEvent = (MemoryWriteEvent) e;
+            setWord(currEvent.getAddressToWriteTo(), currEvent.getValue());
+            MemoryResponseEvent newMemoResponseEvent = new MemoryResponseEvent(
                     Clock.getCurrentTime() + Configuration.mainMemoryLatency, this,
-                    event.getRequestingElement(), event.getValue(), event.getAddressToWriteTo()));
-
+                    currEvent.getRequestingElement(), currEvent.getValue(), currEvent.getAddressToWriteTo());
+            Simulator.getEventQueue().addEvent(newMemoResponseEvent);
             isMainBusy = true;
-
         }
     }
 }

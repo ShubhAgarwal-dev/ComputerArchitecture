@@ -10,10 +10,10 @@ public class Simulator {
     static Processor processor;
     static boolean simulationComplete;
 
-    static int numInst;
-    static int numDataHazards;
+    static int numberOfInstructions;
+    static int numberOfDataHazards;
 
-    static int numNop;
+    static int numberOfNOPs;
 
     static EventQueue eventQueue;
 
@@ -23,7 +23,7 @@ public class Simulator {
 
         simulationComplete = false;
 
-        numInst = numDataHazards = numNop = 0;
+        numberOfInstructions = numberOfDataHazards = numberOfNOPs = 0;
 
         eventQueue = new EventQueue();
     }
@@ -93,18 +93,18 @@ public class Simulator {
     }
 
 
-    public static void incNumInst() {
-        ++numInst;
+    public static void updateNumberOfInstructions() {
+        numberOfInstructions+=1;
     }
 
 
-    public static void incNumDataHazards() {
-        ++numDataHazards;
+    public static void updateNumberOfDataHazard() {
+        numberOfDataHazards+=1;
     }
 
 
-    public static void incNop() {
-        ++numNop;
+    public static void updateNumberOfNops() {
+        numberOfNOPs+=1;
     }
 
     public static EventQueue getEventQueue() {

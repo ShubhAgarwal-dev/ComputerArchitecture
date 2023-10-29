@@ -26,7 +26,6 @@ public class IF_EnableLatchType {
         return this.isStall;
     }
 
-
     public void setStall(boolean isStall) {
         this.isStall = isStall;
     }

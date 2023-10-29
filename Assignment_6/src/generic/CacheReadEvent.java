@@ -3,20 +3,20 @@ package generic;
 
 public class CacheReadEvent extends Event {
 
-    int addressToReadFrom;
+    int addr;
 
 
     public CacheReadEvent(long eventTime, Element requestingElement, Element processingElement,
                           int address) {
         super(eventTime, EventType.CacheRead, requestingElement, processingElement);
-        this.addressToReadFrom = address;
+        this.addr = address;
     }
 
-    public int getAddressToReadFrom() {
-        return addressToReadFrom;
+    public int getAddr() {
+        return addr;
     }
 
-    public void setAddressToReadFrom(int addressToReadFrom) {
-        this.addressToReadFrom = addressToReadFrom;
+    public void setAddr(int addr) {
+        this.addr = addr;
     }
 }

@@ -9,7 +9,6 @@ import processor.pipeline.latch.IF_OF_LatchType;
 
 
 public class InstructionFetch implements Element {
-
     Processor containingProcessor;
     IF_EnableLatchType IF_EnableLatch;
     IF_OF_LatchType IF_OF_Latch;
@@ -32,95 +31,62 @@ public class InstructionFetch implements Element {
 
 
         if (IF_EnableLatch.isIF_enable()) {
-
             if (!IF_EnableLatch.isIFBusy()) {
-
                 if (!IF_EnableLatch.getStall()) {
                     if (!containingProcessor.getL1iCache().isCacheBusy()) {
                         if (EX_IF_Latch.getIsBranchTaken()) {
-
-
-
                             containingProcessor.getRegisterFile()
                                     .setProgramCounter(EX_IF_Latch.getBranchPC());
-
                             EX_IF_Latch.setIsBranchTaken(false);
-
                         }
-
                         int currentPC = containingProcessor.getRegisterFile().getProgramCounter();
-
-
-
-
+                        CacheReadEvent newCacheReadEvent = new CacheReadEvent(Clock.getCurrentTime(), this,
+                                containingProcessor.getL1iCache(), currentPC);
                         Simulator.getEventQueue()
-                                .addEvent(new CacheReadEvent(Clock.getCurrentTime(), this,
-                                        containingProcessor.getL1iCache(), currentPC));
+                                .addEvent(newCacheReadEvent);
                         IF_EnableLatch.setIFBusy(true);
-
                         previousPC = currentPC;
-
                         containingProcessor.getRegisterFile().setProgramCounter(currentPC + 1);
-
-                        Simulator.incNumInst();
-                    } else {
-
+                        Simulator.updateNumberOfInstructions();
                     }
-                } else {
-
                 }
-            } else {
-
             }
-
-
-
             IF_OF_Latch.setOF_enable(true);
-        } else {
-
         }
     }
 
 
     @Override
     public void handleEvent(Event e) {
-
-
         if (IF_OF_Latch.isOFBusy()) {
-
-
-
             e.setEventTime(Clock.getCurrentTime() + 1);
             Simulator.getEventQueue().addEvent(e);
-
         } else if (IF_OF_Latch.getNop()) {
-
-
-
             containingProcessor.getL1iCache().setCacheBusy(false);
-
             containingProcessor.getRegisterFile().setProgramCounter(EX_IF_Latch.getBranchPC());
-
-            IF_EnableLatch.setIFBusy(false);
-
-            IF_OF_Latch.setValidInst(false);
-            IF_OF_Latch.setNop(false);
-            IF_OF_Latch.setOF_enable(true);
-
-            EX_IF_Latch.setIsBranchTaken(false);
+            mountNOP();
         } else {
             CacheResponseEvent event = (CacheResponseEvent) e;
-
             containingProcessor.getL1iCache().setCacheBusy(false);
-
-            IF_EnableLatch.setIFBusy(false);
-
-            IF_OF_Latch.setInstruction(event.getValue());
-            IF_OF_Latch.setValidInst(true);
-            IF_OF_Latch.setNop(false);
-            IF_OF_Latch.setCurrentPC(previousPC);
-            IF_OF_Latch.setOF_enable(true);
+            mountLatch(event);
         }
+    }
+
+    private void mountLatch(CacheResponseEvent event) {
+        IF_EnableLatch.setIFBusy(false);
+        IF_OF_Latch.setInstruction(event.getVal());
+        IF_OF_Latch.setValidInst(true);
+        IF_OF_Latch.setNop(false);
+        IF_OF_Latch.setCurrentPC(previousPC);
+        IF_OF_Latch.setOF_enable(true);
+    }
+
+    private void mountNOP() {
+        IF_EnableLatch.setIFBusy(false);
+        IF_OF_Latch.setValidInst(false);
+        IF_OF_Latch.setNop(false);
+        IF_OF_Latch.setOF_enable(true);
+        EX_IF_Latch.setIsBranchTaken(false);
     }
 
 }
