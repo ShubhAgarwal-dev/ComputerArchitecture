@@ -4,7 +4,6 @@ public class Operand {
 
     OperandType operandType;
 
-    ;
     int value;
     String labelValue; // only applicable for Label type;
 
@@ -36,7 +35,7 @@ public class Operand {
 
     public String toString() {
         if (operandType == OperandType.Register || operandType == OperandType.Immediate) {
-            return "[" + operandType.toString() + ":" + value + "]";
+            return "[" + operandType + ":" + value + "]";
         } else {
             return "[" + operandType.toString() + ":" + labelValue + "]";
         }

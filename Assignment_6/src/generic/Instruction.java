@@ -4,7 +4,6 @@ public class Instruction {
 
     int programCounter;
 
-    ;
     OperationType operationType;
     Operand sourceOperand1;
     Operand sourceOperand2;

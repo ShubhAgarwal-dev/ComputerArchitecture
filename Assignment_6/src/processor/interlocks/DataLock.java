@@ -7,10 +7,10 @@ import generic.Operand;
 import generic.Operand.OperandType;
 import generic.Simulator;
 import processor.Processor;
-import processor.pipeline.EX_MA_LatchType;
-import processor.pipeline.IF_EnableLatchType;
-import processor.pipeline.IF_OF_LatchType;
-import processor.pipeline.MA_RW_LatchType;
+import processor.pipeline.latch.EX_MA_LatchType;
+import processor.pipeline.latch.IF_EnableLatchType;
+import processor.pipeline.latch.IF_OF_LatchType;
+import processor.pipeline.latch.MA_RW_LatchType;
 
 // DataInterlock class to implement the functionality of Data-Interlock
 public class DataLock {
@@ -141,11 +141,7 @@ public class DataLock {
         }
 
         // If Following condition holds true, then there is a conflict
-        if (rs1A == rdB || (!isSecondImm && second == rdB)) {
-            return true;
-        }
-
-        return false;
+        return rs1A == rdB || (!isSecondImm && second == rdB);
     }
 
     // Function to decode the given instruction

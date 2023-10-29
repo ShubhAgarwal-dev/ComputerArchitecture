@@ -4,10 +4,10 @@ public class Event {
 
     long eventTime;
 
-    ;
     Element requestingElement;
     Element processingElement;
     EventType eventType;
+
     public Event(long eventTime, EventType eventType, Element requestingElement,
                  Element processingElement) {
         this.eventTime = eventTime;

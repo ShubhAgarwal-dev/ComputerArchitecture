@@ -1,4 +1,4 @@
-package processor.pipeline;
+package processor.pipeline.latch;
 
 import generic.Instruction;
 

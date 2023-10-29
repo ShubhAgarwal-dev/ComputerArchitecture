@@ -1,8 +1,8 @@
 package processor.interlocks;
 
 import generic.Simulator;
-import processor.pipeline.EX_IF_LatchType;
-import processor.pipeline.IF_OF_LatchType;
+import processor.pipeline.latch.EX_IF_LatchType;
+import processor.pipeline.latch.IF_OF_LatchType;
 
 public class BranchLock {
     IF_OF_LatchType IF_OF_Latch;

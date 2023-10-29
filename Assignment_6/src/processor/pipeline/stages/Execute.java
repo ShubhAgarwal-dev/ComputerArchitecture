@@ -1,9 +1,12 @@
-package processor.pipeline;
+package processor.pipeline.stages;
 
 import configuration.Configuration;
 import generic.*;
 import processor.Clock;
 import processor.Processor;
+import processor.pipeline.latch.EX_IF_LatchType;
+import processor.pipeline.latch.EX_MA_LatchType;
+import processor.pipeline.latch.OF_EX_LatchType;
 
 // Implementing Element interface for Execute class
 public class Execute implements Element {
@@ -234,7 +237,6 @@ public class Execute implements Element {
         // EX_IF_Latch.setIsBranchTaken(false); // Setting isBranchTaken signal as false
         this.aluResult = op1;
         this.isBranchTaken = false;
-        return;
     }
 
     private void execueR2I(long op2, int op, int op1) {
@@ -244,7 +246,6 @@ public class Execute implements Element {
         this.aluResult = getResult(op2);
         op = op1;
         this.isBranchTaken = false;
-        return;
     }
 
     private void executeCompare(boolean op1) {
@@ -265,7 +266,6 @@ public class Execute implements Element {
         EX_IF_Latch.setBranchPC(OF_EX_Latch.getBranchTarget()); // Setting branchPC
         this.isBranchTaken = true;
         this.branchPC = OF_EX_Latch.getBranchTarget();
-        return;
     }
 
     // Function to return first 32 bits result, and passing the excess bits

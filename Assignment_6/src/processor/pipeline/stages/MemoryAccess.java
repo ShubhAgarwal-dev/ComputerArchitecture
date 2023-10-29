@@ -1,8 +1,10 @@
-package processor.pipeline;
+package processor.pipeline.stages;
 
 import generic.*;
 import processor.Clock;
 import processor.Processor;
+import processor.pipeline.latch.EX_MA_LatchType;
+import processor.pipeline.latch.MA_RW_LatchType;
 
 // Implementing Element interface for MemoryAccess class
 public class MemoryAccess implements Element {

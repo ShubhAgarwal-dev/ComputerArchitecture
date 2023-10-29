@@ -5,8 +5,12 @@ import processor.interlocks.DataLock;
 import processor.memorysystem.Cache;
 import processor.memorysystem.MainMemory;
 import processor.memorysystem.RegisterFile;
-import processor.memorysystem.RegisterWrite;
-import processor.pipeline.*;
+import processor.pipeline.stages.RegisterWrite;
+import processor.pipeline.latch.*;
+import processor.pipeline.stages.Execute;
+import processor.pipeline.stages.InstructionFetch;
+import processor.pipeline.stages.MemoryAccess;
+import processor.pipeline.stages.OperandFetch;
 
 public class Processor {
 

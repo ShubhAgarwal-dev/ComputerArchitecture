@@ -1,4 +1,4 @@
-package processor.pipeline;
+package processor.pipeline.stages;
 
 import generic.Instruction;
 import generic.Instruction.OperationType;
@@ -6,6 +6,8 @@ import generic.Misc;
 import generic.Operand;
 import generic.Operand.OperandType;
 import processor.Processor;
+import processor.pipeline.latch.IF_OF_LatchType;
+import processor.pipeline.latch.OF_EX_LatchType;
 
 public class OperandFetch {
     Processor containingProcessor;

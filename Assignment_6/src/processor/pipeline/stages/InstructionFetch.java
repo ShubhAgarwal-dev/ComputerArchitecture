@@ -1,8 +1,11 @@
-package processor.pipeline;
+package processor.pipeline.stages;
 
 import generic.*;
 import processor.Clock;
 import processor.Processor;
+import processor.pipeline.latch.EX_IF_LatchType;
+import processor.pipeline.latch.IF_EnableLatchType;
+import processor.pipeline.latch.IF_OF_LatchType;
 
 // Implementing Element interface for InstructionFetch class
 public class InstructionFetch implements Element {
