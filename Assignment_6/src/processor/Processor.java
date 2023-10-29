@@ -1,5 +1,6 @@
 package processor;
 
+import configuration.Configuration;
 import processor.interlocks.BranchLock;
 import processor.interlocks.DataLock;
 import processor.memorysystem.Cache;
@@ -54,8 +55,8 @@ public class Processor {
                 new DataLock(this, IF_EnableLatch, IF_OF_Latch, EX_MA_Latch, MA_RW_Latch);
         branchLockUnit = new BranchLock(IF_OF_Latch, EX_IF_Latch);
 
-        l1iCache = new Cache(this, 0);
-        l1dCache = new Cache(this, 1);
+        l1iCache = new Cache(this, 0, Configuration.L1i_associativity);
+        l1dCache = new Cache(this, 1, Configuration.L1d_associativity);
     }
 
     public void printState(int memoryStartingAddress, int memoryEndingAddress) {

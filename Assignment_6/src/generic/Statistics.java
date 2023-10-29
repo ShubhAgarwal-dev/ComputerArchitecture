@@ -92,7 +92,7 @@ public class Statistics {
         try {
             PrintWriter writer = new PrintWriter(statFile);
 
-            writer.println("Static Instructions= " + staticInstCount);
+//            writer.println("Static Instructions= " + staticInstCount);
             writer.println("Dynamic Instructions= " + dynamicInstCount);
             writer.println("Number of Cycles= " + numCycles);
             writer.println("IPC = " + IPC);

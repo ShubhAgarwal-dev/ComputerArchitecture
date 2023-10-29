@@ -84,7 +84,6 @@ public class Simulator {
         Statistics.setIPC((float) Statistics.getDynamicInstCount() / Statistics.getNumCycles());
         Statistics.setStalls(numberOfDataHazards);
         Statistics.setNumBranchHazards(numberOfNOPs);
-        Statistics.setNumBranchHazards(numberOfNOPs);
         Statistics.setFrequency((float) Statistics.getDynamicInstCount()/Statistics.getNumCycles());
     }
 

@@ -10,12 +10,12 @@ import processor.Processor;
 public class Cache implements Element {
 
     Processor containingProcessor;
-    int cacheType, numCacheLines, cacheLatency, cacheLineSize, cacheLineArraySize, cacheSize, currIndex;
+    int cacheType, numCacheLines, cacheLatency, cacheLineSize, cacheLineArraySize, cacheSize, currIndex, associativity;
     CacheLine[] buffer;
     boolean isCacheBusy;
 
 
-    public Cache(Processor containingProcessor, int cacheType) {
+    public Cache(Processor containingProcessor, int cacheType, int associativity) {
         this.containingProcessor = containingProcessor;
         this.cacheType = cacheType;
         if (this.cacheType == 0) {
@@ -36,6 +36,7 @@ public class Cache implements Element {
 
         this.currIndex = 0;
         this.isCacheBusy = false;
+        this.associativity = associativity;
     }
 
     public boolean isCacheBusy() {
